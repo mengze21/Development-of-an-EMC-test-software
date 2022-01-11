@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1401</width>
+    <height>792</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1401</width>
+    <height>792</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1401</width>
+    <height>792</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Verdana</family>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>EMV-Prüfung Konfiguration</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <selectedon>icon materials/8.png</selectedon>
+   </iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QToolButton" name="LeistungsgebundeneMode">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>280</y>
+      <width>300</width>
+      <height>300</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>300</width>
+      <height>300</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>300</width>
+      <height>300</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <selectedon>icon materials/1.png</selectedon>
+     </iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>300</width>
+      <height>300</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="GestrahlteMode">
+    <property name="geometry">
+     <rect>
+      <x>900</x>
+      <y>280</y>
+      <width>300</width>
+      <height>300</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>300</width>
+      <height>300</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>300</width>
+      <height>300</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <selectedon>icon materials/2.png</selectedon>
+     </iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>300</width>
+      <height>300</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="Line" name="VerticalLine">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>190</y>
+      <width>21</width>
+      <height>480</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>21</width>
+      <height>480</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>21</width>
+      <height>480</height>
+     </size>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="PleaseChoose">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>90</y>
+      <width>401</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>341</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>111111</width>
+      <height>111111</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Bitte wählen Sie einen Test-Modus aus:
+</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LeitungModeLabel">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>200</y>
+      <width>401</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>401</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>401</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Leitungsgebundener Test</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="GestrahltModeLabel">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>200</y>
+      <width>300</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>300</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>300</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Gestrahlter Test</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LeitungModeExplaination1">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>590</y>
+      <width>521</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>521</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>521</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Die durch Leitungen, die mit dem Gerät verbunden</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="GestrahlModeExplaination1">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>590</y>
+      <width>581</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>581</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>581</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Die durch Geräte bzw. deren Komponenten abgestrahlten</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LeitungModeExplaination2">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>620</y>
+      <width>481</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>481</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>481</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="sizeIncrement">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Verdana</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>sind, übertragenen Störungen werden getestet.</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="GestrahlModeExplaination2">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>620</y>
+      <width>501</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>501</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>501</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>elektromagnetischen Störungen werden getestet.</string>
+    </property>
+   </widget>
+   <zorder>GestrahlteMode</zorder>
+   <zorder>LeistungsgebundeneMode</zorder>
+   <zorder>VerticalLine</zorder>
+   <zorder>PleaseChoose</zorder>
+   <zorder>LeitungModeLabel</zorder>
+   <zorder>GestrahltModeLabel</zorder>
+   <zorder>LeitungModeExplaination1</zorder>
+   <zorder>GestrahlModeExplaination1</zorder>
+   <zorder>LeitungModeExplaination2</zorder>
+   <zorder>GestrahlModeExplaination2</zorder>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1401</width>
+     <height>24</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

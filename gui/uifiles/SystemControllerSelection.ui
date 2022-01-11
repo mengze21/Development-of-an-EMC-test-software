@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SystemControllerSelection</class>
+ <widget class="QDialog" name="SystemControllerSelection">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>640</width>
+    <height>480</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>640</width>
+    <height>480</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Verdana</family>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Auswahl des Systemkontrollers</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <selectedon>icon materials/4.png</selectedon>
+   </iconset>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <widget class="QListWidget" name="AuswahlList">
+   <property name="geometry">
+    <rect>
+     <x>55</x>
+     <y>90</y>
+     <width>531</width>
+     <height>301</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>531</width>
+     <height>301</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>531</width>
+     <height>301</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="verticalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOn</enum>
+   </property>
+   <item>
+    <property name="text">
+     <string>New Item</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="LabelKontroller">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>50</y>
+     <width>281</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>281</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>281</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Verfügbare Systemkontroller</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ApplyButton">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>410</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>121</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>121</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Anwenden</string>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="CancelButton">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>410</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>121</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>121</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Stornieren</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>CancelButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>SystemControllerSelection</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>543</x>
+     <y>440</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>253</x>
+     <y>442</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

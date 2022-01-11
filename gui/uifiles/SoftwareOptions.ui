@@ -1,0 +1,1229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SoftwareOptionen</class>
+ <widget class="QWidget" name="SoftwareOptionen">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>998</width>
+    <height>671</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Verdana</family>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Software Optionen</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <selectedon>icon materials/22.png</selectedon>
+   </iconset>
+  </property>
+  <widget class="QTabWidget" name="OptionTabWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>50</y>
+     <width>960</width>
+     <height>551</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>960</width>
+     <height>551</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>960</width>
+     <height>551</height>
+    </size>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="DuringTest">
+    <attribute name="title">
+     <string>Während des Tests</string>
+    </attribute>
+    <widget class="QCheckBox" name="WarmUpAmplifierCheckBox">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>60</y>
+       <width>211</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>211</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>211</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Warm-up Verstärker</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="AmplifierDeaktivierungLabel">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>170</y>
+       <width>621</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>621</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>621</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Verstärker deaktivieren, während der Signalgenerator deaktiviert ist.</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="MaximalIterationCheckBox">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>280</y>
+       <width>821</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>821</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>821</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Wenn die maximale Iteration erreicht ist, wird sie automatisch akzeptiert und fortgefahren.</string>
+     </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="MaximalLaufwerkstufeCheckBox">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>390</y>
+       <width>871</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>871</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>871</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Wenn die maximale Laufwerksstufe erreicht ist, wird sie automatisch akzeptiert und fortgefahren.</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="WarmUpAmplifierLineEdit">
+     <property name="geometry">
+      <rect>
+       <x>750</x>
+       <y>100</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>15 Minuten</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="MaximalIterationLineEdit">
+     <property name="geometry">
+      <rect>
+       <x>750</x>
+       <y>320</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>24</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="WarmUpAmplifierLabel">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>100</y>
+       <width>341</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>341</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>341</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Zeit für den Verstärker zum Warm-up:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="MaximalIterationLabel">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>320</y>
+       <width>401</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>401</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>401</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Maximale Iteration der Nivellierungsschleife:</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="delays">
+    <attribute name="title">
+     <string>Verzögerungen</string>
+    </attribute>
+    <widget class="QToolButton" name="DelaysToolButton">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>430</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Standardwerte</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DelaysLabel_10">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>380</y>
+       <width>311</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>311</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>311</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Nach dem Zurücksetzen des EUT:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DelaysLabel_7">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>260</y>
+       <width>381</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>381</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>381</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Vor der aktuellen Monitormessung:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DelaysLabel_5">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>180</y>
+       <width>281</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>281</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>281</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Vor der Feldmonitormessung:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="DelaysLineEdit_5">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>180</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>0ms</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="DelaysLineEdit_8">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>300</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>0ms</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DelaysLabel_4">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>140</y>
+       <width>331</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>331</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>331</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Vor der Rückwärtsleistungsmessung:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="DelaysLineEdit_10">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>380</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>500ms</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="DelaysLineEdit_4">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>140</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>0ms</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DelaysLabel_9">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>340</y>
+       <width>441</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>441</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>441</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Nach dem Wechsel des HF-Schalters CI00402:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="DelaysLineEdit_9">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>340</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>0ms</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DelaysLabel_2">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>60</y>
+       <width>421</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>421</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>421</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>*Nach der Änderung des Signalgenerators:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="DelaysLineEdit_2">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>60</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>250ms</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DelaysLabel_3">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>100</y>
+       <width>321</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>321</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>321</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Vor der Vorwärtsleistungsmessung:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="DelaysLineEdit_6">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>220</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>250ms</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DelaysLabel_8">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>300</y>
+       <width>371</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>371</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>371</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Vor der Messung der Kalibriervorrichtung:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DelaysLabel_11">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>470</y>
+       <width>941</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>941</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>941</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>*Warnung: Die Verringerung dieser Verzögerungen kann zu einer Instabilität der Messung führen.</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="DelaysLineEdit_7">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>260</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>0ms</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="DelaysLineEdit_3">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>100</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>0ms</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DelaysLabel_6">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>220</y>
+       <width>421</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>421</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>421</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Nach der Änderung des Vorverstärkerzustands:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="DelaysLineEdit_1">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>20</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>161</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>1000ms</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="DelaysLabel_1">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>20</y>
+       <width>371</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>371</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>371</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>*Nach der Änderung des HF-Zustands:</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="Security">
+    <attribute name="title">
+     <string>Sicherheit</string>
+    </attribute>
+    <widget class="QCheckBox" name="SecurityCheckBox_1">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>60</y>
+       <width>771</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>771</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>771</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Informationen zum automatischen Vervollständigen vom Text beim Beenden löschen.</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="SecurityCheckBox_2">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>170</y>
+       <width>221</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>221</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>221</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Sicherheit aktivieren:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="SecurityLineEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>170</y>
+       <width>481</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>481</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>481</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>deaktiviert</string>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="SecurityToolButton_1">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>240</y>
+       <width>191</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>191</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>191</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Einloggen</string>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="SecurityToolButton_2">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>240</y>
+       <width>191</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>191</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>191</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Passwort ändern</string>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="SecurityToolButton_3">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>660</x>
+       <y>240</y>
+       <width>191</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>191</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>191</width>
+       <height>41</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Passwort löschen</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_5">
+    <attribute name="title">
+     <string>EUT Überwachung</string>
+    </attribute>
+    <widget class="QLabel" name="EUTLabel">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>60</y>
+       <width>711</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>711</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>711</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Wenn die maximale Aktuellbegrenzung erreicht wird, während der Schwellenwert</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="EUTComboBox">
+     <property name="geometry">
+      <rect>
+       <x>740</x>
+       <y>60</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>181</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>181</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="editable">
+      <bool>true</bool>
+     </property>
+     <property name="currentText">
+      <string>Prompt Benutzer</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="EUTCheckBox">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>150</y>
+       <width>841</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>841</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>841</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Warnen, wenn das EUT nicht zurückgesetzt werden kann, nachdem ein Fehler erkannt wurde.</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_6">
+    <attribute name="title">
+     <string>Aktualisierung</string>
+    </attribute>
+   </widget>
+  </widget>
+  <widget class="QToolButton" name="HilfeToolButton">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>620</y>
+     <width>121</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>121</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>121</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>  Hilfe</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <selectedon>icon materials/9.png</selectedon>
+    </iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>31</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="AnwendungPushButton">
+   <property name="geometry">
+    <rect>
+     <x>670</x>
+     <y>620</y>
+     <width>131</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>131</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>131</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Anwenden</string>
+   </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="StornierenPushButton">
+   <property name="geometry">
+    <rect>
+     <x>820</x>
+     <y>620</y>
+     <width>131</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>131</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>131</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Stornieren</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

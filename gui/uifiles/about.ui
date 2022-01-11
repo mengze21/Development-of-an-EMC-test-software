@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>VersionInfo</class>
+ <widget class="QWidget" name="VersionInfo">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>401</width>
+    <height>401</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>401</width>
+    <height>401</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>401</width>
+    <height>401</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Verdana</family>
+    <pointsize>9</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Über EMV-Prüfsoftware</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../icon_materials/37.png</normaloff>../icon_materials/37.png</iconset>
+  </property>
+  <widget class="QLabel" name="UeberIcon">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>40</y>
+     <width>151</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>151</width>
+     <height>151</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>151</width>
+     <height>151</height>
+    </size>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="versionnumber">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>155</x>
+     <y>200</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>101</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>101</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Version 1.0.0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="copyright">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>115</x>
+     <y>240</y>
+     <width>181</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>181</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>181</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Copyright © Yunhe Yang</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Github">
+   <property name="geometry">
+    <rect>
+     <x>185</x>
+     <y>290</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>41</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>41</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Quelle">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>345</y>
+     <width>131</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>131</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>131</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Quelle der Icons:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="website">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>345</y>
+     <width>161</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>161</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>161</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>https://icons8.com/</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

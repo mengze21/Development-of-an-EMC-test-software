@@ -1,0 +1,964 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EditSignalRouting</class>
+ <widget class="QWidget" name="EditSignalRouting">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>720</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1280</width>
+    <height>720</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1280</width>
+    <height>720</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Verdana</family>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Signalrouting bearbeiten</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <selectedon>icon materials/4.png</selectedon>
+   </iconset>
+  </property>
+  <widget class="QPushButton" name="ApplyButton">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>650</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>131</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>131</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Anwenden</string>
+   </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="CancelButton">
+   <property name="geometry">
+    <rect>
+     <x>1100</x>
+     <y>650</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>131</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>131</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Stornieren</string>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="HelptoolButton">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>650</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>131</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>131</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>  Hilfe</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <selectedon>icon materials/9.png</selectedon>
+    </iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>41</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
+   </property>
+  </widget>
+  <widget class="QTabWidget" name="Monitoring">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>310</y>
+     <width>1181</width>
+     <height>311</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>1181</width>
+     <height>311</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1181</width>
+     <height>311</height>
+    </size>
+   </property>
+   <property name="currentIndex">
+    <number>2</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Emissionsausrüstung</string>
+    </attribute>
+    <widget class="QTreeWidget" name="treeWidget">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>361</width>
+       <height>241</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>361</width>
+       <height>241</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>361</width>
+       <height>241</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Verdana</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <property name="tabKeyNavigation">
+      <bool>false</bool>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="uniformRowHeights">
+      <bool>false</bool>
+     </property>
+     <property name="itemsExpandable">
+      <bool>true</bool>
+     </property>
+     <property name="sortingEnabled">
+      <bool>false</bool>
+     </property>
+     <property name="animated">
+      <bool>false</bool>
+     </property>
+     <property name="allColumnsShowFocus">
+      <bool>false</bool>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+     <property name="headerHidden">
+      <bool>false</bool>
+     </property>
+     <property name="expandsOnDoubleClick">
+      <bool>true</bool>
+     </property>
+     <attribute name="headerVisible">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="headerCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="headerHighlightSections">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="headerShowSortIndicator" stdset="0">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="headerStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Rx Antenna</string>
+      </property>
+     </column>
+     <item>
+      <property name="text">
+       <string>None</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="BackgroundLabel1">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>20</y>
+       <width>361</width>
+       <height>241</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>BackgroundLabel1</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Systemkontroller</string>
+    </attribute>
+    <widget class="QLabel" name="AuxiliaryOutputsLabel">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>121</width>
+       <height>21</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>121</width>
+       <height>21</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Hilfsausgänge</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="SwitchPositionLabel">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>10</y>
+       <width>661</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>661</width>
+       <height>21</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>661</width>
+       <height>21</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Schalterpositionen (Automatisch ausgewählt basierend auf der Geräteauswahl.)</string>
+     </property>
+    </widget>
+    <widget class="QTreeWidget" name="OutPutTree">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>461</width>
+       <height>221</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>461</width>
+       <height>221</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>461</width>
+       <height>221</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Verdana</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::DefaultContextMenu</enum>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <attribute name="headerVisible">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>New Column</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>New Column</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QTableWidget" name="PositionTable">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>40</y>
+       <width>661</width>
+       <height>221</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>661</width>
+       <height>221</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>661</width>
+       <height>221</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Verdana</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <column>
+      <property name="text">
+       <string>Art</string>
+      </property>
+      <property name="font">
+       <font>
+        <family>Verdana</family>
+        <pointsize>10</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Schalterpositionen</string>
+      </property>
+      <property name="font">
+       <font>
+        <family>Verdana</family>
+        <pointsize>10</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+     </column>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_3">
+    <attribute name="title">
+     <string>Benutzermeldungen</string>
+    </attribute>
+    <widget class="QTextEdit" name="UserMessageEdit">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>1131</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>1131</width>
+       <height>81</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>1131</width>
+       <height>81</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="UserMessageEditor2">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>180</y>
+       <width>1131</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>1131</width>
+       <height>81</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>1131</width>
+       <height>81</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="UserMessageLabel">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>171</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>171</width>
+       <height>21</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>171</width>
+       <height>21</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Benutzermeldung</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="UserMessageTest">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>150</y>
+       <width>211</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>211</width>
+       <height>21</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>211</width>
+       <height>21</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Benutzermeldung (Test)</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="UserMessageCheckBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>150</y>
+       <width>401</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>401</width>
+       <height>21</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>401</width>
+       <height>21</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Entspricht der Meldung von &quot;Kalibrierung&quot;.</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="expectedSetup">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>100</y>
+     <width>1181</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>1181</width>
+     <height>191</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1181</width>
+     <height>191</height>
+    </size>
+   </property>
+   <property name="title">
+    <string>Erwartetes Setup</string>
+   </property>
+   <widget class="QPushButton" name="EUTButton">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>20</y>
+      <width>100</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>100</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>100</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>EUT</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="AntenneEmpangButton">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>20</y>
+      <width>120</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>120</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>120</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::DefaultContextMenu</enum>
+    </property>
+    <property name="text">
+     <string>Antenne empfangen</string>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="KabelButton">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>20</y>
+      <width>100</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>100</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>100</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>Kabel</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="AltenButton">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>20</y>
+      <width>100</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>100</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>100</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>Antennekontroller</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="RecieverButton">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>20</y>
+      <width>150</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>150</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>150</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="AntenneKontrollerButton">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>120</y>
+      <width>120</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>120</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>120</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>Antennekontroller</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="UpArrow">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>85</y>
+      <width>21</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>21</width>
+      <height>41</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>21</width>
+      <height>41</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="RightArrow1">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>40</y>
+      <width>51</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>51</width>
+      <height>21</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>51</width>
+      <height>21</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="RightArrow2">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>40</y>
+      <width>51</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>51</width>
+      <height>21</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>51</width>
+      <height>21</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="RightArrow3">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>40</y>
+      <width>51</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>51</width>
+      <height>21</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>51</width>
+      <height>21</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLineEdit" name="FrequencyEdit">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>50</y>
+     <width>181</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>181</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>181</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="toolTip">
+    <string>Definieren Sie die Startfrequenz.</string>
+   </property>
+   <property name="text">
+    <string>800MHz</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="FrequencyLabel">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>50</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>101</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>101</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Frequenz:</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>CancelButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>EditSignalRouting</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1142</x>
+     <y>679</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>772</x>
+     <y>660</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

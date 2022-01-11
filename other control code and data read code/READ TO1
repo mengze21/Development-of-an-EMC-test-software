@@ -1,0 +1,17 @@
+#REMI read the date from REMI
+aFile = open('Nullmessung_REMI_V.TO1', 'r')
+allLines = aFile.readlines()
+
+print(allLines)
+rowCnt = len(allLines)-30
+print(rowCnt)
+REMIF = [0] * rowCnt
+REMIMag = [0] * rowCnt
+for i in range(rowCnt):
+    lineText = allLines[i+29].strip()                 # A line of text that must be stripped of the \n at the end
+    strList = lineText.split()                        # Splitting into string lists
+    REMIF[i] = float(strList[0].replace(",", "."))    # Frequence
+    REMIMag[i] = float(strList[1].replace(",", "."))  # Magnitude
+
+#print(REMIF)
+#print(REMIMag)

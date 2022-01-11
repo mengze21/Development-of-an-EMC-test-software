@@ -1,0 +1,1235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ReportWindow</class>
+ <widget class="QWidget" name="ReportWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1122</width>
+    <height>791</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1401</width>
+    <height>100000</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Verdana</family>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Einstellungen des Reports </string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <selectedon>icon materials/6.png</selectedon>
+   </iconset>
+  </property>
+  <widget class="QGroupBox" name="DetailsGroupBox">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>110</y>
+     <width>1061</width>
+     <height>611</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>1061</width>
+     <height>611</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1061</width>
+     <height>611</height>
+    </size>
+   </property>
+   <property name="title">
+    <string>Details</string>
+   </property>
+   <widget class="QLabel" name="ReportTitelLabel">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>161</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>161</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>Titel des Reports:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ReportTitelLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>182</x>
+      <y>30</y>
+      <width>231</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>231</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>231</width>
+      <height>31</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TestIngenieurLabel">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>30</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>131</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>131</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>Testingenieur:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="TestIngenieurLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>30</y>
+      <width>156</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>156</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>156</width>
+      <height>31</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TestDatumLabel">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>30</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>101</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>101</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>Testdatum:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="TestDatumLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>880</x>
+      <y>30</y>
+      <width>156</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>156</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>156</width>
+      <height>31</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="BenutzerNotizenLabel">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>75</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>151</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>151</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>Benutzernotizen:</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="BenutzerNotizenTextEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>391</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>391</width>
+      <height>101</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>391</width>
+      <height>101</height>
+     </size>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOn</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ReportIconLabel">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>270</y>
+      <width>271</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>271</width>
+      <height>271</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>271</width>
+      <height>271</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="AnzeigeEinstellungenGroupBox">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>80</y>
+      <width>601</width>
+      <height>511</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>601</width>
+      <height>501</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>601</width>
+      <height>511</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>Anzeigeeinstellungen:</string>
+    </property>
+    <widget class="QGroupBox" name="AllgemeinGroupBox">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>561</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>561</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>561</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Allgemein</string>
+     </property>
+     <widget class="QCheckBox" name="AllgemeinSeiteCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>71</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>71</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Seite</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AllgemeinBenutzerNotizenCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>30</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>171</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>171</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Benutzernotizen</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AllgemeinDiagrammCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>30</y>
+        <width>191</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>191</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>191</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Einheit</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="TestparameterGroupBox">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>250</y>
+       <width>561</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>561</width>
+       <height>111</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>561</width>
+       <height>111</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Test-Parameter</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <widget class="QCheckBox" name="Effectivefrequency">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>211</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>211</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Effektive Frequenzen</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="Messzeit">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>30</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>101</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>101</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Messzeit</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="Attenuation">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>131</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>131</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>131</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Attenuation</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="Detektor">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>30</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>101</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>101</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Detektor</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="Grenzwerte">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>70</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>121</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>121</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Grenzwerte</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QToolButton" name="AnzeigeEinsteuungenToolButton_1">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>460</y>
+       <width>171</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>171</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>171</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
+       <underline>true</underline>
+      </font>
+     </property>
+     <property name="text">
+      <string>+ Alle wählen...</string>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="AnzeigeEinsteuungenToolButton_2">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>460</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>181</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>181</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+       <underline>true</underline>
+      </font>
+     </property>
+     <property name="text">
+      <string>- Alle entfernen...</string>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="EUTgroupBox">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>110</y>
+       <width>561</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>561</width>
+       <height>131</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>561</width>
+       <height>131</height>
+      </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="title">
+      <string>EUT- und Test-Bedingungen</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <widget class="QLineEdit" name="KundennameEditor">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>30</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>121</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>121</width>
+        <height>31</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="EUTNameEditor">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>30</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>121</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>121</width>
+        <height>31</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="BeschribungEditor">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>80</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>121</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>121</width>
+        <height>31</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="BedingungenEditor">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>80</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>121</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>121</width>
+        <height>31</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Beschreibung">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>131</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>131</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>131</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Beschreibung:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="EUTName">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>30</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>101</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>101</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>EUT-Name:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Bedingungen">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>80</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>121</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>121</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Bedingungen:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Kundenname">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>121</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>121</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Kundenname:</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="Equipmentinformations">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>370</y>
+       <width>561</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>561</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>561</width>
+       <height>71</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Geräteinformationen</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <widget class="QCheckBox" name="Antenne">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>30</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>101</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>101</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Antenne</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="Kabeln">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>30</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>91</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>91</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Kabeln</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="Systemkontroller">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>171</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>171</width>
+        <height>31</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Systemcontroller</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="ReportTypeGroupBox">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>20</y>
+     <width>411</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>411</width>
+     <height>80</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>411</width>
+     <height>80</height>
+    </size>
+   </property>
+   <property name="title">
+    <string>Typ des Reports</string>
+   </property>
+   <widget class="QRadioButton" name="MSWordRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>101</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>101</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>MS Word</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="MSExcelRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>30</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>101</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>101</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>MS Excel</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="PDFRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>30</y>
+      <width>61</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>61</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>61</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>PDF</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="SpeicherungspfadGroupBox">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>20</y>
+     <width>631</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>631</width>
+     <height>80</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>631</width>
+     <height>80</height>
+    </size>
+   </property>
+   <property name="title">
+    <string>Speicherungspfad</string>
+   </property>
+   <widget class="QLabel" name="SpeichernUnterLabel">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>151</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>151</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="sizeIncrement">
+     <size>
+      <width>31</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>Speichern unter:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="SpeichernUnterLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>30</y>
+      <width>341</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>341</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>341</width>
+      <height>31</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="SpeichernUnterToolButton">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>30</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>31</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>31</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <selectedon>icon materials/24.png</selectedon>
+     </iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>31</width>
+      <height>31</height>
+     </size>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="ReportWindowOKPushButton">
+   <property name="geometry">
+    <rect>
+     <x>780</x>
+     <y>740</y>
+     <width>131</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>131</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>131</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Anwenden</string>
+   </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ReportWindowCancelPushButton">
+   <property name="geometry">
+    <rect>
+     <x>960</x>
+     <y>740</y>
+     <width>131</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>131</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>131</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Zurück</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>ReportWindowCancelPushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ReportWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1045</x>
+     <y>735</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>715</x>
+     <y>734</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
