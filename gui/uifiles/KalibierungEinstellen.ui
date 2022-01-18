@@ -585,7 +585,7 @@
           <set>AlignCenter</set>
          </property>
          <property name="text">
-          <string>AM Sine (1kHz, 80%)</string>
+          <string>Off</string>
          </property>
          <property name="textAlignment">
           <set>AlignCenter</set>
@@ -670,7 +670,7 @@
           <set>AlignCenter</set>
          </property>
          <property name="text">
-          <string>AM sine (1kHz, 80%)</string>
+          <string>Off</string>
          </property>
          <property name="font">
           <font>
