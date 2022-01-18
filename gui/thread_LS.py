@@ -19,7 +19,7 @@ class External_LS(QThread):
         self.Leistung=Leistung
         self.signal = 1
 
-        # ead the addresse of the instrument
+        # read the addresse of the instrument
         self.rm = pyvisa.ResourceManager()
         self.gpib_addr2 = 'GPIB0::21::INSTR'
         self.gpib_addr3 = 'GPIB0::9::INSTR'

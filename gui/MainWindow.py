@@ -1505,16 +1505,14 @@ class Ui_MainWindow(object):
     # messageBox will show up and says that the functionality of calibration is not implemented yet. (because it is not needed in this experiment)
     def calibrationwarning(self):
         # neu
-        # widget = QtWidgets.QDialog()
-        # ui = uic.loadUi("uifiles/KalibierungWindow.ui")
-        # ui = Ui_Calibration()
-        # ui.setupUi(widget)
-        # widget.exec_()
-        # ui.setupUi(widget)
-        #widget.exec_()
+        if self.choose == 4:
+            ui = Ui_Calibration()
+            ui.setupUi()
+            ui.exec_()
         # neu
         # QtWidgets.QMessageBox.information(self.ui)
-        QtWidgets.QMessageBox.information(self, "Hinweis", "Diese Funktionalität ist noch nicht implementiert.")
+        else:
+            QtWidgets.QMessageBox.information(self, "Hinweis", "Diese Funktionalität ist noch nicht implementiert.")
 
 
 # function that can process .jpg image

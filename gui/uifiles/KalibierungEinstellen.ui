@@ -114,7 +114,7 @@
         </font>
        </property>
        <property name="columnCount">
-        <number>5</number>
+        <number>4</number>
        </property>
        <attribute name="headerVisible">
         <bool>true</bool>
@@ -148,11 +148,6 @@
          <string>Adresse</string>
         </property>
        </column>
-       <column>
-        <property name="text">
-         <string notr="true">5</string>
-        </property>
-       </column>
        <item>
         <property name="text">
          <string>Antenne</string>
@@ -168,25 +163,13 @@
           <string>R&amp;S HL562</string>
          </property>
          <property name="text">
-          <string/>
-         </property>
-        </item>
-       </item>
-       <item>
-        <property name="text">
-         <string>Kabel</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>LMK11</string>
+          <string>--</string>
          </property>
          <property name="text">
-          <string/>
+          <string>xx.dll</string>
          </property>
-        </item>
-        <item>
          <property name="text">
-          <string>LMK12</string>
+          <string>xxxxx</string>
          </property>
         </item>
        </item>

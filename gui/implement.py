@@ -10,13 +10,14 @@ from MainWindow import Ui_MainWindow
 from ManagementderAusrustung_FE import FE_EquipmentManagement
 from ManagementderAusrustung_LS import LS_EquipmentManagement
 from ManagementderAusrustung_LE import LE_EquipmentManagement
-# from ManagementderAusrustung_FS import FS_EquipmentManagement
+from ManagementderAusrustung_FS import FS_EquipmentManagement
 from TestWindow_LE import Ui_TestWindow_LE
 from TestWindow_FE import Ui_TestWindow_FE
 from TestWindow_LS import Ui_TestWindow_LS
 from TestWindow_FS import Ui_TestWindow_FS
 from Versuchsaufbau import Ui_TestSetUp
 from ReportWindow import Ui_ReportWindow
+from versuchsaufbau_FS import Ui_CalibrationSetup_FS
 import sys
 
 
@@ -64,7 +65,7 @@ class Test_FS(QtWidgets.QWidget, Ui_TestWindow_FS):
 # neu
 
 
-# Initialization of the "Gerätemanagement" Fenster for 3 tests
+# Initialization of the "Gerätemanagement" Fenster for 4 tests
 class Equipment(QtWidgets.QWidget, FE_EquipmentManagement):
     def __init__(self, parent=None):
         super(Equipment, self).__init__(parent)
@@ -81,6 +82,13 @@ class Equipment(QtWidgets.QWidget, LE_EquipmentManagement):
     def __init__(self, parent=None):
         super(Equipment, self).__init__(parent)
         self.setupUi(self)
+
+# neu
+class Equipment(QtWidgets.QWidget, FS_EquipmentManagement):
+    def __init__(self, parent=None):
+        super(Equipment, self).__init__(parent)
+        self.setupUi(self)
+# neu
 
 
 # This MainWindow is the main body of the whole gui. After chosing the test mode "Feldgebundene Emissionsmessung", this MainWindow will show up.
@@ -132,7 +140,7 @@ class MyMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         widget.exec_()
 
     # slot function of the "Gerätemanagement" Window
-    # FE choose=1,LE choose =2, LS choose=3
+    # FE choose=1,LE choose =2, LS choose=3, FS choose=4
     def equipmentManagement(self):
         print(self.choose)
         if self.choose == 1:
@@ -164,6 +172,20 @@ class MyMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             ui = LS_EquipmentManagement()
             ui.setupUi(widget)
             widget.exec_()
+        # neu
+        elif self.choose == 4:
+            widget = QtWidgets.QDialog(self)
+            ui = FS_EquipmentManagement()
+            ui.setupUi(widget)
+            widget.exec_()
+            # antenne factors are tansported into the "Gerätemanagement" Window
+            self.anntef = ui.anntenfre
+            self.anntem = ui.anntenmag
+            self.kabelf1 = ui.frequenz1
+            self.kabelm1 = ui.magnitude1
+            self.kabelf2 = ui.frequenz2
+            self.kabelm2 = ui.magnitude2
+        # neu
 
     # slot function for the "Test" window.
     def testStart(self):
@@ -445,10 +467,21 @@ class MyMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     # slot function of "Testkonfiguration" Window
     def testSETUP(self):
-        widget = QtWidgets.QDialog(self)
-        ui = Ui_TestSetUp()
-        ui.setupUi(widget)
-        widget.exec_()
+        #neu
+        if self.choose == 4:
+            #ui = Ui_Calibration_FS()
+            #ui.setupUi()
+            #ui.exec_()
+            widget = QtWidgets.QDialog(self)
+            ui = Ui_CalibrationSetup_FS()
+            ui.setupUi(widget)
+            widget.exec_()
+        #neu
+        else:
+            widget = QtWidgets.QDialog(self)
+            ui = Ui_TestSetUp()
+            ui.setupUi(widget)
+            widget.exec_()
 
     # Method to make sure that the gui is placed in the center of users desktop
     def center(self):

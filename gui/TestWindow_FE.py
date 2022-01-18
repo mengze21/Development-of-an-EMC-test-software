@@ -1811,7 +1811,9 @@ class Ui_TestWindow_FE(object):
         if "Gruppe 1. Klasse B. Quasi-Peak. 10m." in self.data:
             self.label6.show()
 
+
 from PyQt5 import QtChart
+
 
 # decode the color and obtain the channel numbers
 def color(hex):

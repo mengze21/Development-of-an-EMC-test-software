@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>KalibierungWindow</class>
- <widget class="QDialog" name="KalibierungWindow">
+ <class>KalibrierungWindow</class>
+ <widget class="QDialog" name="KalibrierungWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Kalibierung</string>
+   <string>Kalibrierung</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="sizeConstraint">
@@ -243,14 +243,12 @@
           <family>Verdana</family>
          </font>
         </property>
+        <property name="currentText">
+         <string>Show: Field Kalibierung</string>
+        </property>
         <item>
          <property name="text">
           <string>Show: Field Kalibierung</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Show: </string>
          </property>
         </item>
        </widget>
@@ -515,13 +513,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>GroupBox</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -538,7 +529,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>KalibierungWindow</receiver>
+   <receiver>KalibrierungWindow</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -554,7 +545,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>KalibierungWindow</receiver>
+   <receiver>KalibrierungWindow</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
