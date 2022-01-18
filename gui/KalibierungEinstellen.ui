@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>KalibrierungEinstellen</class>
+ <widget class="QDialog" name="KalibrierungEinstellen">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>826</width>
+    <height>621</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Verdana</family>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Kalibrierung Einstellen</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0">
+   <item>
+    <layout class="QGridLayout" name="gridLayout_position">
+     <item row="1" column="1">
+      <widget class="QComboBox" name="comboBox_Polar">
+       <item>
+        <property name="text">
+         <string>Vertikal</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Horizontal</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Vertikal+Horizontal</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Horizontal+Vertikal</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QComboBox" name="comboBox_Pos">
+       <item>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>5</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_Position">
+       <property name="text">
+        <string>Position:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0" alignment="Qt::AlignLeft">
+      <widget class="QCheckBox" name="checkBox_Ampli">
+       <property name="text">
+        <string>Check Verstärker Linearität</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_Polar">
+       <property name="text">
+        <string>Polarisation:</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_antenne">
+     <item>
+      <widget class="QLabel" name="label_Antenne">
+       <property name="text">
+        <string>Antenne</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTreeWidget" name="treeWidget_antenne">
+       <property name="font">
+        <font>
+         <family>Verdana</family>
+        </font>
+       </property>
+       <property name="columnCount">
+        <number>4</number>
+       </property>
+       <attribute name="headerVisible">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="headerCascadingSectionResizes">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="headerDefaultSectionSize">
+        <number>140</number>
+       </attribute>
+       <attribute name="headerHighlightSections">
+        <bool>false</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>Namen</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Kalibrierungsdaten</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Treiber</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Adresse</string>
+        </property>
+       </column>
+       <item>
+        <property name="text">
+         <string>Antenne</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <item>
+         <property name="text">
+          <string>R&amp;S HL562</string>
+         </property>
+         <property name="text">
+          <string>--</string>
+         </property>
+         <property name="text">
+          <string>xx.dll</string>
+         </property>
+         <property name="text">
+          <string>xxxxx</string>
+         </property>
+        </item>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_feldtoler">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label_feldtorleranz">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Feld Toleranz</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_torplus">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>+4V/m</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_durchsymbol">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>10</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string>/</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_torminus">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>-0V/m</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_Parameters">
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="title">
+      <string>Variable Parameter</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_edit">
+        <item>
+         <widget class="QToolButton" name="toolButton_new">
+          <property name="minimumSize">
+           <size>
+            <width>90</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Verdana</family>
+            <pointsize>14</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Neu</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButton_copy">
+          <property name="minimumSize">
+           <size>
+            <width>90</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Verdana</family>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Kopieren</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButton_edit">
+          <property name="minimumSize">
+           <size>
+            <width>90</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Verdana</family>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Bearbeiten</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButton_delete">
+          <property name="minimumSize">
+           <size>
+            <width>90</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Verdana</family>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Löschen</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QTreeWidget" name="treeWidget_parameters">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>1</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <column>
+         <property name="text">
+          <string>Freq (Hz)</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Freq Step</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+           <pointsize>13</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+           <underline>false</underline>
+           <strikeout>false</strikeout>
+           <kerning>true</kerning>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Level</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Lvl Step</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Dwell</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>CW</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Modulation 1</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Modulation 2</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </column>
+        <item>
+         <property name="text">
+          <string>80M</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="text">
+          <string>1%</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="text">
+          <string>30</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="text">
+          <string>None</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="text">
+          <string>1s</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="text">
+          <string>Off</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="text">
+          <string>Off</string>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="text">
+          <string>Off</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1G</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="text">
+          <string>1%</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="text">
+          <string>30</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="text">
+          <string>None</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="text">
+          <string>1s</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="text">
+          <string>Off</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="text">
+          <string>Off</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="text">
+          <string>Off</string>
+         </property>
+         <property name="font">
+          <font>
+           <family>Verdana</family>
+          </font>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+     <property name="centerButtons">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>KalibrierungEinstellen</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>224</x>
+     <y>599</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>KalibrierungEinstellen</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>292</x>
+     <y>605</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
