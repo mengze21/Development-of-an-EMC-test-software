@@ -24,7 +24,7 @@ class External_FS_Calib(QThread):
         self.E_L = 1.8 * self.E_T
         self.effEval = 30
         self.f_test = self.f_min
-        self.sonde = WrapperEMRFeldsonde('GPIB0::21::INSTR')
+        #self.sonde = WrapperEMRFeldsonde('GPIB0::21::INSTR')
 
     def run(self):
         print(self.f_test)
@@ -41,9 +41,9 @@ class External_FS_Calib(QThread):
         #self.sonde.emrInst.write('SYST:BEEP')
 
         while self.f_test < self.f_max:
-            self.sonde.readval()
-            while self.E_L < self.sonde.effEVal:
-                self.P_L = self.P_L + 1         # P_L step level?
+            #self.sonde.readval()
+            #while self.E_L < self.sonde.effEVal:
+                #self.P_L = self.P_L + 1         # P_L step level?
             #self.effEval = 30
             #if self.effEval < self.E_L:
                 #readval(self)
