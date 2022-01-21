@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>872</width>
-    <height>755</height>
+    <width>866</width>
+    <height>713</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -205,6 +205,19 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="3">
+       <widget class="QLabel" name="label_plotoption">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Plot options</string>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="1">
        <widget class="QLabel" name="label_pos3">
         <property name="text">
@@ -219,46 +232,23 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
-       <widget class="QLabel" name="label_plotoption">
-        <property name="font">
-         <font>
-          <family>Verdana</family>
-          <pointsize>14</pointsize>
-         </font>
-        </property>
+      <item row="3" column="1">
+       <widget class="QLabel" name="label_pos4">
         <property name="text">
-         <string>Plot options</string>
+         <string>Pos 4</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="0" rowspan="7">
-       <widget class="QGraphicsView" name="graphicsView">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
+      <item row="0" column="2" rowspan="7">
+       <widget class="Line" name="line">
+        <property name="sizeIncrement">
          <size>
-          <width>0</width>
-          <height>0</height>
+          <width>150</width>
+          <height>150</height>
          </size>
         </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="label_pos1">
-        <property name="text">
-         <string>Pos 1</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="label_pos2">
-        <property name="text">
-         <string>Pos 2</string>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
        </widget>
       </item>
@@ -279,26 +269,6 @@
         </item>
        </widget>
       </item>
-      <item row="0" column="2" rowspan="7">
-       <widget class="Line" name="line">
-        <property name="sizeIncrement">
-         <size>
-          <width>150</width>
-          <height>150</height>
-         </size>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLabel" name="label_pos4">
-        <property name="text">
-         <string>Pos 4</string>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="3">
        <widget class="QComboBox" name="comboBox_polarisation">
         <property name="font">
@@ -316,6 +286,20 @@
           <string>Polarisation: Horizontal</string>
          </property>
         </item>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label_pos1">
+        <property name="text">
+         <string>Pos 1</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="label_pos2">
+        <property name="text">
+         <string>Pos 2</string>
+        </property>
        </widget>
       </item>
       <item row="4" column="3" rowspan="3" colspan="2">
@@ -356,6 +340,22 @@
         </property>
         <property name="text">
          <string>Tabular Daten</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" rowspan="7">
+       <widget class="QGraphicsView" name="graphicsView">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -618,7 +618,7 @@
           <string>Polarisation:</string>
          </property>
          <property name="text">
-          <string>Hor</string>
+          <string>Horizontal</string>
          </property>
         </item>
         <item>
@@ -695,8 +695,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>224</x>
-     <y>935</y>
+     <x>230</x>
+     <y>743</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -711,8 +711,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>292</x>
-     <y>941</y>
+     <x>298</x>
+     <y>743</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
