@@ -1507,7 +1507,7 @@ class Ui_MainWindow(object):
         # neu
         if self.choose == 4:
             ui = Ui_Calibration()
-            ui.setupUi()
+            #ui.setupUi()
             ui.exec_()
         # neu
         # QtWidgets.QMessageBox.information(self.ui)

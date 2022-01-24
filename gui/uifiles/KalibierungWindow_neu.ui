@@ -363,9 +363,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit_1"/>
-   </item>
-   <item>
     <widget class="QFrame" name="frame_2">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -610,7 +607,7 @@
           <string>Position:</string>
          </property>
          <property name="text">
-          <string>1</string>
+          <string/>
          </property>
         </item>
         <item>
@@ -618,12 +615,12 @@
           <string>Polarisation:</string>
          </property>
          <property name="text">
-          <string>Horizontal</string>
+          <string/>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Frequency(Hz):</string>
+          <string>Start Frequency(Hz):</string>
          </property>
          <property name="text">
           <string>80M</string>
@@ -639,6 +636,14 @@
         </item>
         <item>
          <property name="text">
+          <string>Max. Frequency(Hz):</string>
+         </property>
+         <property name="text">
+          <string>1G</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>Level:</string>
          </property>
          <property name="text">
@@ -647,26 +652,10 @@
         </item>
         <item>
          <property name="text">
-          <string>Lvl step:</string>
-         </property>
-         <property name="text">
-          <string>None</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
           <string>Dwell:</string>
          </property>
          <property name="text">
           <string>1s</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>CW:</string>
-         </property>
-         <property name="text">
-          <string>Off</string>
          </property>
         </item>
        </widget>
@@ -696,7 +685,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>230</x>
-     <y>743</y>
+     <y>708</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -712,7 +701,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>298</x>
-     <y>743</y>
+     <y>708</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

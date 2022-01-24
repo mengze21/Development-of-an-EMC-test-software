@@ -6,6 +6,7 @@ import time
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import QThread, pyqtSignal
 import pyvisa
+
 from WrapperEMRFeldsonde import WrapperEMRFeldsonde
 sys.path.append('gui')
 
@@ -52,6 +53,8 @@ class External_FS_Calib(QThread):
             #print(self.E_L)
             #print(self.E_T)
             print(self.f_test)
+
+
 
 
 

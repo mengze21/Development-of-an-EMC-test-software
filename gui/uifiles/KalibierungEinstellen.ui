@@ -113,6 +113,9 @@
          <family>Verdana</family>
         </font>
        </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+       </property>
        <property name="columnCount">
         <number>4</number>
        </property>
@@ -166,10 +169,10 @@
           <string>--</string>
          </property>
          <property name="text">
-          <string>xx.dll</string>
+          <string>--</string>
          </property>
          <property name="text">
-          <string>xxxxx</string>
+          <string>--</string>
          </property>
         </item>
        </item>
@@ -178,7 +181,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_feldtoler">
+    <layout class="QHBoxLayout" name="horizontalLayout_feldtoler" stretch="0,0,0,0,0,0,0">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -187,6 +190,12 @@
      </property>
      <property name="leftMargin">
       <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>1</number>
      </property>
      <item>
       <widget class="QLabel" name="label_feldtorleranz">
@@ -261,6 +270,34 @@
        </property>
        <property name="text">
         <string>-0V/m</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_StartDrive">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>Verdana</family>
+        </font>
+       </property>
+       <property name="text">
+        <string>Start Drive:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_StartDrive">
+       <property name="text">
+        <string>-40dBm</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -404,9 +441,33 @@
           <family>Verdana</family>
          </font>
         </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+        </property>
+        <property name="autoExpandDelay">
+         <number>-1</number>
+        </property>
+        <property name="indentation">
+         <number>20</number>
+        </property>
+        <property name="itemsExpandable">
+         <bool>true</bool>
+        </property>
+        <attribute name="headerCascadingSectionResizes">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="headerDefaultSectionSize">
+         <number>160</number>
+        </attribute>
+        <attribute name="headerMinimumSectionSize">
+         <number>100</number>
+        </attribute>
+        <attribute name="headerShowSortIndicator" stdset="0">
+         <bool>false</bool>
+        </attribute>
         <column>
          <property name="text">
-          <string>Freq (Hz)</string>
+          <string>Start Frequency (Hz)</string>
          </property>
          <property name="font">
           <font>
@@ -419,7 +480,7 @@
         </column>
         <column>
          <property name="text">
-          <string>Freq Step</string>
+          <string>Frequency Step</string>
          </property>
          <property name="font">
           <font>
@@ -439,13 +500,11 @@
         </column>
         <column>
          <property name="text">
-          <string>Level</string>
+          <string>Max. Frequency (Hz)</string>
          </property>
          <property name="font">
           <font>
            <family>Verdana</family>
-           <weight>50</weight>
-           <bold>false</bold>
           </font>
          </property>
          <property name="textAlignment">
@@ -454,7 +513,7 @@
         </column>
         <column>
          <property name="text">
-          <string>Lvl Step</string>
+          <string>Calibration Level(V/m)</string>
          </property>
          <property name="font">
           <font>
@@ -480,7 +539,7 @@
         </column>
         <column>
          <property name="text">
-          <string>CW</string>
+          <string>Discrete Frequency</string>
          </property>
          <property name="font">
           <font>
@@ -493,7 +552,7 @@
         </column>
         <column>
          <property name="text">
-          <string>Modulation 1</string>
+          <string>Modulatoin 1</string>
          </property>
          <property name="font">
           <font>
@@ -541,7 +600,7 @@
           <set>AlignCenter</set>
          </property>
          <property name="text">
-          <string>30</string>
+          <string>1G</string>
          </property>
          <property name="font">
           <font>
@@ -552,7 +611,7 @@
           <set>AlignCenter</set>
          </property>
          <property name="text">
-          <string>None</string>
+          <string>30</string>
          </property>
          <property name="font">
           <font>
@@ -626,7 +685,7 @@
           <set>AlignCenter</set>
          </property>
          <property name="text">
-          <string>30</string>
+          <string>None</string>
          </property>
          <property name="font">
           <font>
@@ -637,7 +696,7 @@
           <set>AlignCenter</set>
          </property>
          <property name="text">
-          <string>None</string>
+          <string>30</string>
          </property>
          <property name="font">
           <font>
