@@ -45,15 +45,21 @@ class WrapperSwitchHP:
         if self.reset():
             self.switchInst.write('CLOSE 101')
             self.switchInst.write('DISP AMP1 active')
+            return True
+        return False
 
     def switchAmp2(self):
         # Reset before doing anything!
         if self.reset():
             self.switchInst.write('CLOSE 102')
             self.switchInst.write('DISP AMP2 active')
+            return True
+        return False
 
     def switchAmp3(self):
         # Reset before doing anything!
         if self.reset():
             self.switchInst.write('CLOSE 103')
             self.switchInst.write('DISP AMP3 active')
+            return True
+        return False
