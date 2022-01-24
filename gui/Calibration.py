@@ -28,16 +28,16 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.FieldStrength = 30
         # get start frequency from setup info
         #if "M" in str(self.treeWidget_info.topLevelItem(2).text(1)):
-            #self.StartFreq = int(self.treeWidget_info.topLevelItem(2).text(1).replace("M", "")) * 1E6
+        #self.StartFreq = int(self.treeWidget_info.topLevelItem(2).text(1).replace("M", "")) * 1E6
         #elif "G" in str(self.treeWidget_info.topLevelItem(2).text(1)):
-            #self.StartFreq = int(self.treeWidget_info.topLevelItem(2).text(1).replace("G", "")) * 1E9
+        #self.StartFreq = int(self.treeWidget_info.topLevelItem(2).text(1).replace("G", "")) * 1E9
         # get frequency step from setup info
         #self.FreStep = int(self.treeWidget_info.topLevelItem(3).text(1).replace("%", "")) * 0.01
         # get max.frequency from setup info
         #if "M" in str(self.treeWidget_info.topLevelItem(4).text(1)):
-            #self.MaxFreq = int(self.treeWidget_info.topLevelItem(4).text(1).replace("M", "")) * 1E6
+        #self.MaxFreq = int(self.treeWidget_info.topLevelItem(4).text(1).replace("M", "")) * 1E6
         #elif "G" in str(self.treeWidget_info.topLevelItem(4).text(1)):
-            #self.MaxFreq = int(self.treeWidget_info.topLevelItem(4).text(1).replace("G", "")) * 1E9
+        #self.MaxFreq = int(self.treeWidget_info.topLevelItem(4).text(1).replace("G", "")) * 1E9
         #self.level
         # self.paraWindow = ParametersEditWindow()
 
@@ -49,22 +49,22 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.toolButton_start.clicked.connect(self.start_CaliThread)
 
     #def setupUi(self):
-        #dialog = uic.loadUi("uifiles/KalibierungWindow_neu.ui", self)
-        #dialog.exec_()
-        #dialog.show()
-        # get calibration setup from file
-        #f = open("./data/KalibrierungEinstellungsDaten.txt", "r")
-        #alllines = f.readlines()
-        #paragroup = alllines[0].strip()
-        #self.paralist = paragroup.split()
-        #f.close()
-        #self.treeWidget_info.topLevelItem(0).setText(1, "%s" % self.paralist[5])  # Position
-        #self.treeWidget_info.topLevelItem(1).setText(1, "%s" % self.paralist[6])  # Polarisation
-        #self.treeWidget_info.topLevelItem(2).setText(1, "%s" % self.paralist[0])
-        #self.treeWidget_info.topLevelItem(3).setText(1, "%s" % self.paralist[1])
-        #self.treeWidget_info.topLevelItem(4).setText(1, "%s" % self.paralist[2])
-        #self.treeWidget_info.topLevelItem(5).setText(1, "%s" % self.paralist[3])
-        #self.treeWidget_info.topLevelItem(6).setText(1, "%s" % self.paralist[4])
+    #dialog = uic.loadUi("uifiles/KalibierungWindow_neu.ui", self)
+    #dialog.exec_()
+    #dialog.show()
+    # get calibration setup from file
+    #f = open("./data/KalibrierungEinstellungsDaten.txt", "r")
+    #alllines = f.readlines()
+    #paragroup = alllines[0].strip()
+    #self.paralist = paragroup.split()
+    #f.close()
+    #self.treeWidget_info.topLevelItem(0).setText(1, "%s" % self.paralist[5])  # Position
+    #self.treeWidget_info.topLevelItem(1).setText(1, "%s" % self.paralist[6])  # Polarisation
+    #self.treeWidget_info.topLevelItem(2).setText(1, "%s" % self.paralist[0])
+    #self.treeWidget_info.topLevelItem(3).setText(1, "%s" % self.paralist[1])
+    #self.treeWidget_info.topLevelItem(4).setText(1, "%s" % self.paralist[2])
+    #self.treeWidget_info.topLevelItem(5).setText(1, "%s" % self.paralist[3])
+    #self.treeWidget_info.topLevelItem(6).setText(1, "%s" % self.paralist[4])
 
     def showCalibrationEditWindow(self):
         dialog = CalibrationEditWindow(self)
@@ -81,19 +81,19 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.treeWidget_info.topLevelItem(6).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(0).text(4))
         # get start frequency from setup info
         if "M" in str(dialog.treeWidget_parameters.topLevelItem(0).text(0)):
-            self.StartFreq = int(dialog.treeWidget_parameters.topLevelItem(0).text(0).replace("M", "")) * 1E6
+            self.StartFreq = float(dialog.treeWidget_parameters.topLevelItem(0).text(0).replace("M", ""))
         elif "G" in str(dialog.treeWidget_parameters.topLevelItem(0).text(0)):
-            self.StartFreq = int(dialog.treeWidget_parameters.topLevelItem(0).text(0).replace("G", "")) * 1E9
+            self.StartFreq = float(dialog.treeWidget_parameters.topLevelItem(0).text(0).replace("G", "")) * 1E3
         #print("Strat Frequenz ist %s" % self.StartFreq)
         # get frequency step from setup info
-        self.FreStep = int(dialog.treeWidget_parameters.topLevelItem(0).text(1).replace("%", "")) * 0.01
+        self.FreStep = float(dialog.treeWidget_parameters.topLevelItem(0).text(1).replace("%", "")) * 0.01
         # get max.frequency from setup info
         if "M" in str(dialog.treeWidget_parameters.topLevelItem(0).text(2)):
-            self.MaxFreq = int(dialog.treeWidget_parameters.topLevelItem(0).text(2).replace("M", "")) * 1E6
+            self.MaxFreq = float(dialog.treeWidget_parameters.topLevelItem(0).text(2).replace("M", ""))
         elif "G" in str(dialog.treeWidget_parameters.topLevelItem(0).text(2)):
-            self.MaxFreq = int(dialog.treeWidget_parameters.topLevelItem(0).text(2).replace("G", "")) * 1E9
+            self.MaxFreq = float(dialog.treeWidget_parameters.topLevelItem(0).text(2).replace("G", "")) * 1E3
         # get calibration level
-        self.level = int(dialog.treeWidget_parameters.topLevelItem(0).text(3))
+        self.level = float(dialog.treeWidget_parameters.topLevelItem(0).text(3))
 
         print("Strat Frequenz ist %s" % self.MaxFreq)
         print("Strat Frequenz ist %s" % self.level)
@@ -109,18 +109,18 @@ class Ui_Calibration(QtWidgets.QDialog):
             # remained the user to set the polarisation
             if self.comboBox_polarisation.currentText() == "Polarisation: Horizontal":
                 QtWidgets.QMessageBox.information(self, "Hinweis",
-                                              "Die Sonde wird in Position %s eingestellt." % self.Position)
+                                                  "Die Sonde wird in Position %s eingestellt." % self.Position)
             else:
                 QtWidgets.QMessageBox.information(self, "Hinweis", "Die Polarisation der Antenne is %s" % self.Polarisation)
             self.count = 0
             # start the test for all 5 points
+            self.cacl = External_FS_Calib(E_T=self.FieldStrength, f_min=self.StartFreq, f_step=self.FreStep,
+                                          f_max=self.MaxFreq, level=self.level)
             while self.Position < 6:
                 # for self.count in range(6-self.Position):
-             # remained user to put prob in right Position
+                # remained user to put prob in right Position
                 QtWidgets.QMessageBox.information(self, "Hinweis",
-                                              "Bitte die Sonde in Position %s einstellen." % self.Position)
-                self.cacl = External_FS_Calib(E_T=self.FieldStrength, f_min=self.StartFreq, f_step=self.FreStep,
-                                          f_max=self.MaxFreq, level=self.level)
+                                                  "Bitte die Sonde in Position %s einstellen." % self.Position)
                 self.cacl.start()
                 print("1")
                 self.count += 1
@@ -128,11 +128,12 @@ class Ui_Calibration(QtWidgets.QDialog):
                 # self.count += 1
             if self.count == 5:
                 QtWidgets.QMessageBox.information(self, "Hinweis",
-                                              "Alle Prüfungen für 5 Positionen sind erledigt. \nBitte die Polarisation der Antenne ändern.")
+                                                  "Alle Prüfungen für 5 Positionen sind erledigt. \nBitte die Polarisation der Antenne ändern.")
             else:
                 QtWidgets.QMessageBox.information(self, "Hinweis", "Bitte die Sonde in anderen Positonen einstellen.")
 
             # print(self.count)
+
 
 
 class CalibrationEditWindow(QtWidgets.QDialog):
