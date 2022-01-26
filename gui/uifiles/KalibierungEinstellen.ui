@@ -526,7 +526,7 @@
         </column>
         <column>
          <property name="text">
-          <string>Dwell</string>
+          <string>Dwell(s)</string>
          </property>
          <property name="font">
           <font>
@@ -622,7 +622,7 @@
           <set>AlignCenter</set>
          </property>
          <property name="text">
-          <string>1s</string>
+          <string>1</string>
          </property>
          <property name="font">
           <font>
@@ -707,7 +707,7 @@
           <set>AlignCenter</set>
          </property>
          <property name="text">
-          <string>1s</string>
+          <string>1</string>
          </property>
          <property name="font">
           <font>
