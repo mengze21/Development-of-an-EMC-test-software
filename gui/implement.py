@@ -5,7 +5,7 @@
 import sys
 
 sys.path.append('gui')
-from PyQt5 import QtGui, QtWidgets
+from PyQt5 import QtGui, QtWidgets, uic
 from MainWindow import Ui_MainWindow
 from ManagementderAusrustung_FE import FE_EquipmentManagement
 from ManagementderAusrustung_LS import LS_EquipmentManagement
