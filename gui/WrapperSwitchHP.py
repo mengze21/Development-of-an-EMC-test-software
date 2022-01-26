@@ -63,3 +63,13 @@ class WrapperSwitchHP:
             self.switchInst.write('DISP AMP3 active')
             return True
         return False
+
+    def validFrequ(self,valFrequ):
+        if 0.01 < valFrequ < 220:
+            return 1
+        elif 80 < valFrequ < 1000:
+            return 2
+        elif 800 < valFrequ < 4200:
+            return 3
+        else:
+            return 4

@@ -12,7 +12,6 @@ from WrapperSwitchHP import WrapperSwitchHP
 from WrapperPowerMeter import WrapperPowerMeter
 from WrapperSignalGenerator import WrapperSignalGenerator
 
-from WrapperEMRFeldsonde import WrapperEMRFeldsonde
 sys.path.append('gui')
 
 
