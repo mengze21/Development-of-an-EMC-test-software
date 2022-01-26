@@ -45,6 +45,7 @@ class WrapperSwitchHP:
         if self.reset():
             self.switchInst.write('CLOSE 101')
             self.switchInst.write('DISP AMP1 active')
+            time.sleep(1)
             return True
         return False
 
@@ -53,6 +54,7 @@ class WrapperSwitchHP:
         if self.reset():
             self.switchInst.write('CLOSE 102')
             self.switchInst.write('DISP AMP2 active')
+            time.sleep(1)
             return True
         return False
 
@@ -61,13 +63,14 @@ class WrapperSwitchHP:
         if self.reset():
             self.switchInst.write('CLOSE 103')
             self.switchInst.write('DISP AMP3 active')
+            time.sleep(1)
             return True
         return False
 
     def validFrequ(self,valFrequ):
-        if 0.01 < valFrequ < 220:
+        if 0.01 < valFrequ < 210:
             return 1
-        elif 80 < valFrequ < 1000:
+        elif 80 < valFrequ < 900:
             return 2
         elif 800 < valFrequ < 4200:
             return 3

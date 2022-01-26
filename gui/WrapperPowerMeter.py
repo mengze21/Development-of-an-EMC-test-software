@@ -24,11 +24,14 @@ class WrapperPowerMeter:
         self.sigPowerMeterInst.write('INP:SEL "A"')
         self.setUnitDBM()
         self.setFilterLevel(5)
+        time.sleep(1)
+
 
     def switchChannelB(self):
         self.sigPowerMeterInst.write('INP:SEL "B"')
         self.setUnitDBM()
         self.setFilterLevel(5)
+        time.sleep(1)
 
     def setFilterLevel(self,val):
         self.sigPowerMeterInst.write('CALC:FILT:NSEL %d' % val)
