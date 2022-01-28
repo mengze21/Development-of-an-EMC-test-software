@@ -1,57 +1,42 @@
+import pyvisa
+
 from WrapperEMRFeldsonde import WrapperEMRFeldsonde
 from WrapperSwitchHP import WrapperSwitchHP
 from WrapperSignalGenerator import WrapperSignalGenerator
 from WrapperPowerMeter import WrapperPowerMeter
 import time
+import csv
+import matplotlib.pyplot as plt
+import numpy as np
+import time
 
+rm = pyvisa.ResourceManager()
+instWrapperEMR = WrapperEMRFeldsonde("ASRL3::INSTR", rm) # Adresse als Variable von GUI übernehmen
+# instWrapperEMR.readval()
+# print(instWrapperEMR.currVal)
+# instWrapperSwitch = WrapperSwitchHP('GPIB0::9::INSTR')
+# instWrapperSwitch.reset()
 
-
-instWrapperEMR = WrapperEMRFeldsonde("ASRL3::INSTR") # Adresse als Variable von GUI übernehmen
-instWrapperSwitch = WrapperSwitchHP('GPIB0::9::INSTR')
-instWrapperSwitch.reset()
-
-instSigGen = WrapperSignalGenerator('GPIB0::21::INSTR')
-time.sleep(10)
-
-instWrapperSwitch.switchAmp1()
+# instSigGen = WrapperSignalGenerator('GPIB0::21::INSTR')
 # time.sleep(10)
+
+# instWrapperSwitch.switchAmp1()
 # instWrapperSwitch.switchAmp2()
-# # time.sleep(10)
 # instWrapperSwitch.switchAmp3()
 # time.sleep(10)
-
-instPowerMet = WrapperPowerMeter('GPIB0::11::INSTR')
-time.sleep(2)
-instSigGen.switchRFOn()
-
 while 1:
-    revCh = input("Enter Channel:  \n")
-    if revCh == 'B':
-        instPowerMet.switchChannelB()
-        print('Switch Channel to B')
-    else:
-        instPowerMet.switchChannelA()
-        print('Switch Channel to A')
-    instPowerMet.getMeasVal()
-    print(instPowerMet.currVal)
+    startTime = time.time()
     instWrapperEMR.readval()
-    instPowerMet.getMeasVal()
-    print(instPowerMet.currVal)
-    instWrapperEMR.readval()
-    instPowerMet.getMeasVal()
-    print(instPowerMet.currVal)
-    instWrapperEMR.readval()
-    flgAbort = input("Abort Meas?  \n")
-    if flgAbort == 'yes':
-        break
-    newVal = input("Enter AMP:  \n")
-    instSigGen.setAmpDBM(float(newVal))
+    currSondeVal = instWrapperEMR.currVal
+    print(time.time()-startTime)
 
+# instPowerMet = WrapperPowerMeter('GPIB0::11::INSTR')
+# instSigGen.switchRFOn()
+# startTime = time.time()
 
-instWrapperSwitch.reset()
-instSigGen.setAmpDBM(-100)
-instSigGen.switchRFOff()
-
-
-
+#     print(time.time()-startTime)
+#     # print(instPowerMet.currVal)
+#     flgAbort = input("Abort Meas?  \n")
+#     if flgAbort == 'yes':
+#         break
 

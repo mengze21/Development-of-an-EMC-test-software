@@ -6,9 +6,9 @@ import re
 import numpy
 
 class WrapperSignalGenerator:
-    def __init__(self,address):
+    def __init__(self,address,resourceManager):
      self.address = address
-     self.rm = pyvisa.ResourceManager()
+     self.rm = resourceManager
      self.sigGenInst = self.rm.open_resource(self.address)
      self.sigGenInst.read_termination = '\n'
      self.sigGenInst.write_termination = '\n'

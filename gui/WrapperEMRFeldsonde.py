@@ -3,12 +3,12 @@ sys.path.append('gui')
 import pyvisa
 import time
 import re
-import numpy
+from math import sqrt
 
 class WrapperEMRFeldsonde:
-    def __init__(self,address):
+    def __init__(self,address, resourceManager):
      self.address = address
-     self.rm = pyvisa.ResourceManager()
+     self.rm = resourceManager
      self.emrInst = self.rm.open_resource(self.address)
      self.emrInst.baud_rate = 4800
      self.emrInst.timeout = 10000
@@ -26,8 +26,7 @@ class WrapperEMRFeldsonde:
         self.Ex = float(self.listVal[0])
         self.Ey = float(self.listVal[1])
         self.Ez = float(self.listVal[2])
-        self.effEVal = numpy.sqrt(pow(self.Ex,2)+pow(self.Ey,2)+pow(self.Ez,2))
-        print('eff Value: ', self.effEVal)
+        self.effEVal = sqrt(pow(self.Ex,2)+pow(self.Ey,2)+pow(self.Ez,2))
         #print('Ex:' , self.Ex)
         #print('Ey:' , self.Ey)
         #print('Ez:' , self.Ez)

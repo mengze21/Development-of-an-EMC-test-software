@@ -6,10 +6,10 @@ import re
 import numpy
 
 class WrapperSwitchHP:
-    def __init__(self,address):
+    def __init__(self,address,resourceManager):
      self.address = address
      self.currAmplifier = 0
-     self.rm = pyvisa.ResourceManager()
+     self.rm = resourceManager
      self.switchInst = self.rm.open_resource(self.address)
      self.switchInst.timeout = 10000
      self.switchInst.query_delay = 0.1
