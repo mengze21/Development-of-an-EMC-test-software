@@ -2,7 +2,7 @@
 
 import sys
 import time
-
+import csv
 import PyQt5
 from PyQt5 import uic, QtWidgets, QtChart, QtCore, QtGui
 from PyQt5.QtCore import (Qt, pyqtSignal)
@@ -11,6 +11,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from openpyxl.descriptors import Default
 from thread_FS_Calib import External_FS_Calib
+from thread_FS_test import External_FS_test
 
 sys.path.append('gui')
 
@@ -77,7 +78,19 @@ class Ui_Calibration(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(Ui_Calibration, self).__init__(parent)
         uic.loadUi("uifiles/KalibierungWindow_neu.ui", self)
+
+        #initial parameters
+        self.FieldStrength = 0
+        self.StartFreq = 0
+        self.FreStep = 0
+        self.MaxFreq = 0
+        self.level = 0
+        self.Dwell = 0
         # self.setupUi()
+
+        # init thread_FS_test
+        self.lock = QtCore.QReadWriteLock()
+        self.External_FS_test = External_FS_test(self.lock, self)
 
         # creation of the interactive diagram
         self.chart_1 = QtChart.QChart()
@@ -91,7 +104,7 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.chart_1.addAxis(self.__axisFreq, QtCore.Qt.AlignBottom)
         self.__axisMag = QtChart.QValueAxis()
         self.__axisMag.setTitleText("Feldstärke / V/m  ")
-        self.__axisMag.setRange(-35, -0)
+        self.__axisMag.setRange(0, 40)
         self.__axisMag.setTickCount(8)
         self.__axisMag.setLabelFormat("%d")
         self.chart_1.addAxis(self.__axisMag, QtCore.Qt.AlignLeft)
@@ -105,8 +118,8 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.chart_2.addAxis(self.__axisFreq_2, QtCore.Qt.AlignBottom)
         self.__axisMag_2 = QtChart.QValueAxis()
         self.__axisMag_2.setTitleText("Vorwärtsleistung / dBm ")
-        self.__axisMag_2.setRange(-50, 10)
-        self.__axisMag_2.setTickCount(10)
+        self.__axisMag_2.setRange(-10, 10)
+        self.__axisMag_2.setTickCount(6)
         self.__axisMag_2.setLabelFormat("%d")
         self.chart_2.addAxis(self.__axisMag_2, QtCore.Qt.AlignLeft)
 
@@ -131,13 +144,85 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.graphicsView_2.setChart(self.chart_2)
         self.graphicsView_2.setObjectName("graphicsView_2")
 
+        # create curve for forward power at position 1
+        self.curveFPower1 = QtChart.QLineSeries()
+        self.curveFPower1.setName("Test Position 1")
+        self.chart_2.addSeries(self.curveFPower1)
+        self.curveFPower1.attachAxis(self.__axisFreq_2)
+        self.curveFPower1.attachAxis(self.__axisMag_2)
+        self.chart_2.legend().markers(self.curveFPower1)[0].setVisible(True)
+        self.chart_2.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(255, 0, 0))
+        pen.setWidth(1)
+        self.curveFPower1.setPen(pen)
+        self.curveFPower1.setPointsVisible(True)
+        # self.curveProb.hovered.connect(self.do_series_hovered)
+        # self.curveProb.clicked.connect(self.do_series_clicked)
+
+        # create curve for field strength at position 1
+        self.curveFieldStr_1 = QtChart.QLineSeries()
+        self.curveFieldStr_1.setName("Test Position 1")
+        self.chart_1.addSeries(self.curveFieldStr_1)
+        self.curveFieldStr_1.attachAxis(self.__axisFreq)
+        self.curveFieldStr_1.attachAxis(self.__axisMag)
+        self.chart_1.legend().markers(self.curveFieldStr_1)[0].setVisible(True)
+        self.chart_1.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(255, 0, 0))
+        pen.setWidth(1)
+        self.curveFieldStr_1.setPen(pen)
+        self.curveFieldStr_1.setPointsVisible(True)
+
+        # open and read measurement data
+        self.measuredFreq = []  # init parameters
+        self.forwardPower = []  # init parameters
+        self.probData = []      # init parameters
+        with open("./output.csv", "r") as FSCaliData:
+            reader = csv.reader(FSCaliData)
+            rows = []
+            for row in reader:
+                rows.append(row)
+            print(rows)
+        for i in range(len(rows)):
+            self.measuredFreq.append(float(rows[i][0]))    # column 0 is frequency
+            self.forwardPower.append(float(rows[i][1]))    # column 1 is forward power
+            self.probData.append(float(rows[i][2]))        # column 2 is measurement data from prob
+        #print(self.measuredFreq)
+        #print(self.forwardPower)
+        #print(self.probData)
+
+        # adding data to chart1
+        for a, b in zip(self.measuredFreq, self.forwardPower):
+            self.curveFPower1.append(a, b)
+        # adding data to chart1
+        for a, b in zip(self.measuredFreq, self.probData):
+            self.curveFieldStr_1.append(a, b)
+
+        #while self.External_FS_test.completedflag == 1:
+           #self.label_TestRunningStatus.setText("Test beendet!")
+
         # define signal slots
         self.toolButton_testparameter.clicked.connect(self.showCalibrationEditWindow)
-        self.toolButton_start.clicked.connect(self.start_CaliThread)
-        self.toolButton_pause.clicked.connect(self.cali_test_pause)
+        self.toolButton_start.clicked.connect(self.start_test)  # signal connect to test function later rewrite!!
+        self.toolButton_pause.clicked.connect(self.pause_test)  # signal connect to test function later rewrite!!
+        self.toolButton_stop.clicked.connect(self.stop_test)    # signal connect to test function later rewrite!!
+        self.pushButton_colorChange_1.clicked.connect(self.changecolorP1)
+        self.pushButton_colorChange_2.clicked.connect(self.changecolorP2)
+
+    def changecolorP1(self):
+        color = QtWidgets.QColorDialog.getColor()
+        pen = QtGui.QPen(QtGui.QColor(color))
+        self.curveFieldStr_1.setPen(pen)
+        self.curveFPower1.setPen(pen)
+
+    def changecolorP2(self):
+        color = QtWidgets.QColorDialog.getColor()
+        pen = QtGui.QPen(QtGui.QColor(color))
+        #self.curveFieldStr_1.setPen(pen)
+        #self.curveFPower1.setPen(pen)
+
 
     def do_chartView_mouseMove(self, point):
-        pt = self.graphicsView.chart().mapToValue(point)
+        pt = self.graphicsView_2.chart().mapToValue(point)
         self.MousPositionLabel.setText("Chart X=%.2f,Y=%.2f" % (pt.x(), pt.y()))
 
         self.Polarisation = ""
@@ -182,7 +267,10 @@ class Ui_Calibration(QtWidgets.QDialog):
             self.StartFreq = float(dialog.treeWidget_parameters.topLevelItem(0).text(0).replace("G", "")) * 1E3
 
         # get frequency step from setup info
-        self.FreStep = float(dialog.treeWidget_parameters.topLevelItem(0).text(1).replace("%", "")) * 0.01
+        if "%" in str(dialog.treeWidget_parameters.topLevelItem(0).text(1)):
+            self.FreStep = float(dialog.treeWidget_parameters.topLevelItem(0).text(1).replace("%", "")) * 0.01
+        else:
+            self.FreStep = dialog.treeWidget_parameters.topLevelItem(0).text(1)
 
         # get max.frequency from setup info
         if "M" in str(dialog.treeWidget_parameters.topLevelItem(0).text(2)):
@@ -199,10 +287,41 @@ class Ui_Calibration(QtWidgets.QDialog):
         print("Strat Frequenz ist %s" % self.MaxFreq)
         print("Strat Frequenz ist %s" % self.level)
 
+
+    # test function delete later
+    def start_test(self):
+        self.External_FS_test.start()
+        self.label_TestRunningStatus.setText("Test läuft")
+        self.label_status.setText("Status: %s (%s)" % (
+        self.label_TestRunningStatus.text(), time.strftime("%d.%m.%Y %H:%M:%S", time.localtime())))
+        #while self.External_FS_test.completedflag:
+            #self.label_TestRunningStatus.setText("Test beendet!")
+    # test function delete later
+    def pause_test(self):
+        if not self.External_FS_test.ispaused:
+            self.External_FS_test.pause()
+            self.label_TestRunningStatus.setText("Test pausiert")
+        else:
+            self.External_FS_test.resum()
+            self.label_TestRunningStatus.setText("Test läuft wieder")
+    # test function delete later
+    def stop_test(self):
+        if self.External_FS_test.isRunning():
+            self.External_FS_test.stop()
+            time.sleep(1)
+            self.label_TestRunningStatus.setText("Test wird gestoppt")
+        self.label_status.setText("Status: %s (%s)" % (
+            self.label_TestRunningStatus.text(), time.strftime("%d.%m.%Y %H:%M:%S", time.localtime())))
+
     def start_CaliThread(self):
         # self.count = 0
-        if self.treeWidget_info.topLevelItem(0).text(1) == "":
-            QtWidgets.QMessageBox.information(self, "Hinweis", "Bitte die Parameter einstellen")
+        if self.treeWidget_info.topLevelItem(0).text(1) == "" or \
+                self.treeWidget_info.topLevelItem(1).text(1) == "" or \
+                self.treeWidget_info.topLevelItem(2).text(1) == "" or \
+                self.treeWidget_info.topLevelItem(3).text(1) == "" or \
+                self.treeWidget_info.topLevelItem(4).text(1) == "" or \
+                self.treeWidget_info.topLevelItem(5).text(1) == "":
+            QtWidgets.QMessageBox.information(self, "Hinweis", "Bitte alle Parameter einstellen")
         else:
             print(self.comboBox_polarisation.currentText())
             # remained the user to set the polarisation
@@ -219,12 +338,13 @@ class Ui_Calibration(QtWidgets.QDialog):
             # remained user to put prob in right Position
             # QtWidgets.QMessageBox.information(self, "Hinweis",
             # "Bitte die Sonde in Position %s einstellen." % self.Position)
+
             self.calc = External_FS_Calib(E_T=self.FieldStrength, f_min=self.StartFreq, f_step=self.FreStep,
                                           f_max=self.MaxFreq, level=self.level)
             self.calc.start()
             self.calc.signal = 1
             self.calc.countChanged.connect(self.onCountChanged)
-            print("1")
+
             # self.count += 1
             # self.Position += 1
             # self.count += 1
@@ -236,27 +356,33 @@ class Ui_Calibration(QtWidgets.QDialog):
 
             # print(self.count)
 
-
     def cali_test_pause(self):
-        self.calc.signal += 1
-        if (self.calc.signal & 1) == 0:
-            self.toolButton_pause.setAutoRaise(False)
-            #time.sleep(1)
-            self.lineEdit_TestStatus.setText("Test unterbrochen! ")
-        elif (self.calc.signal & 1) == 1:
-
-            self.lineEdit_TestStatus.setText("Test läuft!")
-
-            #self.calc = External_FS_Calib(E_T=self.FieldStrength, f_min=self.StartFreq, f_step=self.FreStep,
-                                          #f_max=self.MaxFreq, level=self.level)
-            #self.calc.start()
-            #self.calc.signal = 1
-            #self.calc.countChanged.connect(self.onCountChanged)
+        pass
 
 
+        #self.calc.signal += 1
+        #print(self.calc.signal)
+        #if (self.calc.signal & 1) == 0:
+            #self.toolButton_pause.setAutoRaise(False)
+            # time.sleep(1)
+            #self.lineEdit_TestStatus.setText("Test unterbrochen! ")
+        #elif (self.calc.signal & 1) == 1:
+
+            #self.lineEdit_TestStatus.setText("Test läuft!")
+
+            # self.calc = External_FS_Calib(E_T=self.FieldStrength, f_min=self.StartFreq, f_step=self.FreStep,
+            # f_max=self.MaxFreq, level=self.level)
+            # self.calc.start()
+            # self.calc.signal = 1
+            # self.calc.countChanged.connect(self.onCountChanged)
+
+    def cali_test_stop(self):
+        self.calc.quit()
+        time.sleep(2)
+        self.lineEdit_TestStatus.setText("Test ist stop!")
 
     # used to update the diagram
-    def onCountChanged(self, value, num, spannung):     # the parameters rewrite later
+    def onCountChanged(self, value, num, spannung):  # the parameters rewrite later
         frequenz = value
         magnitude = num
         Sollspannung = spannung
@@ -286,16 +412,16 @@ class CalibrationEditWindow(QtWidgets.QDialog):
         paragroup1 = alllines[0].strip()
         self.paralist = paragroup1.split()
         f.close()
-        self.treeWidget_parameters.topLevelItem(0).setText(0, "%s" % self.paralist[0])
-        self.treeWidget_parameters.topLevelItem(0).setText(1, "%s" % self.paralist[1])
-        self.treeWidget_parameters.topLevelItem(0).setText(2, "%s" % self.paralist[2])
-        self.treeWidget_parameters.topLevelItem(0).setText(3, "%s" % self.paralist[3])
-        self.treeWidget_parameters.topLevelItem(0).setText(4, "%s" % self.paralist[4])
-        # self.treeWidget_parameters.topLevelItem(0).setText(0, "%s" % dialog.start_freq)
-        # self.treeWidget_parameters.topLevelItem(0).setText(1, "%s" % dialog.freq_step)
-        # self.treeWidget_parameters.topLevelItem(0).setText(2, "%s" % dialog.Max_freq)
-        # self.treeWidget_parameters.topLevelItem(0).setText(3, "%s" % dialog.TestLevel)
-        # self.treeWidget_parameters.topLevelItem(0).setText(4, "%s" % dialog.Dwell)
+        #self.treeWidget_parameters.topLevelItem(0).setText(0, "%s" % self.paralist[0])
+        #self.treeWidget_parameters.topLevelItem(0).setText(1, "%s" % self.paralist[1])
+        #self.treeWidget_parameters.topLevelItem(0).setText(2, "%s" % self.paralist[2])
+        #self.treeWidget_parameters.topLevelItem(0).setText(3, "%s" % self.paralist[3])
+        #self.treeWidget_parameters.topLevelItem(0).setText(4, "%s" % self.paralist[4])
+        self.treeWidget_parameters.topLevelItem(0).setText(0, "%s" % dialog.start_freq)
+        self.treeWidget_parameters.topLevelItem(0).setText(1, "%s" % dialog.freq_step)
+        self.treeWidget_parameters.topLevelItem(0).setText(2, "%s" % dialog.Max_freq)
+        self.treeWidget_parameters.topLevelItem(0).setText(3, "%s" % dialog.TestLevel)
+        self.treeWidget_parameters.topLevelItem(0).setText(4, "%s" % dialog.Dwell)
 
     def setnewPara(self):
         dialog = ParametersEditWindow(self)

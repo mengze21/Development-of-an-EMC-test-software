@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1300</width>
-    <height>1000</height>
+    <width>867</width>
+    <height>755</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -20,15 +20,30 @@
    <string>Kalibrierung</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,0">
+   <property name="spacing">
+    <number>-1</number>
+   </property>
    <property name="sizeConstraint">
     <enum>QLayout::SetDefaultConstraint</enum>
+   </property>
+   <property name="leftMargin">
+    <number>4</number>
+   </property>
+   <property name="topMargin">
+    <number>4</number>
+   </property>
+   <property name="rightMargin">
+    <number>4</number>
+   </property>
+   <property name="bottomMargin">
+    <number>8</number>
    </property>
    <item>
     <widget class="QFrame" name="frame">
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>60</height>
+       <height>50</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -47,6 +62,9 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout">
+      <property name="topMargin">
+       <number>4</number>
+      </property>
       <property name="horizontalSpacing">
        <number>20</number>
       </property>
@@ -72,6 +90,9 @@
         </property>
         <property name="whatsThis">
          <string extracomment="öffnen"/>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
         <property name="text">
          <string>Öffnen</string>
@@ -118,6 +139,9 @@
         </property>
         <property name="accessibleDescription">
          <string/>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
         <property name="text">
          <string>Speichern</string>
@@ -173,6 +197,9 @@
         <property name="whatsThis">
          <string extracomment="neu"/>
         </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
         <property name="text">
          <string>Neu</string>
         </property>
@@ -201,8 +228,11 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>300</height>
+       <height>400</height>
       </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -210,11 +240,29 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
+     <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0,0,0" columnminimumwidth="0,0,0,0,0">
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
-      <item row="2" column="4">
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
+      <property name="horizontalSpacing">
+       <number>6</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>13</number>
+      </property>
+      <item row="2" column="3">
        <widget class="QComboBox" name="comboBox_show">
         <property name="font">
          <font>
@@ -231,7 +279,70 @@
         </item>
        </widget>
       </item>
-      <item row="8" column="4" rowspan="2" colspan="2">
+      <item row="6" column="3">
+       <widget class="QLabel" name="label_TestRunningStatus">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QComboBox" name="comboBox_polarisation">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+         </font>
+        </property>
+        <item>
+         <property name="text">
+          <string>Polarisation: Vertikal</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Polarisation: Horizontal</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="2" rowspan="8">
+       <widget class="Line" name="line">
+        <property name="sizeIncrement">
+         <size>
+          <width>150</width>
+          <height>150</height>
+         </size>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="3" rowspan="2" colspan="2">
        <widget class="QToolButton" name="toolButton_tabulardaten">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -272,61 +383,14 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="4">
+      <item row="4" column="3">
        <widget class="QLabel" name="MousPositionLabel">
         <property name="text">
          <string/>
         </property>
        </widget>
       </item>
-      <item row="6" column="4">
-       <widget class="QLabel" name="label_TestStatus">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Test Zustand:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLabel" name="label_pos3">
-        <property name="text">
-         <string>Pos 3</string>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="1">
-       <widget class="QLabel" name="label_pos5">
-        <property name="text">
-         <string>Pos 5</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLabel" name="label_pos4">
-        <property name="text">
-         <string>Pos 4</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3" rowspan="9">
-       <widget class="Line" name="line">
-        <property name="sizeIncrement">
-         <size>
-          <width>150</width>
-          <height>150</height>
-         </size>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="4">
+      <item row="1" column="3">
        <widget class="QLabel" name="label_plotoption">
         <property name="font">
          <font>
@@ -339,40 +403,20 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="4">
-       <widget class="QComboBox" name="comboBox_polarisation">
-        <property name="font">
-         <font>
-          <family>Verdana</family>
-         </font>
+      <item row="5" column="3">
+       <widget class="QLabel" name="label_TestStatus">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <item>
-         <property name="text">
-          <string>Polarisation: Vertikal</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Polarisation: Horizontal</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="label_pos1">
         <property name="text">
-         <string>Pos 1</string>
+         <string>Test Zustand:</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="label_pos2">
-        <property name="text">
-         <string>Pos 2</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" rowspan="9">
+      <item row="1" column="0" rowspan="8">
        <widget class="QFrame" name="frame_5">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -389,7 +433,7 @@
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout" stretch="">
+        <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="spacing">
           <number>-1</number>
          </property>
@@ -408,13 +452,100 @@
         </layout>
        </widget>
       </item>
-      <item row="7" column="4">
-       <widget class="QLineEdit" name="lineEdit_TestStatus">
+      <item row="1" column="1">
+       <widget class="QPushButton" name="pushButton_colorChange_1">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>95</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Fabe Pos. 1</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="pushButton_colorChange_2">
+        <property name="maximumSize">
+         <size>
+          <width>95</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Fabe Pos. 2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QPushButton" name="pushButton_colorChange_3">
+        <property name="maximumSize">
+         <size>
+          <width>95</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Fabe Pos. 3</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QPushButton" name="pushButton_colorChange_4">
+        <property name="maximumSize">
+         <size>
+          <width>95</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Fabe Pos. 4</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QPushButton" name="pushButton_colorChange_5">
+        <property name="maximumSize">
+         <size>
+          <width>95</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Fabe Pos. 5</string>
         </property>
        </widget>
       </item>
@@ -488,6 +619,9 @@
             <font>
              <family>Verdana</family>
             </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
            </property>
            <property name="title">
             <string>Test Control</string>
@@ -746,8 +880,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>230</x>
-     <y>995</y>
+     <x>236</x>
+     <y>706</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -762,8 +896,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>298</x>
-     <y>995</y>
+     <x>304</x>
+     <y>706</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

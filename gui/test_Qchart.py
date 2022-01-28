@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import csv
 from PyQt5 import uic, QtWidgets, QtChart, QtCore, QtGui
 from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QDialog
 
 
 class QmyChartView(QtChart.QChartView):
@@ -62,19 +64,27 @@ class test(QtWidgets.QDialog):
         super(test, self).__init__(parent)
         uic.loadUi("uifiles/testQchart.ui", self)
 
+        self.Sonde = []
+        self.vorLeistung = []
+        self.StartFreq = []
+
+
+        self.pushButton.setEnabled(True)
+        self.toolButton.setEnabled(False)
+
         self.chart_1 = QtChart.QChart()
         self.chart_2 = QtChart.QChart()
 
         self.__axisFreq = QtChart.QLogValueAxis()
         self.__axisFreq.setLabelFormat("%d")  # format of the label
         self.__axisFreq.setTitleText("Frequenz / kHz \r\n ")
-        self.__axisFreq.setRange(100, 100000)
+        self.__axisFreq.setRange(10, 1000)
         self.__axisFreq.setMinorTickCount(8)
         self.chart_1.addAxis(self.__axisFreq, QtCore.Qt.AlignBottom)
 
         self.__axisMag = QtChart.QValueAxis()
         self.__axisMag.setTitleText("Generator - Leistung / dBm  ")
-        self.__axisMag.setRange(-35, -0)
+        self.__axisMag.setRange(0, 30)
         self.__axisMag.setTickCount(8)
         self.__axisMag.setLabelFormat("%d")
         self.chart_1.addAxis(self.__axisMag, QtCore.Qt.AlignLeft)
@@ -82,14 +92,14 @@ class test(QtWidgets.QDialog):
         self.__axisFreq_2 = QtChart.QLogValueAxis()
         self.__axisFreq_2.setLabelFormat("%d")  # format of the label
         self.__axisFreq_2.setTitleText("Frequenz / kHz \r\n ")
-        self.__axisFreq_2.setRange(100, 100000)
+        self.__axisFreq_2.setRange(10, 1000)
         self.__axisFreq_2.setMinorTickCount(8)
         #self.__axisFreq.tickAn([ticks])
         self.chart_2.addAxis(self.__axisFreq_2, QtCore.Qt.AlignBottom)
 
         self.__axisMag_2 = QtChart.QValueAxis()
-        self.__axisMag_2.setTitleText("Spannung / V ")
-        self.__axisMag_2.setRange(-5, 65)
+        self.__axisMag_2.setTitleText("Vorwärtsleistung / dBm ")
+        self.__axisMag_2.setRange(-30, 10)
         self.__axisMag_2.setTickCount(15)
         self.__axisMag_2.setLabelFormat("%d")
         self.chart_2.addAxis(self.__axisMag_2, QtCore.Qt.AlignLeft)
@@ -121,21 +131,69 @@ class test(QtWidgets.QDialog):
         self.curveProb.attachAxis(self.__axisMag_2)
         self.chart_2.legend().markers(self.curveProb)[0].setVisible(True)
         self.chart_2.legend().setAlignment(Qt.AlignTop)
-
         pen = QtGui.QPen(QtGui.QColor(255, 0, 255))
         pen.setWidth(1)
         self.curveProb.setPen(pen)
-
         self.curveProb.setPointsVisible(True)
         #self.curveProb.hovered.connect(self.do_series_hovered)
         #self.curveProb.clicked.connect(self.do_series_clicked)
 
-        self.x = [150, 1000, 1001, 10000, 10001, 80000]
-        self.y = [10, 10, 10, 10, 10, 13]
+        self.curveFeldSträke = QtChart.QLineSeries()
+        # self.normline1.setName("Norm Line 1.")
+        self.chart_1.addSeries(self.curveFeldSträke)
+        self.curveFeldSträke.attachAxis(self.__axisFreq)
+        self.curveFeldSträke.attachAxis(self.__axisMag)
+        self.chart_1.legend().markers(self.curveFeldSträke)[0].setVisible(True)
+        self.chart_1.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(255, 0, 255))
+        pen.setWidth(1)
+        self.curveFeldSträke.setPen(pen)
+        self.curveFeldSträke.setPointsVisible(True)
+
+        with open("./output.csv", "r") as FSCaliData:
+            reader = csv.reader(FSCaliData)
+            rows = []
+            for row in reader:
+                rows.append(row)
+            print(rows)
+        #print(len(rows))
+
+        for i in range(len(rows)):
+            self.StartFreq.append(float(rows[i][0]))        # column 0 is
+            self.vorLeistung.append(float(rows[i][1]))
+            self.Sonde.append(float(rows[i][2]))
+        print(self.StartFreq)
+        print(self.vorLeistung)
+        print(self.Sonde)
+        #for i in range(12, 24):
+            #self.vorLeistung = float(rows[i][0])
+            #print(self.vorLeistung)
+        #for i in range(24, 36):
+            #self.Sonde = rows[i][0]
+            #print(self.Sonde)
+        self.x = [150.000, 1000, 1001, 10000, 10001, 80000]
+        self.y = [10.0, 10, 10, 10, 10, 13]
         # print(y)
 
-        for a, b in zip(self.x, self.y):
+        #result = zip(self.x, self.y)
+        #print(list(result))
+        #print(float(rows[13][0]))
+        for a, b in zip(self.StartFreq, self.vorLeistung):
             self.curveProb.append(a, b)
+        for a, b in zip(self.StartFreq, self.Sonde):
+            self.curveFeldSträke.append(a, b)
+
+
+
+    # define signals
+        self.pushButton.clicked.connect(self.changecolor)
+    # change curve color
+    def changecolor(self):
+        color = QtWidgets.QColorDialog.getColor()
+        pen = QtGui.QPen(QtGui.QColor(color))
+        self.curveFeldSträke.setPen(pen)
+
+
 
     def do_chartView_mouseMove(self, point):
         pt = self.graphicsView.chart().mapToValue(point)
