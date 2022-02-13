@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>867</width>
+    <width>1044</width>
     <height>755</height>
    </rect>
   </property>
@@ -16,8 +16,26 @@
     <height>0</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <family>Verdana</family>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Kalibrierung</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../icon_materials/8.png</normaloff>../icon_materials/8.png</iconset>
+  </property>
+  <property name="windowFilePath">
+   <string/>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,0">
    <property name="spacing">
@@ -68,8 +86,8 @@
       <property name="horizontalSpacing">
        <number>20</number>
       </property>
-      <item row="0" column="1">
-       <widget class="QToolButton" name="toolButton_open">
+      <item row="0" column="0">
+       <widget class="QToolButton" name="toolButton_new">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -86,16 +104,20 @@
          <font>
           <family>Verdana</family>
           <pointsize>13</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+          <stylestrategy>PreferDefault</stylestrategy>
          </font>
         </property>
         <property name="whatsThis">
-         <string extracomment="öffnen"/>
+         <string extracomment="neu"/>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
         <property name="text">
-         <string>Öffnen</string>
+         <string>Neu</string>
         </property>
         <property name="iconSize">
          <size>
@@ -154,24 +176,8 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>450</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="0">
-       <widget class="QToolButton" name="toolButton_new">
+      <item row="0" column="1">
+       <widget class="QToolButton" name="toolButton_open">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -188,20 +194,16 @@
          <font>
           <family>Verdana</family>
           <pointsize>13</pointsize>
-          <weight>50</weight>
-          <italic>false</italic>
-          <bold>false</bold>
-          <stylestrategy>PreferDefault</stylestrategy>
          </font>
         </property>
         <property name="whatsThis">
-         <string extracomment="neu"/>
+         <string extracomment="öffnen"/>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
         <property name="text">
-         <string>Neu</string>
+         <string>Öffnen</string>
         </property>
         <property name="iconSize">
          <size>
@@ -210,6 +212,22 @@
          </size>
         </property>
        </widget>
+      </item>
+      <item row="0" column="3">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>450</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>
@@ -231,6 +249,9 @@
        <height>400</height>
       </size>
      </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
      <property name="styleSheet">
       <string notr="true"/>
      </property>
@@ -240,7 +261,7 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0,0,0" columnminimumwidth="0,0,0,0,0">
+     <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0,0,0">
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
@@ -262,27 +283,569 @@
       <property name="verticalSpacing">
        <number>13</number>
       </property>
-      <item row="2" column="3">
-       <widget class="QComboBox" name="comboBox_show">
-        <property name="font">
-         <font>
-          <family>Verdana</family>
-         </font>
+      <item row="1" column="0" rowspan="10">
+       <widget class="QFrame" name="frame_5">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="currentText">
-         <string>Show: Field Kalibierung</string>
+        <property name="minimumSize">
+         <size>
+          <width>500</width>
+          <height>0</height>
+         </size>
         </property>
-        <item>
-         <property name="text">
-          <string>Show: Field Kalibierung</string>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout" stretch="">
+         <property name="spacing">
+          <number>1</number>
          </property>
-        </item>
+         <property name="leftMargin">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>2</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
+        </layout>
        </widget>
       </item>
-      <item row="6" column="3">
-       <widget class="QLabel" name="label_TestRunningStatus">
+      <item row="1" column="2" rowspan="10">
+       <widget class="Line" name="line">
+        <property name="sizeIncrement">
+         <size>
+          <width>150</width>
+          <height>150</height>
+         </size>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="pushButton_ShowHideCurve_2">
+        <property name="maximumSize">
+         <size>
+          <width>95</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Ein/Aus P2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QPushButton" name="pushButton_ShowHideCurve_4">
+        <property name="maximumSize">
+         <size>
+          <width>95</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Ein/Aus P4</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3" rowspan="7">
+       <widget class="QFrame" name="frame_Statusleiste">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>400</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>250</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QLabel" name="label_TestStatus">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Aktueller Zustand:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_TestRunningStatus">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>250</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Verdana</family>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);
+</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="InformationenKoordinatenGroupBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>250</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="title">
+            <string>Informationen der Koordinaten</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_5">
+            <item row="0" column="0">
+             <widget class="QLabel" name="GeschwebtLabel">
+              <property name="minimumSize">
+               <size>
+                <width>111</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>111</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Geschwebt</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="GeklicktMagnitudeLabel">
+              <property name="minimumSize">
+               <size>
+                <width>101</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>101</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Magnitude:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="GeklicktLabel">
+              <property name="minimumSize">
+               <size>
+                <width>81</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>81</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Geklickt</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="GeschwebtMagnitudeLineEdit">
+              <property name="minimumSize">
+               <size>
+                <width>101</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>131</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>ArrowCursor</cursorShape>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="GeschwebtMagnitudeLabel">
+              <property name="minimumSize">
+               <size>
+                <width>101</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>101</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Magnitude:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QToolButton" name="GeschwebtToolButton">
+              <property name="minimumSize">
+               <size>
+                <width>31</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>31</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>../icon_materials/9.png</normaloff>../icon_materials/9.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>30</width>
+                <height>30</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="GeschwebtFrequenzLineEdit">
+              <property name="minimumSize">
+               <size>
+                <width>101</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>131</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>ArrowCursor</cursorShape>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0" colspan="2">
+             <widget class="QLabel" name="MousPositionLabel">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>611</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Verdana</family>
+                <pointsize>11</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLineEdit" name="GeklicktFrequenzLineEdit">
+              <property name="minimumSize">
+               <size>
+                <width>101</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>131</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>ArrowCursor</cursorShape>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="GeklicktFrequenzLabel">
+              <property name="minimumSize">
+               <size>
+                <width>91</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>91</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Frequenz:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="GeschwebtFrequenzLabel">
+              <property name="minimumSize">
+               <size>
+                <width>91</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>91</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Frequenz:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QToolButton" name="GeklicktToolButton">
+              <property name="minimumSize">
+               <size>
+                <width>31</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>31</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>../icon_materials/9.png</normaloff>../icon_materials/9.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>30</width>
+                <height>30</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QLineEdit" name="GeklicktMagnitudeLineEdit">
+              <property name="minimumSize">
+               <size>
+                <width>101</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>131</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>ArrowCursor</cursorShape>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="pushButton_ShowHideCurve_1">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -290,28 +853,58 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>30</height>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>95</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Ein/Aus P1</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QPushButton" name="pushButton_ShowHideCurve_5">
+        <property name="maximumSize">
+         <size>
+          <width>95</width>
+          <height>16777215</height>
          </size>
         </property>
         <property name="font">
          <font>
           <family>Verdana</family>
+          <pointsize>12</pointsize>
          </font>
         </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(255, 0, 0);</string>
-        </property>
         <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <string>Ein/Aus P5</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="3">
+      <item row="6" column="1">
        <widget class="QComboBox" name="comboBox_polarisation">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <family>Verdana</family>
@@ -329,23 +922,10 @@ color: rgb(255, 0, 0);</string>
         </item>
        </widget>
       </item>
-      <item row="1" column="2" rowspan="8">
-       <widget class="Line" name="line">
-        <property name="sizeIncrement">
-         <size>
-          <width>150</width>
-          <height>150</height>
-         </size>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="3" rowspan="2" colspan="2">
+      <item row="7" column="1">
        <widget class="QToolButton" name="toolButton_tabulardaten">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -383,119 +963,8 @@ color: rgb(255, 0, 0);</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="3">
-       <widget class="QLabel" name="MousPositionLabel">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QLabel" name="label_plotoption">
-        <property name="font">
-         <font>
-          <family>Verdana</family>
-          <pointsize>14</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Plot options</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="3">
-       <widget class="QLabel" name="label_TestStatus">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Test Zustand:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" rowspan="8">
-       <widget class="QFrame" name="frame_5">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="spacing">
-          <number>-1</number>
-         </property>
-         <property name="leftMargin">
-          <number>6</number>
-         </property>
-         <property name="topMargin">
-          <number>6</number>
-         </property>
-         <property name="rightMargin">
-          <number>6</number>
-         </property>
-         <property name="bottomMargin">
-          <number>6</number>
-         </property>
-        </layout>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="pushButton_colorChange_1">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>95</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Fabe Pos. 1</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QPushButton" name="pushButton_colorChange_2">
-        <property name="maximumSize">
-         <size>
-          <width>95</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Fabe Pos. 2</string>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="1">
-       <widget class="QPushButton" name="pushButton_colorChange_3">
+       <widget class="QPushButton" name="pushButton_ShowHideCurve_3">
         <property name="maximumSize">
          <size>
           <width>95</width>
@@ -508,44 +977,7 @@ color: rgb(255, 0, 0);</string>
          </font>
         </property>
         <property name="text">
-         <string>Fabe Pos. 3</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QPushButton" name="pushButton_colorChange_4">
-        <property name="maximumSize">
-         <size>
-          <width>95</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Fabe Pos. 4</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QPushButton" name="pushButton_colorChange_5">
-        <property name="maximumSize">
-         <size>
-          <width>95</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Verdana</family>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Fabe Pos. 5</string>
+         <string>Ein/Aus P3</string>
         </property>
        </widget>
       </item>
@@ -881,7 +1313,7 @@ color: rgb(255, 0, 0);</string>
    <hints>
     <hint type="sourcelabel">
      <x>236</x>
-     <y>706</y>
+     <y>754</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -897,7 +1329,7 @@ color: rgb(255, 0, 0);</string>
    <hints>
     <hint type="sourcelabel">
      <x>304</x>
-     <y>706</y>
+     <y>754</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
