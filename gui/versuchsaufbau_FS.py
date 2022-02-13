@@ -2,8 +2,10 @@
 
 import sys
 #from PyQt5 import uic, QtWidgets
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets,uic
 
+import Calibration
+from Calibration import ParametersEditWindow
 
 sys.path.append('gui')
 
@@ -13,10 +15,6 @@ class Ui_CalibrationSetup_FS(object):
         #self.setupUi()
 
         # define signals
-
-    #def setupUi(self):
-        #dialog = uic.loadUi("uifiles/versuchsaufbau_FS.ui", self)
-        #dialog.show()
 
     def setupUi(self, TestSetUp):
         TestSetUp.setObjectName("TestSetUp")
@@ -130,7 +128,7 @@ class Ui_CalibrationSetup_FS(object):
         item_0 = QtWidgets.QTreeWidgetItem(self.treeWidget)
         self.treeWidget.header().setVisible(True)
         self.treeWidget.header().setCascadingSectionResizes(False)
-        self.treeWidget.header().setDefaultSectionSize(130)
+        self.treeWidget.header().setDefaultSectionSize(160)
         self.treeWidget.header().setHighlightSections(False)
         self.treeWidget.header().setSortIndicatorShown(False)
         self.treeWidget.header().setStretchLastSection(False)
@@ -399,6 +397,9 @@ class Ui_CalibrationSetup_FS(object):
         self.CancelButton.clicked['bool'].connect(TestSetUp.close)
         QtCore.QMetaObject.connectSlotsByName(TestSetUp)
 
+        # define signals
+        self.treeWidget.doubleClicked.connect(self.showParaEditWindow)
+
     def retranslateUi(self, TestSetUp):
         _translate = QtCore.QCoreApplication.translate
         TestSetUp.setWindowTitle(_translate("TestSetUp", "Versuchsaufbau"))
@@ -406,11 +407,11 @@ class Ui_CalibrationSetup_FS(object):
         self.toolButton_copy.setText(_translate("TestSetUp", "Kopieren"))
         self.toolButton_edit.setText(_translate("TestSetUp", "Bearbeiten"))
         self.toolButton_delete.setText(_translate("TestSetUp", "Löschen"))
-        self.treeWidget.headerItem().setText(0, _translate("TestSetUp", "Freq (Hz)"))
+        self.treeWidget.headerItem().setText(0, _translate("TestSetUp", "Start Frequenz(Hz)"))
         self.treeWidget.headerItem().setText(1, _translate("TestSetUp", "Freq Step"))
-        self.treeWidget.headerItem().setText(2, _translate("TestSetUp", "Level"))
-        self.treeWidget.headerItem().setText(3, _translate("TestSetUp", "Level Step"))
-        self.treeWidget.headerItem().setText(4, _translate("TestSetUp", "Dwell"))
+        self.treeWidget.headerItem().setText(2, _translate("TestSetUp", "Max. Frequenz(Hz)"))
+        self.treeWidget.headerItem().setText(3, _translate("TestSetUp", "Level(V/m)"))
+        self.treeWidget.headerItem().setText(4, _translate("TestSetUp", "Dwell(s)"))
         self.treeWidget.headerItem().setText(5, _translate("TestSetUp", "CW"))
         self.treeWidget.headerItem().setText(6, _translate("TestSetUp", "Modulation 1"))
         self.treeWidget.headerItem().setText(7, _translate("TestSetUp", "Modulation 2"))
@@ -418,16 +419,16 @@ class Ui_CalibrationSetup_FS(object):
         self.treeWidget.setSortingEnabled(False)
         self.treeWidget.topLevelItem(0).setText(0, _translate("TestSetUp", "80M"))
         self.treeWidget.topLevelItem(0).setText(1, _translate("TestSetUp", "1%"))
-        self.treeWidget.topLevelItem(0).setText(2, _translate("TestSetUp", "30"))
-        self.treeWidget.topLevelItem(0).setText(3, _translate("TestSetUp", "None"))
+        self.treeWidget.topLevelItem(0).setText(2, _translate("TestSetUp", "1G"))
+        self.treeWidget.topLevelItem(0).setText(3, _translate("TestSetUp", "30"))
         self.treeWidget.topLevelItem(0).setText(4, _translate("TestSetUp", "1s"))
         self.treeWidget.topLevelItem(0).setText(5, _translate("TestSetUp", "Off"))
         self.treeWidget.topLevelItem(0).setText(6, _translate("TestSetUp", "AM Sine(1kHz, 80%)"))
         self.treeWidget.topLevelItem(0).setText(7, _translate("TestSetUp", "Off"))
         self.treeWidget.topLevelItem(1).setText(0, _translate("TestSetUp", "1G"))
         self.treeWidget.topLevelItem(1).setText(1, _translate("TestSetUp", "1%"))
-        self.treeWidget.topLevelItem(1).setText(2, _translate("TestSetUp", "30"))
-        self.treeWidget.topLevelItem(1).setText(3, _translate("TestSetUp", "None"))
+        self.treeWidget.topLevelItem(1).setText(2, _translate("TestSetUp", "3G"))
+        self.treeWidget.topLevelItem(1).setText(3, _translate("TestSetUp", "30"))
         self.treeWidget.topLevelItem(1).setText(4, _translate("TestSetUp", "1s"))
         self.treeWidget.topLevelItem(1).setText(5, _translate("TestSetUp", "Off"))
         self.treeWidget.topLevelItem(1).setText(6, _translate("TestSetUp", "Off"))
@@ -474,6 +475,36 @@ class Ui_CalibrationSetup_FS(object):
         self.WarningLabel.setText(_translate("TestSetUp", "Das Signal Routing ist leer!"))
         self.ApplyButton.setText(_translate("TestSetUp", "Anwenden"))
         self.CancelButton.setText(_translate("TestSetUp", "Zurücken"))
+
+    def showParaEditWindow(self):
+        dialog = Calibration.ParametersEditWindow()
+        dialog.exec_()
+        # update the parameters
+
+        self.treeWidget.topLevelItem(0).setText(0, "%s" % dialog.lineEdit_frequency.text())
+        self.treeWidget.topLevelItem(0).setText(1, "%s" % dialog.lineEdit_step.text())
+        self.treeWidget.topLevelItem(0).setText(2, "%s" % dialog.lineEdit_MaxFreq.text())
+        self.treeWidget.topLevelItem(0).setText(3, "%s" % dialog.lineEdit_testlevel.text())
+        self.treeWidget.topLevelItem(0).setText(4, "%s" % dialog.lineEdit_Dwell.text())
+        if dialog.checkBox_cw.isChecked():
+            self.treeWidget.topLevelItem(0).setText(5, "On")
+        else:
+            self.treeWidget.topLevelItem(0).setText(5, "Off")
+        # the parameters of Modulation not transfer
+        if dialog.checkBox_m1check.isChecked():
+            self.treeWidget.topLevelItem(0).setText(6, "On")
+        else:
+            self.treeWidget.topLevelItem(0).setText(6, "Off")
+        # the parameters of Modulation not transfer
+        if dialog.checkBox_m2check.isChecked():
+            self.treeWidget.topLevelItem(0).setText(7, "On")
+        else:
+            self.treeWidget.topLevelItem(0).setText(7, "Off")
+
+        #class ParameterEditWindow(QtWidgets.QDialog):
+    #def __init__(self, parent=None):
+        #super().__init__(parent)
+        #uic.loadUi("uifiles/ParaEditWindow.ui", self)
 
 
 if __name__ == "__main__":
