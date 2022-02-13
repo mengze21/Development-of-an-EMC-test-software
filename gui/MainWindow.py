@@ -1267,7 +1267,7 @@ class Ui_MainWindow(object):
 
     # This method is mainly for showing up the marginal values(Grenzwerte) of the chosen norm in listView (self.NormDescription)
     def NormDescribe(self):
-        # the same reson as line 1047, the listView should be cleared at first
+        # the same reason as line 1047, the listView should be cleared at first
         self.NormDescription.clear()
 
         # if the norm "CISPR 11: EN 55011" is chosen, it's marginal values(Grenzwerte) will be showed in listView (self.NormDescription)
@@ -1437,9 +1437,19 @@ class Ui_MainWindow(object):
             item = QtWidgets.QListWidgetItem()
             self.NormDescription.addItem(item)
             item.setBackground(QtGui.QColor(233, 241, 247))
+            item = QtWidgets.QListWidgetItem()
+            self.NormDescription.addItem(item)
+            #item.setBackground(QtGui.QColor(233, 241, 247))
+            item = QtWidgets.QListWidgetItem()
+            self.NormDescription.addItem(item)
+            item.setBackground(QtGui.QColor(233, 241, 247))
 
             item = self.NormDescription.item(0)
-            item.setText("Standard!")
+            item.setText("Signal Gen.")
+            item = self.NormDescription.item(1)
+            item.setText("Forward Power")
+            item = self.NormDescription.item(2)
+            item.setText("Net Power")
         # neu
         else:
             item = QtWidgets.QListWidgetItem()
