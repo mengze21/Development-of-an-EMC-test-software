@@ -14,7 +14,8 @@ from ManagementderAusrustung_FS import FS_EquipmentManagement
 from TestWindow_LE import Ui_TestWindow_LE
 from TestWindow_FE import Ui_TestWindow_FE
 from TestWindow_LS import Ui_TestWindow_LS
-from TestWindow_FS import Ui_TestWindow_FS
+#from TestWindow_FS import Ui_TestWindow_FS
+from TestWindow_FS1 import Ui_TestWindow_FS # for test use
 from Versuchsaufbau import Ui_TestSetUp
 from ReportWindow import Ui_ReportWindow
 from versuchsaufbau_FS import Ui_CalibrationSetup_FS
@@ -404,16 +405,16 @@ class MyMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     ui = Ui_TestWindow_FS()
                     ui.setupUi(widget)
                     # recieving the chosed marginal value and draw a curve for it in "Test" window
-                    www = self.NormDescription.selectedItems()
-                    ui.drawnormlimit(www)
-                    # Tansfer the antenne factors into "Test" window
-                    if self.anntef != []:
-                        ui.tianxianf = self.anntef
-                        ui.tianxianm = self.anntem
-                        ui.cablef1 = self.kabelf1
-                        ui.cablem1 = self.kabelm1
-                        ui.cablef2 = self.kabelf2
-                        ui.cablem2 = self.kabelm2
+                    #www = self.NormDescription.selectedItems()
+                    # ui.drawnormlimit(www)
+                    # # Tansfer the antenne factors into "Test" window
+                    # if self.anntef != []:
+                    #     ui.tianxianf = self.anntef
+                    #     ui.tianxianm = self.anntem
+                    #     ui.cablef1 = self.kabelf1
+                    #     ui.cablem1 = self.kabelm1
+                    #     ui.cablef2 = self.kabelf2
+                    #     ui.cablem2 = self.kabelm2
                     widget.exec_()
 
                 # if norm "CISPR 11: EN 55011" is selected, whose coupling devices are not defined yet,
