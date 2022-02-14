@@ -16,7 +16,6 @@ from thread_FS_test import External_FS_test
 
 sys.path.append('gui')
 
-
 # this class is used to customized a QChartView that can realize advanced functions.
 # The advanced function is: When you press the left mouse on the diagramm in order to make a selection,
 # a rectangular selection box will be displayed as the mouse is dragged.
@@ -561,16 +560,18 @@ class Ui_Calibration(QtWidgets.QDialog):
     def showCalibrationEditWindow(self):
         dialog = CalibrationEditWindow(self)
         dialog.exec_()
-        # update parameters
-        self.Position = int(dialog.comboBox_Pos.currentText())
-        self.Polarisation = dialog.comboBox_Polar.currentText()
-        self.treeWidget_info.topLevelItem(0).setText(1, "%s" % dialog.comboBox_Pos.currentText())
-        self.treeWidget_info.topLevelItem(1).setText(1, "%s" % dialog.comboBox_Polar.currentText())
-        self.treeWidget_info.topLevelItem(2).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(0).text(0))
-        self.treeWidget_info.topLevelItem(3).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(0).text(1))
-        self.treeWidget_info.topLevelItem(4).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(0).text(2))
-        self.treeWidget_info.topLevelItem(5).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(0).text(3))
-        self.treeWidget_info.topLevelItem(6).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(0).text(4))
+        # update parameters for calibration setup
+        if not dialog.itemIndex == "":
+            self.index = int(dialog.itemIndex)
+            self.Position = int(dialog.comboBox_Pos.currentText())
+            self.Polarisation = dialog.comboBox_Polar.currentText()
+            self.treeWidget_info.topLevelItem(0).setText(1, "%s" % dialog.comboBox_Pos.currentText())
+            self.treeWidget_info.topLevelItem(1).setText(1, "%s" % dialog.comboBox_Polar.currentText())
+            self.treeWidget_info.topLevelItem(2).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(self.index).text(0))
+            self.treeWidget_info.topLevelItem(3).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(self.index).text(1))
+            self.treeWidget_info.topLevelItem(4).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(self.index).text(2))
+            self.treeWidget_info.topLevelItem(5).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(self.index).text(3))
+            self.treeWidget_info.topLevelItem(6).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(self.index).text(4))
 
         # get start frequency from setup info
         if "M" in str(dialog.treeWidget_parameters.topLevelItem(0).text(0)):
@@ -846,41 +847,96 @@ class CalibrationEditWindow(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(CalibrationEditWindow, self).__init__(parent)
         uic.loadUi("uifiles/KalibierungEinstellen.ui", self)
+        self.itemIndex = ""
+        self.paragroup = []
+
+        # show the saved parameter setup
+        f = open("./data/KalibrierungEinstellungsDaten.txt", "r")
+        alllines = f.readlines()
+        f.close()
+        for i in range(len(alllines)):
+            self.paragroup.append(alllines[i].strip().split())
+        #paragroup1 = alllines[0].strip()
+        #paragroup2 = alllines[1].strip()
+        #self.paralist2 = paragroup2.split()
+        #self.paralist = paragroup1.split()
+        print(len(alllines))
+        print(self.paragroup)
+        print("length %s" % self.paragroup)
+        if not self.paragroup == []:
+            for i in range(len(self.paragroup)):
+                self.treeWidget_parameters.topLevelItem(i).setText(0, "%s" % self.paragroup[i][0])
+                self.treeWidget_parameters.topLevelItem(i).setText(1, "%s" % self.paragroup[i][1])
+                self.treeWidget_parameters.topLevelItem(i).setText(2, "%s" % self.paragroup[i][2])
+                self.treeWidget_parameters.topLevelItem(i).setText(3, "%s" % self.paragroup[i][3])
+                self.treeWidget_parameters.topLevelItem(i).setText(4, "%s" % self.paragroup[i][4])
+        #if not self.paralist == []:
+            #self.treeWidget_parameters.topLevelItem(0).setText(0, "%s" % self.paralist[0])
+            #self.treeWidget_parameters.topLevelItem(0).setText(1, "%s" % self.paralist[1])
+            #self.treeWidget_parameters.topLevelItem(0).setText(2, "%s" % self.paralist[2])
+            #self.treeWidget_parameters.topLevelItem(0).setText(3, "%s" % self.paralist[3])
+           # self.treeWidget_parameters.topLevelItem(0).setText(4, "%s" % self.paralist[4])
+            #self.treeWidget_parameters.topLevelItem(1).setText(0, "%s" % self.paralist2[0])
+            #self.treeWidget_parameters.topLevelItem(1).setText(1, "%s" % self.paralist2[1])
+            #self.treeWidget_parameters.topLevelItem(1).setText(2, "%s" % self.paralist2[2])
+            #self.treeWidget_parameters.topLevelItem(1).setText(3, "%s" % self.paralist2[3])
+            #self.treeWidget_parameters.topLevelItem(1).setText(4, "%s" % self.paralist2[4])
+
 
         # define Signal Slots
         self.treeWidget_parameters.doubleClicked.connect(self.findParaEdit)
         # self.toolButton_new.clicked.connect(self.findParaEdit)
         self.toolButton_new.clicked.connect(self.setnewPara)
-        self.buttonBox.accepted.connect(self.SveingData)
+        self.buttonBox.accepted.connect(self.saveData)
+        self.treeWidget_parameters.itemClicked.connect(self.currentItemIndex)
+
+    # get the index of selected item
+    def currentItemIndex(self):
+        self.currentItem = self.treeWidget_parameters.selectedItems()
+        self.itemIndex = self.treeWidget_parameters.indexFromItem(self.currentItem[0], 0).row() # Returns the row this model index refers to
+        global indexNum     # save the index of chosen item in tree widget
+        indexNum = self.itemIndex
+        print(self.currentItem[0])
+        print(self.currentItem[0].text(0))
+        print(self.currentItem[0].text(1))
+        print(self.itemIndex)
+        return self.itemIndex
 
     def findParaEdit(self):
         dialog = ParametersEditWindow(self)
+        #applybtn = dialog.edit_var_parameters.button(dialog.edit_var_parameters.Apply)
+        #if dialog.edit_var_parameters.clicked.connect(self.accept):
+        #if dialog.edit_var_parameters.clicked(applybtn):
+            #print("clicked")
         dialog.exec_()
+
         # self.treeWidget_parameters.topLevelItem(0).setText(0, "%s" % self.paralist[0])
         # updating parameters from file
-        f = open("./data/KalibrierungEinstellungsDaten.txt", "r")
-        alllines = f.readlines()
-        paragroup1 = alllines[0].strip()
-        self.paralist = paragroup1.split()
-        f.close()
+        #f = open("./data/KalibrierungEinstellungsDaten.txt", "r")
+        #alllines = f.readlines()
+        #paragroup1 = alllines[0].strip()
+        #self.paralist = paragroup1.split()
+        #f.close()
         #self.treeWidget_parameters.topLevelItem(0).setText(0, "%s" % self.paralist[0])
         #self.treeWidget_parameters.topLevelItem(0).setText(1, "%s" % self.paralist[1])
         #self.treeWidget_parameters.topLevelItem(0).setText(2, "%s" % self.paralist[2])
         #self.treeWidget_parameters.topLevelItem(0).setText(3, "%s" % self.paralist[3])
         #self.treeWidget_parameters.topLevelItem(0).setText(4, "%s" % self.paralist[4])
         if dialog.edit_var_parameters.accepted:
-            self.treeWidget_parameters.topLevelItem(0).setText(0, "%s" % dialog.start_freq)
-            self.treeWidget_parameters.topLevelItem(0).setText(1, "%s" % dialog.freq_step)
-            self.treeWidget_parameters.topLevelItem(0).setText(2, "%s" % dialog.Max_freq)
-            self.treeWidget_parameters.topLevelItem(0).setText(3, "%s" % dialog.TestLevel)
-            self.treeWidget_parameters.topLevelItem(0).setText(4, "%s" % dialog.Dwell)
+            self.treeWidget_parameters.topLevelItem(self.itemIndex).setText(0, "%s" % dialog.start_freq)
+            self.treeWidget_parameters.topLevelItem(self.itemIndex).setText(1, "%s" % dialog.freq_step)
+            self.treeWidget_parameters.topLevelItem(self.itemIndex).setText(2, "%s" % dialog.Max_freq)
+            self.treeWidget_parameters.topLevelItem(self.itemIndex).setText(3, "%s" % dialog.TestLevel)
+            self.treeWidget_parameters.topLevelItem(self.itemIndex).setText(4, "%s" % dialog.Dwell)
         elif dialog.edit_var_parameters.rejected:
-            dialog.quit()
+            pass
+            #dialog.quit()
 
     def setnewPara(self):
         dialog = ParametersEditWindow(self)
         dialog.lineEdit_frequency.setText("")
         dialog.lineEdit_step.setText("")
+        dialog.lineEdit_MaxFreq.setText("")
         dialog.lineEdit_testlevel.setText("")
         dialog.lineEdit_Dwell.setText("")
         dialog.lineEdit_m1fre.setText("")
@@ -889,7 +945,7 @@ class CalibrationEditWindow(QtWidgets.QDialog):
         dialog.lineEdit_4.setText("")
         dialog.exec_()
 
-    def SveingData(self):
+    def saveData(self):
         self.Position = self.comboBox_Pos.currentText()
         self.Polarisation = self.comboBox_Polar.currentText()
         # add new Position to file
@@ -903,10 +959,11 @@ class CalibrationEditWindow(QtWidgets.QDialog):
         # print(self.Position)
         # print(paragroup1[1])
 
-        with open("./data/KalibrierungEinstellungsDaten.txt", "a") as add_positon:
-            add_positon.write("%s " % self.Position)
-            add_positon.write("%s " % self.Polarisation)
-        add_positon.close()
+        #with open("./data/KalibrierungEinstellungsDaten.txt", "a") as add_position:
+            #add_position.write("%s " % self.Position)
+            #add_position.write("%s " % self.Polarisation)
+            #add_position.write("\n")
+        #add_position.close()
 
 
 # this class define the window of parameters settings
@@ -916,22 +973,51 @@ class ParametersEditWindow(QtWidgets.QDialog):
         super().__init__(parent)
         uic.loadUi("uifiles/ParaEditWindow.ui", self)
 
-        # define signals
-        self.edit_var_parameters.accepted.connect(self.SveingData)
-
-    def SveingData(self):
+        # init paramters
         self.start_freq = self.lineEdit_frequency.text()
         self.freq_step = self.lineEdit_step.text()
         self.Max_freq = self.lineEdit_MaxFreq.text()
         self.TestLevel = self.lineEdit_testlevel.text()
         self.Dwell = self.lineEdit_Dwell.text()
-        self.Position = ""
-        self.Polarisation = ""
-        f = open("./data/KalibrierungEinstellungsDaten.txt", "w")
-        f.writelines(["%s " % self.start_freq, "%s " % self.freq_step, "%s " % self.Max_freq, "%s " % self.TestLevel,
-                      "%s " % self.Dwell, "%s" % self.Position, "%s" % self.Polarisation])
-        # f.write("\n")
+        applybtn = self.edit_var_parameters.button(self.edit_var_parameters.Apply)
+
+
+        # define signals
+        self.edit_var_parameters.accepted.connect(self.saveData)
+
+    def saveData(self):
+        self.start_freq = self.lineEdit_frequency.text()
+        self.freq_step = self.lineEdit_step.text()
+        self.Max_freq = self.lineEdit_MaxFreq.text()
+        self.TestLevel = self.lineEdit_testlevel.text()
+        self.Dwell = self.lineEdit_Dwell.text()
+        self.Position = " "
+        self.Polarisation = " "
+        self.paraSetup = []
+        lineIndex = indexNum
+        linetowrite = ["%s %s %s %s %s %s %s \n"
+                       % (self.start_freq, self.freq_step, self.Max_freq, self.TestLevel, self.Dwell, self.Position, self.Polarisation)]
+        f = open("./data/KalibrierungEinstellungsDaten.txt", "r")
+        alllines = f.readlines()
         f.close()
+        for i in range(len(alllines)):
+            self.paraSetup.append(alllines[i])
+        print(self.paraSetup)
+        self.paraSetup[lineIndex] = linetowrite
+        print("new file %s" % self.paraSetup)
+        f = open("./data/KalibrierungEinstellungsDaten.txt", "w")
+        for i in range(len(self.paraSetup)):
+            for j in range(len(self.paraSetup[i])):
+                f.write(self.paraSetup[i][j])
+        f.close()
+        #for i in range(len(self.parasetup)):
+            #f.write(self.parasetup[i])
+        #print("lineindex %s" % lineIndex)
+        #f = open("./data/KalibrierungEinstellungsDaten.txt", "w")
+        #f.writelines(["%s " % self.start_freq, "%s " % self.freq_step, "%s " % self.Max_freq, "%s " % self.TestLevel,
+                      #"%s " % self.Dwell, "%s" % self.Position, "%s" % self.Polarisation])
+        # f.write("\n")
+        #f.close()
 
 
 class TabularDateWindow(QtWidgets.QDialog):
