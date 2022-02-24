@@ -13,36 +13,34 @@ class External_FS_test(QThread):
     completedflag = pyqtSignal(bool, int)
     countChanged = pyqtSignal(float, float, float, float, int)
     positionChanged = pyqtSignal(int)          # emit the current calibration position
-    #dataCache = pyqtSignal(list, list, list)
 
     def __init__(self, StartFreq, FreqStep, MaxFreq, E_T, startAPM, Position):
-        #QtCore.QThread.__init__(self)
         super(External_FS_test, self).__init__()
         self.StartFreq = StartFreq
         self.FreqStep = FreqStep
         self.MaxFreq = MaxFreq
         self.position = Position
+        self.E_T = E_T
+        self.startAPM = startAPM
         self.stopped = False
         self.completed = False
         self.restart = False
         self.isPaused = False
         self.isWaiting = False
+        # dummy value
         self.testFreq = 0
         self.vorPower = 0
         self.bwdPow = 0
         self.FieldStrength = 0
 
-    #def initialize(self):
-        #self.stopped = False
-        #self.completed = False
-        #self.restart = False
 
     def run(self):
-        #self.stopped = False
-        #self.testFreq = self.StartFreq
-        # measuredFreq = 0
-        # vorPower = 0
-        # FieldStrength = 0
+        print('StartFreq %s' % self.StartFreq)
+        print('FreqStep %s' % self.FreqStep)
+        print('MaxFreq %s' % self.MaxFreq)
+        print('E_T %s' % self.E_T)
+        print('startAPM %s' % self.startAPM)
+        print('position %s' % self.position)
         while self.position in range(6):
             self.stopped = False
             self.completed = False
@@ -60,12 +58,14 @@ class External_FS_test(QThread):
                 bwdPow = self.bwdPow
                 FieldStrength = self.FieldStrength
                 self.testFreq = self.testFreq + self.FreqStep * self.testFreq
+
+                # emit the data to GUI
                 self.countChanged.emit(measuredFreq, vorPower, bwdPow, FieldStrength, position)
 
+                #
                 time.sleep(0.01)
                 while self.isPaused:
                     time.sleep(0)
-
                 if self.stopped:
                     break
             if not self.stopped:
@@ -82,26 +82,8 @@ class External_FS_test(QThread):
             self.position += 1
             print(self.position)
 
-
-        #self.completed = True
-        #self.completedflag.emit(self.completed)
-        # for i in range(10):
-        #     print(i)
-        #     time.sleep(1)
-        #
-        #     while self.ispaused:
-        #         time.sleep(0)
-        #
-        #     if self.stopped:
-        #         break
-        # if i == 9 :
-        #     print("thread finished")
-        #self.completed = True
-        #completed = self.completed
-        #self.completedflag.emit(completed)
-
     def stop(self):
-        print("thread stoped")
+        #print("thread stoped")
         self.stopped = True
 
     def pause(self):
