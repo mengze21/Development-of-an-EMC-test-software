@@ -4,6 +4,7 @@ import csv
 
 from typing import List
 import pyvisa
+from csv import reader
 
 from WrapperEMRFeldsonde import WrapperEMRFeldsonde
 from WrapperSwitchHP import WrapperSwitchHP
@@ -21,7 +22,7 @@ import time
 sys.path.append('gui')
 # start Values
 startFrequ = 80
-endFrequ = 1000
+endFrequ = 500
 frequStep = 1.01
 polarisation = 'vertical'
 E_T = 3 # Prüffeldstärke
@@ -55,6 +56,8 @@ gridValFrequ = []
 gridValFwd = []
 powRevVal = []
 powAPMSet  = []
+# list CSV fiel
+listCsvFile = []
 
 def abortTest():
     instSigGen.switchRFOff()
@@ -103,10 +106,15 @@ def PI(Kp, Ki, MV_bar, beta):
         # update stored data for next iteration
         t_prev = t
 
-
+def createCalibrationFile(listCsvFile):
+    for csvEl in listCsvFile:
+        with open(csvEl, 'r') as read_obj:
+            csv_reader = reader(read_obj)
+            listCalFile = list(csv_reader)
+            print(listCalFile)
 
 ii = 1
-for currPoint in range(2, totalPoints + 1, 1):
+for currPoint in range(5, totalPoints + 1, 1):
 
     frequVal.clear()
     powFwdVal.clear()
@@ -114,6 +122,7 @@ for currPoint in range(2, totalPoints + 1, 1):
     sondeListVal.clear()
     setFrequ = startFrequ
     setAPM = startAPM
+
     flgGridPoint = input('Feldsonde aufgestellt?: \n')
     if flgGridPoint == 'yes':
         currAmpSwitch = instSwitch.validFrequ(setFrequ) # check if frequency is valid
@@ -276,7 +285,6 @@ for currPoint in range(2, totalPoints + 1, 1):
 
 
             # save the values in lists
-
             instPowerMeter.switchChannelA()
             instPowerMeter.getMeasVal()
             currFwdVal = instPowerMeter.currVal
@@ -306,3 +314,6 @@ for currPoint in range(2, totalPoints + 1, 1):
 
     gridValFrequ.append(frequVal)
     gridValFwd.append(powFwdVal)
+
+
+
