@@ -33,20 +33,15 @@
          <string>Horizontal</string>
         </property>
        </item>
-       <item>
-        <property name="text">
-         <string>Vertikal+Horizontal</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Horizontal+Vertikal</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item row="1" column="0">
       <widget class="QComboBox" name="comboBox_Pos">
+       <item>
+        <property name="text">
+         <string>Alle 5</string>
+        </property>
+       </item>
        <item>
         <property name="text">
          <string>1</string>
@@ -181,7 +176,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_feldtoler" stretch="0,0,0,0,0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout_feldtoler" stretch="0,0,0,0,0,0,0,0">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -297,10 +292,17 @@
      <item>
       <widget class="QLineEdit" name="lineEdit_StartDrive">
        <property name="text">
-        <string>-40dBm</string>
+        <string>-40</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_SDUnit">
+       <property name="text">
+        <string>dBm</string>
        </property>
       </widget>
      </item>

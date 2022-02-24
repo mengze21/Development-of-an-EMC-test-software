@@ -3,6 +3,8 @@ import os
 import sys
 import time
 import csv
+import numpy as np
+import pandas as pd
 import PyQt5
 from PyQt5 import uic, QtWidgets, QtChart, QtCore, QtGui
 from PyQt5.QtCore import Qt, pyqtSignal
@@ -11,8 +13,11 @@ from PyQt5.QtGui import *
 #from PyQt5.QtWidgets import QTableWidget
 from PyQt5.QtWidgets import *
 from openpyxl.descriptors import Default
+
+import CaliDataProcessing
 from thread_FS_Calib import External_FS_Calib
 from thread_FS_test import External_FS_test
+from CaliDataProcessing import caliDataProcessing
 
 sys.path.append('gui')
 
@@ -95,11 +100,16 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.feilStrList = []
         #self.testresult = [[]]
         # self.setupUi()
+        # deactivate pause and stop button
+        self.toolButton_stop.setEnabled(False)
+        self.toolButton_pause.setEnabled(False)
+
 
         # creation of the interactive diagram
         self.chart_1 = QtChart.QChart()
         self.chart_2 = QtChart.QChart()
-        # chart 1
+        self.chart_3 = QtChart.QChart()
+        # chart 1   Field Strength
         self.__axisFreq = QtChart.QLogValueAxis()
         self.__axisFreq.setLabelFormat("%d")  # format of the label
         self.__axisFreq.setTitleText("Frequenz / MHz \r\n ")
@@ -112,7 +122,7 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.__axisMag.setTickCount(8)
         self.__axisMag.setLabelFormat("%d")
         self.chart_1.addAxis(self.__axisMag, QtCore.Qt.AlignLeft)
-        # chart 2
+        # chart 2  forward power
         self.__axisFreq_2 = QtChart.QLogValueAxis()
         self.__axisFreq_2.setLabelFormat("%d")  # format of the label
         self.__axisFreq_2.setTitleText("Frequenz / MHz \r\n ")
@@ -126,13 +136,26 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.__axisMag_2.setTickCount(8)
         self.__axisMag_2.setLabelFormat("%d")
         self.chart_2.addAxis(self.__axisMag_2, QtCore.Qt.AlignLeft)
+        # chart 3   backward power
+        self.__axisFreq_3 = QtChart.QLogValueAxis()
+        self.__axisFreq_3.setLabelFormat("%d")  # format of the label
+        self.__axisFreq_3.setTitleText("Frequenz / MHz \r\n ")
+        self.__axisFreq_3.setRange(10, 10000)
+        self.__axisFreq_3.setMinorTickCount(8)
+        # self.__axisFreq.tickAn([ticks])
+        self.chart_3.addAxis(self.__axisFreq_3, QtCore.Qt.AlignBottom)
+        self.__axisMag_3 = QtChart.QValueAxis()
+        self.__axisMag_3.setTitleText("Rückwärtsleistung / dBm ")
+        self.__axisMag_3.setRange(-30, 10)
+        self.__axisMag_3.setTickCount(8)
+        self.__axisMag_3.setLabelFormat("%d")
+        self.chart_3.addAxis(self.__axisMag_3, QtCore.Qt.AlignLeft)
 
         # create graphics
         self.graphicsView = QmyChartView(self.frame_5)
         #self.graphicsView.setGeometry(QtCore.QRect(10, 0, 400, 400))
         #self.graphicsView.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         self.horizontalLayout.addWidget(self.graphicsView)
-        # self.verticalLayout.addWidget(self.frame)
         self.graphicsView.setRenderHint(QtGui.QPainter.Antialiasing)
         self.graphicsView.setCursor(QtCore.Qt.ArrowCursor)
         self.graphicsView.mouseMove.connect(self.do_chartView_mouseMove)
@@ -146,6 +169,7 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.graphicsView_2.setCursor(QtCore.Qt.ArrowCursor)
         self.graphicsView_2.mouseMove.connect(self.do_chartView_mouseMove)
         self.graphicsView_2.setChart(self.chart_2)
+        #self.graphicsView_2.setChart(self.chart_3)
         self.graphicsView_2.setObjectName("graphicsView_2")
 
         # create curve for forward power
@@ -219,7 +243,7 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.curveFPower5.setPointsVisible(True)
         self.curveFPower5.hovered.connect(self.do_series_hovered)
         self.curveFPower5.clicked.connect(self.do_series_clicked)
-        # realtime curve
+        # real time curve
         self.curveFPower_real = QtChart.QLineSeries()
         self.curveFPower_real.setName("P1")
         self.chart_2.addSeries(self.curveFPower_real)
@@ -227,12 +251,68 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.curveFPower_real.attachAxis(self.__axisMag_2)
         self.chart_2.legend().markers(self.curveFPower_real)[0].setVisible(False)
         self.chart_2.legend().setAlignment(Qt.AlignTop)
-        pen = QtGui.QPen(QtGui.QColor(255, 0, 0))
+        pen = QtGui.QPen(QtGui.QColor(255, 0, 0))   # red
         pen.setWidth(1)
         self.curveFPower_real.setPen(pen)
         self.curveFPower_real.setPointsVisible(True)
         self.curveFPower_real.hovered.connect(self.do_series_hovered)
         self.curveFPower_real.clicked.connect(self.do_series_clicked)
+        # real time curve 2
+        self.curveFPower_real2 = QtChart.QLineSeries()
+        self.curveFPower_real2.setName("P2")
+        self.chart_2.addSeries(self.curveFPower_real2)
+        self.curveFPower_real2.attachAxis(self.__axisFreq_2)
+        self.curveFPower_real2.attachAxis(self.__axisMag_2)
+        self.chart_2.legend().markers(self.curveFPower_real2)[0].setVisible(False)
+        self.chart_2.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(0, 0, 255))   # blue
+        pen.setWidth(1)
+        self.curveFPower_real2.setPen(pen)
+        self.curveFPower_real2.setPointsVisible(True)
+        self.curveFPower_real2.hovered.connect(self.do_series_hovered)
+        self.curveFPower_real2.clicked.connect(self.do_series_clicked)
+        # real time curve 3
+        self.curveFPower_real3 = QtChart.QLineSeries()
+        self.curveFPower_real3.setName("P3")
+        self.chart_2.addSeries(self.curveFPower_real3)
+        self.curveFPower_real3.attachAxis(self.__axisFreq_2)
+        self.curveFPower_real3.attachAxis(self.__axisMag_2)
+        self.chart_2.legend().markers(self.curveFPower_real3)[0].setVisible(False)
+        self.chart_2.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(255, 0, 255))     # fuchsia
+        pen.setWidth(1)
+        self.curveFPower_real3.setPen(pen)
+        self.curveFPower_real3.setPointsVisible(True)
+        self.curveFPower_real3.hovered.connect(self.do_series_hovered)
+        self.curveFPower_real3.clicked.connect(self.do_series_clicked)
+        # real time curve 4
+        self.curveFPower_real4 = QtChart.QLineSeries()
+        self.curveFPower_real4.setName("P5")
+        self.chart_2.addSeries(self.curveFPower_real4)
+        self.curveFPower_real4.attachAxis(self.__axisFreq_2)
+        self.curveFPower_real4.attachAxis(self.__axisMag_2)
+        self.chart_2.legend().markers(self.curveFPower_real4)[0].setVisible(False)
+        self.chart_2.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(0, 128, 0))       # green
+        pen.setWidth(1)
+        self.curveFPower_real4.setPen(pen)
+        self.curveFPower_real4.setPointsVisible(True)
+        self.curveFPower_real4.hovered.connect(self.do_series_hovered)
+        self.curveFPower_real4.clicked.connect(self.do_series_clicked)
+        # real time curve 5
+        self.curveFPower_real5 = QtChart.QLineSeries()
+        self.curveFPower_real5.setName("P5")
+        self.chart_2.addSeries(self.curveFPower_real5)
+        self.curveFPower_real5.attachAxis(self.__axisFreq_2)
+        self.curveFPower_real5.attachAxis(self.__axisMag_2)
+        self.chart_2.legend().markers(self.curveFPower_real5)[0].setVisible(False)
+        self.chart_2.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(128, 0, 128))     # purple
+        pen.setWidth(1)
+        self.curveFPower_real5.setPen(pen)
+        self.curveFPower_real5.setPointsVisible(True)
+        self.curveFPower_real5.hovered.connect(self.do_series_hovered)
+        self.curveFPower_real5.clicked.connect(self.do_series_clicked)
 
         # create curve for field strength
         # at position 1
@@ -307,18 +387,147 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.curveFieldStr_5.clicked.connect(self.do_series_clicked)
         # real time curve
         self.curveFieldStr_real = QtChart.QLineSeries()
-        self.curveFieldStr_real.setName("Test Position 1")
+        self.curveFieldStr_real.setName("P1")
         self.chart_1.addSeries(self.curveFieldStr_real)
         self.curveFieldStr_real.attachAxis(self.__axisFreq)
         self.curveFieldStr_real.attachAxis(self.__axisMag)
         self.chart_1.legend().markers(self.curveFieldStr_real)[0].setVisible(False)
         self.chart_1.legend().setAlignment(Qt.AlignTop)
-        pen = QtGui.QPen(QtGui.QColor(255, 0, 0))
+        pen = QtGui.QPen(QtGui.QColor(255, 0, 0))       # red
         pen.setWidth(1)
         self.curveFieldStr_real.setPen(pen)
         self.curveFieldStr_real.setPointsVisible(True)
         self.curveFieldStr_real.hovered.connect(self.do_series_hovered)
         self.curveFieldStr_real.clicked.connect(self.do_series_clicked)
+        # real time curve 2
+        self.curveFieldStr_real2 = QtChart.QLineSeries()
+        self.curveFieldStr_real2.setName("P2")
+        self.chart_1.addSeries(self.curveFieldStr_real2)
+        self.curveFieldStr_real2.attachAxis(self.__axisFreq)
+        self.curveFieldStr_real2.attachAxis(self.__axisMag)
+        self.chart_1.legend().markers(self.curveFieldStr_real2)[0].setVisible(False)
+        self.chart_1.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(0, 0, 255))       # blue
+        pen.setWidth(1)
+        self.curveFieldStr_real2.setPen(pen)
+        self.curveFieldStr_real2.setPointsVisible(True)
+        self.curveFieldStr_real2.hovered.connect(self.do_series_hovered)
+        self.curveFieldStr_real2.clicked.connect(self.do_series_clicked)
+        # real time curve 3
+        self.curveFieldStr_real3 = QtChart.QLineSeries()
+        self.curveFieldStr_real3.setName("P3")
+        self.chart_1.addSeries(self.curveFieldStr_real3)
+        self.curveFieldStr_real3.attachAxis(self.__axisFreq)
+        self.curveFieldStr_real3.attachAxis(self.__axisMag)
+        self.chart_1.legend().markers(self.curveFieldStr_real3)[0].setVisible(False)
+        self.chart_1.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(255, 0, 255))     # fuchsia
+        pen.setWidth(1)
+        self.curveFieldStr_real3.setPen(pen)
+        self.curveFieldStr_real3.setPointsVisible(True)
+        self.curveFieldStr_real3.hovered.connect(self.do_series_hovered)
+        self.curveFieldStr_real3.clicked.connect(self.do_series_clicked)
+        # real time curve 4
+        self.curveFieldStr_real4 = QtChart.QLineSeries()
+        self.curveFieldStr_real4.setName("P4")
+        self.chart_1.addSeries(self.curveFieldStr_real4)
+        self.curveFieldStr_real4.attachAxis(self.__axisFreq)
+        self.curveFieldStr_real4.attachAxis(self.__axisMag)
+        self.chart_1.legend().markers(self.curveFieldStr_real4)[0].setVisible(False)
+        self.chart_1.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(0, 128, 0))       # green
+        pen.setWidth(1)
+        self.curveFieldStr_real4.setPen(pen)
+        self.curveFieldStr_real4.setPointsVisible(True)
+        self.curveFieldStr_real4.hovered.connect(self.do_series_hovered)
+        self.curveFieldStr_real4.clicked.connect(self.do_series_clicked)
+        # real time curve 5
+        self.curveFieldStr_real5 = QtChart.QLineSeries()
+        self.curveFieldStr_real5.setName("P5")
+        self.chart_1.addSeries(self.curveFieldStr_real5)
+        self.curveFieldStr_real5.attachAxis(self.__axisFreq)
+        self.curveFieldStr_real5.attachAxis(self.__axisMag)
+        self.chart_1.legend().markers(self.curveFieldStr_real5)[0].setVisible(False)
+        self.chart_1.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(128, 0, 128))     # purple
+        pen.setWidth(1)
+        self.curveFieldStr_real5.setPen(pen)
+        self.curveFieldStr_real5.setPointsVisible(True)
+        self.curveFieldStr_real5.hovered.connect(self.do_series_hovered)
+        self.curveFieldStr_real5.clicked.connect(self.do_series_clicked)
+
+        # crate curve for chart3
+        # crate curve for backward power
+        # real time curve 1
+        self.curveRwdPow_real = QtChart.QLineSeries()
+        self.curveRwdPow_real.setName("P1")
+        self.chart_3.addSeries(self.curveRwdPow_real)
+        self.curveRwdPow_real.attachAxis(self.__axisFreq_3)
+        self.curveRwdPow_real.attachAxis(self.__axisMag_3)
+        self.chart_3.legend().markers(self.curveRwdPow_real)[0].setVisible(False)
+        self.chart_3.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(255, 0, 0))       #red
+        pen.setWidth(1)
+        self.curveRwdPow_real.setPen(pen)
+        self.curveRwdPow_real.setPointsVisible(True)
+        self.curveRwdPow_real.hovered.connect(self.do_series_hovered)
+        self.curveRwdPow_real.clicked.connect(self.do_series_clicked)
+        # real time curve 2
+        self.curveRwdPow_real2 = QtChart.QLineSeries()
+        self.curveRwdPow_real2.setName("P2")
+        self.chart_3.addSeries(self.curveRwdPow_real2)
+        self.curveRwdPow_real2.attachAxis(self.__axisFreq_3)
+        self.curveRwdPow_real2.attachAxis(self.__axisMag_3)
+        self.chart_3.legend().markers(self.curveRwdPow_real2)[0].setVisible(False)
+        self.chart_3.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(0, 0, 255))       # blue
+        pen.setWidth(1)
+        self.curveRwdPow_real2.setPen(pen)
+        self.curveRwdPow_real2.setPointsVisible(True)
+        self.curveRwdPow_real2.hovered.connect(self.do_series_hovered)
+        self.curveRwdPow_real2.clicked.connect(self.do_series_clicked)
+        # real time curve 3
+        self.curveRwdPow_real3 = QtChart.QLineSeries()
+        self.curveRwdPow_real3.setName("P2")
+        self.chart_3.addSeries(self.curveRwdPow_real3)
+        self.curveRwdPow_real3.attachAxis(self.__axisFreq_3)
+        self.curveRwdPow_real3.attachAxis(self.__axisMag_3)
+        self.chart_3.legend().markers(self.curveRwdPow_real3)[0].setVisible(False)
+        self.chart_3.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(255, 0, 255))     # fuchsia
+        pen.setWidth(1)
+        self.curveRwdPow_real3.setPen(pen)
+        self.curveRwdPow_real3.setPointsVisible(True)
+        self.curveRwdPow_real3.hovered.connect(self.do_series_hovered)
+        self.curveRwdPow_real3.clicked.connect(self.do_series_clicked)
+        # real time curve 4
+        self.curveRwdPow_real4 = QtChart.QLineSeries()
+        self.curveRwdPow_real4.setName("P2")
+        self.chart_3.addSeries(self.curveRwdPow_real4)
+        self.curveRwdPow_real4.attachAxis(self.__axisFreq_3)
+        self.curveRwdPow_real4.attachAxis(self.__axisMag_3)
+        self.chart_3.legend().markers(self.curveRwdPow_real4)[0].setVisible(False)
+        self.chart_3.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(0, 128, 0))       # green
+        pen.setWidth(1)
+        self.curveRwdPow_real4.setPen(pen)
+        self.curveRwdPow_real4.setPointsVisible(True)
+        self.curveRwdPow_real4.hovered.connect(self.do_series_hovered)
+        self.curveRwdPow_real4.clicked.connect(self.do_series_clicked)
+        # real time curve 5
+        self.curveRwdPow_real5 = QtChart.QLineSeries()
+        self.curveRwdPow_real5.setName("P2")
+        self.chart_3.addSeries(self.curveRwdPow_real5)
+        self.curveRwdPow_real5.attachAxis(self.__axisFreq_3)
+        self.curveRwdPow_real5.attachAxis(self.__axisMag_3)
+        self.chart_3.legend().markers(self.curveRwdPow_real5)[0].setVisible(False)
+        self.chart_3.legend().setAlignment(Qt.AlignTop)
+        pen = QtGui.QPen(QtGui.QColor(128, 0, 128))     # purple
+        pen.setWidth(1)
+        self.curveRwdPow_real5.setPen(pen)
+        self.curveRwdPow_real5.setPointsVisible(True)
+        self.curveRwdPow_real5.hovered.connect(self.do_series_hovered)
+        self.curveRwdPow_real5.clicked.connect(self.do_series_clicked)
 
         # open and read measurement data
         # measurement data in position 1
@@ -358,11 +567,13 @@ class Ui_Calibration(QtWidgets.QDialog):
         #self.toolButton_open.clicked.connect(self.loadNewData)
         self.toolButton_new.clicked.connect(self.clearGraphics)     # clear graphics
         self.toolButton_new.clicked.connect(self.clearParameter)    # clear parameters
-        #self.toolButton_new.clicked.connect(self.loadNewData)
-        self.toolButton_open.clicked.connect(self.loadNewData2)
+        self.toolButton_save.clicked.connect(self.dataSave2)
+        #self.toolButton_open.clicked.connect(self.loadNewData2)
+        self.comboBox_chart.currentIndexChanged.connect(self.changeChart)
 
+        self.toolButton_open.clicked.connect(self.loadData)
 
-        self.toolButton_save.clicked.connect(self.dataSave)
+        #self.toolButton_save.clicked.connect(self.dataSave)
         #self.toolButton_save.clicked.connect(self.savetest)
 
     # this function used for load all 5 positions data
@@ -443,19 +654,28 @@ class Ui_Calibration(QtWidgets.QDialog):
                 self.chart_1.legend().markers(self.curveFieldStr_5)[0].setVisible(True)
                 self.chart_2.legend().markers(self.curveFPower5)[0].setVisible(True)
 
-    # choose a csv file
+    # load the calibration data
+    # Numpy and panda method
+    def loadData(self):
+        filepath = self.open_file()
+        if not filepath == "":
+            caliData = pd.read_csv('%s' % filepath, header=0).values
+            print(caliData)
+
+    # choose a csv file and give the file path
     def open_file(self):
         filename = QFileDialog.getOpenFileName(self, 'Kalibrierungsdaten öffnen', '', 'csv files (*.csv)')
         self.path = filename[0]
-        #a = self.path.split("/")[-1]
-        #if self.path != ('', ''):
-            #print("opena file %s" % self.path)
         return self.path
 
     def clearGraphics(self):
         self.progressBar_status.setValue(0)
         self.curveFieldStr_real.clear()
+        self.curveFieldStr_real2.clear()
         self.curveFPower_real.clear()
+        self.curveFPower_real2.clear()
+        self.curveRwdPow_real.clear()
+        self.curveRwdPow_real2.clear()
         self.curveFieldStr_1.clear()
         self.curveFPower1.clear()
         self.curveFieldStr_2.clear()
@@ -487,56 +707,96 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.treeWidget_info.topLevelItem(6).setText(1, "")
 
     def ShowHideCurveP1(self):
-        if self.curveFPower1.isVisible():
-            self.curveFPower1.hide()
-            self.curveFieldStr_1.hide()
+        #if self.curveFPower1.isVisible():
+            #self.curveFPower1.hide()
+            #self.curveFieldStr_1.hide()
+        #else:
+            #self.curveFPower1.show()
+            #self.curveFieldStr_1.show()
+        if self.curveFPower_real.isVisible():
+            self.curveFPower_real.hide()
+            self.curveFieldStr_real.hide()
+            self.curveRwdPow_real.hide()
         else:
-            self.curveFPower1.show()
-            self.curveFieldStr_1.show()
-        #color = QtWidgets.QColorDialog.getColor()
-        #pen = QtGui.QPen(QtGui.QColor(color))
-        #self.curveFieldStr_1.setPen(pen)
-        #self.curveFPower1.setPen(pen)
+            self.curveFPower_real.show()
+            self.curveFieldStr_real.show()
+            self.curveRwdPow_real.show()
 
     def ShowHideCurveP2(self):
-        if self.curveFPower2.isVisible():
-            self.curveFPower2.hide()
-            self.curveFieldStr_1.hide()
+        #if self.curveFPower2.isVisible():
+            #self.curveFPower2.hide()
+            #self.curveFieldStr_1.hide()
+        #else:
+            #self.curveFPower2.show()
+            #self.curveFieldStr_2.show()
+        if self.curveFPower_real2.isVisible():
+            self.curveFPower_real2.hide()
+            self.curveFieldStr_real2.hide()
+            self.curveRwdPow_real2.hide()
         else:
-            self.curveFPower2.show()
-            self.curveFieldStr_2.show()
+            self.curveFPower_real2.show()
+            self.curveFieldStr_real2.show()
+            self.curveRwdPow_real2.show()
 
     def ShowHideCurveP3(self):
-        if self.curveFPower3.isVisible():
-            self.curveFPower3.hide()
-            self.curveFieldStr_3.hide()
+        #if self.curveFPower3.isVisible():
+            #self.curveFPower3.hide()
+            #self.curveFieldStr_3.hide()
+        #else:
+            #self.curveFPower3.show()
+            #self.curveFieldStr_3.show()
+        if self.curveFPower_real3.isVisible():
+            self.curveFPower_real3.hide()
+            self.curveFieldStr_real3.hide()
+            self.curveRwdPow_real3.hide()
         else:
-            self.curveFPower3.show()
-            self.curveFieldStr_3.show()
+            self.curveFPower_real3.show()
+            self.curveFieldStr_real3.show()
+            self.curveRwdPow_real3.show()
 
     def ShowHideCurveP4(self):
-        if self.curveFPower4.isVisible():
-            self.curveFPower4.hide()
-            self.curveFieldStr_4.hide()
+        #if self.curveFPower4.isVisible():
+            #self.curveFPower4.hide()
+            #self.curveFieldStr_4.hide()
+        #else:
+            #self.curveFPower4.show()
+            #self.curveFieldStr_4.show()
+        if self.curveFPower_real4.isVisible():
+            self.curveFPower_real4.hide()
+            self.curveFieldStr_real4.hide()
+            self.curveRwdPow_real4.hide()
         else:
-            self.curveFPower4.show()
-            self.curveFieldStr_4.show()
+            self.curveFPower_real4.show()
+            self.curveFieldStr_real4.show()
+            self.curveRwdPow_real4.show()
 
     def ShowHideCurveP5(self):
-        if self.curveFPower5.isVisible():
-            self.curveFPower5.hide()
-            self.curveFieldStr_5.hide()
+        #if self.curveFPower5.isVisible():
+            #self.curveFPower5.hide()
+            #self.curveFieldStr_5.hide()
+        #else:
+            #self.curveFPower5.show()
+            #self.curveFieldStr_5.show()
+        if self.curveFPower_real5.isVisible():
+            self.curveFPower_real5.hide()
+            self.curveFieldStr_real5.hide()
+            self.curveRwdPow_real5.hide()
         else:
-            self.curveFPower5.show()
-            self.curveFieldStr_5.show()
+            self.curveFPower_real5.show()
+            self.curveFieldStr_real5.show()
+            self.curveRwdPow_real5.show()
 
-    def do_chartView_mouseMove(self, point):
-        pt = self.graphicsView_2.chart().mapToValue(point)
-        self.MousPositionLabel.setText("Chart X=%.2f,Y=%.2f" % (pt.x(), pt.y()))
+    #def do_chartView_mouseMove(self, point):
+        #pt = self.graphicsView_2.chart().mapToValue(point)
+        #self.MousPositionLabel.setText("Chart X=%.2f,Y=%.2f" % (pt.x(), pt.y()))
+        #self.Polarisation = ""
+        #self.FieldStrength = 30
 
-        self.Polarisation = ""
-        self.FieldStrength = 30
-
+    def changeChart(self):
+        if self.comboBox_chart.currentText() == "Vorwärtsleistung":
+            self.graphicsView_2.setChart(self.chart_2)
+        elif self.comboBox_chart.currentText() == "Rückwärtsleistung":
+            self.graphicsView_2.setChart(self.chart_3)
 
     # def setupUi(self):
     # dialog = uic.loadUi("uifiles/KalibierungWindow_neu.ui", self)
@@ -563,7 +823,10 @@ class Ui_Calibration(QtWidgets.QDialog):
         # update parameters for calibration setup
         if not dialog.itemIndex == "":
             self.index = int(dialog.itemIndex)
-            self.Position = int(dialog.comboBox_Pos.currentText())
+            if dialog.comboBox_Pos.currentText() == "Alle 5":
+                self.Position = 1         # "Alle 5" start with position 1
+            else:
+                self.Position = int(dialog.comboBox_Pos.currentText())
             self.Polarisation = dialog.comboBox_Polar.currentText()
             self.treeWidget_info.topLevelItem(0).setText(1, "%s" % dialog.comboBox_Pos.currentText())
             self.treeWidget_info.topLevelItem(1).setText(1, "%s" % dialog.comboBox_Polar.currentText())
@@ -572,7 +835,7 @@ class Ui_Calibration(QtWidgets.QDialog):
             self.treeWidget_info.topLevelItem(4).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(self.index).text(2))
             self.treeWidget_info.topLevelItem(5).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(self.index).text(3))
             self.treeWidget_info.topLevelItem(6).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(self.index).text(4))
-
+            self.treeWidget_info.topLevelItem(7).setText(1, "%s" % dialog.lineEdit_StartDrive.text())
         # get start frequency from setup info
         if "M" in str(dialog.treeWidget_parameters.topLevelItem(0).text(0)):
             self.StartFreq = float(dialog.treeWidget_parameters.topLevelItem(0).text(0).replace("M", ""))
@@ -596,29 +859,48 @@ class Ui_Calibration(QtWidgets.QDialog):
 
         # get Dwell
         self.Dwell = int(dialog.treeWidget_parameters.topLevelItem(0).text(4))
-        print("start fre ist %s" % self.StartFreq)
-        print("max Frequenz ist %s" % self.MaxFreq)
-        #print("level ist %s" % self.level)
+
+        # get startAPM
+        self.startAPM = int(dialog.lineEdit_StartDrive.text())
+
+        print("start fre %s" % self.StartFreq)
+        print("max Frequenz %s" % self.MaxFreq)
+        print('startAPM: %s' % self.startAPM)
+        print("level  %s" % self.level)
 
     # test function delete later
     def start_test(self):
         self.freqList = []
         self.vorPowList = []
         self.feilStrList = []
-        self.External_FS_test = External_FS_test(StartFreq=self.StartFreq, FreqStep=self.FreStep, MaxFreq=self.MaxFreq)
-        self.External_FS_test.start()
-        self.label_TestRunningStatus.setText("Test läuft")
-        self.label_status.setText("Status: %s (%s)" % (
-        self.label_TestRunningStatus.text(), time.strftime("%d.%m.%Y %H:%M:%S", time.localtime())))
-        self.External_FS_test.countChanged.connect(self.onCountChanged)
-        self.External_FS_test.completedflag.connect(self.testCompletedflag)
-        # disable the start button
-        self.toolButton_start.setEnabled(False)
+        if self.treeWidget_info.topLevelItem(0).text(1) == "" or \
+                self.treeWidget_info.topLevelItem(1).text(1) == "" or \
+                self.treeWidget_info.topLevelItem(2).text(1) == "" or \
+                self.treeWidget_info.topLevelItem(3).text(1) == "" or \
+                self.treeWidget_info.topLevelItem(4).text(1) == "" or \
+                self.treeWidget_info.topLevelItem(5).text(1) == "":
+            QtWidgets.QMessageBox.information(self, "Hinweis", "Bitte alle Parameter einstellen")
+        else:
+            # activate the stop and pause button
+            self.toolButton_stop.setEnabled(True)
+            self.toolButton_pause.setEnabled(True)
+
+            self.External_FS_test = External_FS_test(StartFreq=self.StartFreq,
+                                                 FreqStep=self.FreStep, MaxFreq=self.MaxFreq, E_T=self.level,
+                                                     startAPM=self.startAPM, Position=self.Position)
+            self.External_FS_test.start()
+            self.label_TestRunningStatus.setText("Test läuft")
+            self.label_status.setText("Status: %s (%s)" % (
+            self.label_TestRunningStatus.text(), time.strftime("%d.%m.%Y %H:%M:%S", time.localtime())))
+            self.External_FS_test.countChanged.connect(self.onCountChanged)
+            self.External_FS_test.completedflag.connect(self.testCompletedflag)
+            # disable the start button when calibration is running
+            self.toolButton_start.setEnabled(False)
         #self.External_FS_test.dataCache.connect(self.onDataCache)
 
     # test function delete later
     def pause_test(self):
-        if not self.External_FS_test.ispaused:
+        if not self.External_FS_test.isPaused:
             self.External_FS_test.pause()
             self.label_TestRunningStatus.setText("Test pausiert!")
             self.label_status.setText("Status: %s (%s)" % (
@@ -639,6 +921,8 @@ class Ui_Calibration(QtWidgets.QDialog):
             self.label_TestRunningStatus.text(), time.strftime("%d.%m.%Y %H:%M:%S", time.localtime())))
         # enable the start button
         self.toolButton_start.setEnabled(True)
+        self.toolButton_stop.setEnabled(False)
+        self.toolButton_pause.setEnabled(False)
 
     def start_CaliThread(self):
         # self.count = 0
@@ -715,16 +999,54 @@ class Ui_Calibration(QtWidgets.QDialog):
         print("saved data is %s" % self.testresult)
 
     # used to update the diagram
-    def onCountChanged(self, measuredFreq, vorPower, FieldStrength):  # the parameters rewrite later
-        frequenz = measuredFreq
-        magnitude1 = vorPower
+    def onCountChanged(self, measuredFreq, vorPower, bwdPow, FieldStrength, position):  # the parameters rewrite later
+        frequency = measuredFreq
+        magnitude1FwdPow = vorPower
+        magnitude1RwdPow = bwdPow
         magnitude2 = FieldStrength
+        Pos = position
         self.freqList.append(measuredFreq)
         self.vorPowList.append(vorPower)
         self.feilStrList.append(FieldStrength)
-        self.curveFPower_real.append(frequenz, magnitude1)
-        self.curveFieldStr_real.append(frequenz, magnitude2)
-        value = ((frequenz-self.StartFreq)/((self.MaxFreq/(self.FreStep+1.0))-self.StartFreq)) * 100
+        # adding real time data to chart
+        if Pos == 1:
+            self.curveFPower_real.append(frequency, magnitude1FwdPow)
+            self.curveFieldStr_real.append(frequency, magnitude2)
+            self.curveRwdPow_real.append(frequency, magnitude1RwdPow)
+            self.chart_2.legend().markers(self.curveFPower_real)[0].setVisible(True)
+            self.chart_1.legend().markers(self.curveFieldStr_real)[0].setVisible(True)
+            self.chart_3.legend().markers(self.curveRwdPow_real)[0].setVisible(True)
+
+        elif Pos == 2:
+            self.curveFPower_real2.append(frequency, magnitude1FwdPow)
+            self.curveFieldStr_real2.append(frequency, magnitude2)
+            self.curveRwdPow_real2.append(frequency, magnitude1RwdPow)
+            self.chart_2.legend().markers(self.curveFPower_real2)[0].setVisible(True)
+            self.chart_1.legend().markers(self.curveFieldStr_real2)[0].setVisible(True)
+            self.chart_3.legend().markers(self.curveRwdPow_real2)[0].setVisible(True)
+        elif Pos == 3:
+            self.curveFPower_real3.append(frequency, magnitude1FwdPow)
+            self.curveFieldStr_real3.append(frequency, magnitude2)
+            self.curveRwdPow_real3.append(frequency, magnitude1RwdPow)
+            self.chart_2.legend().markers(self.curveFPower_real3)[0].setVisible(True)
+            self.chart_1.legend().markers(self.curveFieldStr_real3)[0].setVisible(True)
+            self.chart_3.legend().markers(self.curveRwdPow_real3)[0].setVisible(True)
+        elif Pos == 4:
+            self.curveFPower_real4.append(frequency, magnitude1FwdPow)
+            self.curveFieldStr_real4.append(frequency, magnitude2)
+            self.curveRwdPow_real4.append(frequency, magnitude1RwdPow)
+            self.chart_2.legend().markers(self.curveFPower_real4)[0].setVisible(True)
+            self.chart_1.legend().markers(self.curveFieldStr_real4)[0].setVisible(True)
+            self.chart_3.legend().markers(self.curveRwdPow_real4)[0].setVisible(True)
+        elif Pos == 5:
+            self.curveFPower_real5.append(frequency, magnitude1FwdPow)
+            self.curveFieldStr_real5.append(frequency, magnitude2)
+            self.curveRwdPow_real5.append(frequency, magnitude1RwdPow)
+            self.chart_2.legend().markers(self.curveFPower_real5)[0].setVisible(True)
+            self.chart_1.legend().markers(self.curveFieldStr_real5)[0].setVisible(True)
+            self.chart_3.legend().markers(self.curveRwdPow_real5)[0].setVisible(True)
+
+        value = ((frequency - self.StartFreq) / ((self.MaxFreq / (self.FreStep + 1.0)) - self.StartFreq)) * 100
         self.progressBar_status.setValue(value)
 
         #print("test data %s" % testdata)
@@ -732,23 +1054,47 @@ class Ui_Calibration(QtWidgets.QDialog):
         #print("value ist %s" % value)
         #print("max freq %s" % self.MaxFreq)
 
-        #self.progressBar_status.setValue(value)
-        #colum1 = [measuredFreq]
-        #colum2 = [vorPower]
-        #colum3 = [FieldStrength]
-        #return colum1, colum2, colum3
-
-    def testCompletedflag(self, completed):
+    def testCompletedflag(self, completed, position):
         if completed:
-            self.label_TestRunningStatus.setText("Kalibrierung ist fertig!")
-        completedflag = completed
-        return completedflag
+            self.label_TestRunningStatus.setText("Kalibrierung für Position %s ist fertig!" % position)
+
+            messageBox = QtWidgets.QMessageBox()
+            messageBox.setWindowTitle('Achtung!!')
+            messageBox.setIcon(QtWidgets.QMessageBox.Warning)
+            messageBox.setWindowIcon(QtGui.QIcon('./icon_materials/8.png'))
+            messageBox.setText('Kalibrierung für Position %s ist fertig!\n '
+                               'Bitte die Sonde auf die nächste Position einstellen!' % position)
+            messageBox.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+            buttonY = messageBox.button(QtWidgets.QMessageBox.Ok)
+            buttonY.setText('Fortfahren')
+            buttonN = messageBox.button(QtWidgets.QMessageBox.Cancel)
+            buttonN.setText('Kalibrierung enden')
+            if messageBox.exec_() == QtWidgets.QMessageBox.Ok:
+                self.External_FS_test.runNextTest()
+            else:
+                self.External_FS_test.stop()
+                self.toolButton_start.setEnabled(True)
+        if completed and position == 5:
+            self.toolButton_start.setEnabled(True)
+            self.toolButton_stop.setEnabled(False)
+            self.toolButton_pause.setEnabled(False)
+            self.progressBar_status.setValue(0)
+
+        #completedflag = completed
+        #currentTestPos = position
+        #return completedflag, currentTestPos
 
     def showTabularTate(self):
         dialog = TabularDateWindow()
         if dialog.path != "":
             dialog.exec_()
-
+    # use numpy and panda
+    def dataSave2(self):
+        filename = QFileDialog.getSaveFileName(self, "Save File", "./data", "csv file(*.csv)")
+        if not filename[0] == "":
+            result = caliDataProcessing()
+            writeF = pd.DataFrame(result)
+            writeF.to_csv('%s' % filename[0], index=False)
     # save the data for one test position
     #
     def dataSave(self):
@@ -834,6 +1180,7 @@ class Ui_Calibration(QtWidgets.QDialog):
         pt2 = self.graphicsView_2.chart().mapToValue(point)
         self.MousPositionLabel.setText("Chart X=%.2f,Y=%.2f" % (pt.x(), pt.y()))
         self.MousPositionLabel.setText("Chart X=%.2f,Y=%.2f" % (pt2.x(), pt2.y()))
+
 
     def color(hex):
         r = int(hex[1:3], 16)
@@ -1046,6 +1393,19 @@ class TabularDateWindow(QtWidgets.QDialog):
                 # self.measuredFreq.append(float(self.rows[i][0]))  # column 0 is frequency
                 # self.forwardPower.append(float(self.rows[i][1]))  # column 1 is forward power
                 # self.probData.append(float(self.rows[i][2]))  # column 2 is measurement data from prob
+
+
+class RemainderDialog(QtWidgets.QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        uic.loadUi("uifiles/remainderWindow.ui", self)
+        self.label_reminder.setText("aaa")
+
+        # define signals
+        self.pushButton_continue.clicked.connect(self.startNextTest)
+        #self.pushButton_cancle.clicked.connect()
+
+
 
 
 if __name__ == "__main__":
