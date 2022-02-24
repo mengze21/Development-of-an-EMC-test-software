@@ -19,13 +19,16 @@
    <string>Variable Parameter einstellen</string>
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0" rowminimumheight="0,0,0,0">
-   <item row="3" column="0">
+   <item row="3" column="0" alignment="Qt::AlignRight">
     <widget class="QDialogButtonBox" name="edit_var_parameters">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
