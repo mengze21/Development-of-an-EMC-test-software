@@ -35,6 +35,8 @@ class External_FS_test(QThread):
 
 
     def run(self):
+        #####
+        # rewrite
         print('StartFreq %s' % self.StartFreq)
         print('FreqStep %s' % self.FreqStep)
         print('MaxFreq %s' % self.MaxFreq)
@@ -58,12 +60,12 @@ class External_FS_test(QThread):
                 bwdPow = self.bwdPow
                 FieldStrength = self.FieldStrength
                 self.testFreq = self.testFreq + self.FreqStep * self.testFreq
-
+        ######
                 # emit the data to GUI
                 self.countChanged.emit(measuredFreq, vorPower, bwdPow, FieldStrength, position)
 
                 #
-                time.sleep(0.01)
+                #time.sleep(0.01)
                 while self.isPaused:
                     time.sleep(0)
                 if self.stopped:
