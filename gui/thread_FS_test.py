@@ -6,6 +6,8 @@ from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtCore import QThread, pyqtSignal
 import sys
 import time
+import csv
+from csv import reader
 
 from tqdm import tqdm
 
@@ -13,6 +15,7 @@ from WrapperEMRFeldsonde import WrapperEMRFeldsonde
 from WrapperSwitchHP import WrapperSwitchHP
 from WrapperPowerMeter import WrapperPowerMeter
 from WrapperSignalGenerator import WrapperSignalGenerator
+from calibrationFileCreate import createCalibrationFile
 import pyvisa
 
 rm = pyvisa.ResourceManager()
@@ -35,8 +38,13 @@ class External_FS_test(QThread):
         self.position = Position
         self.E_T = E_T
         self.E_L = E_T * 1.8  # Pegeleinstellungsfeldstärke
-        self.E_L_Tol = 0.6
+        self.E_L_Tol = 0.6 #Field Strength Toleranz
+        self.polarisation = 'vertical' # Polarisation auch aus GUI
+        self.max_E_L = self.E_L + self.E_L_Tol
+        self.control_E_L = self.E_L + self.E_L_Tol / 2
+
         self.startAPM = startAPM
+        self.powMeterTol = 0.1 #eventuell aus GUI
         self.stopped = False
         self.completed = False
         self.restart = False
@@ -53,6 +61,17 @@ class External_FS_test(QThread):
         self.FieldStrength = 0
 
     def run(self):
+        prevStepAPM = self.startAPM
+        # list creation
+        frequVal = []
+        powFwdVal = []
+        sondeListVal = []
+        gridValFrequ = []
+        gridValFwd = []
+        powRevVal = []
+        powAPMSet = []
+        # list CSV fiel
+        listCsvFile = []
         while self.position in range(6):
             self.stopped = False
             self.completed = False
@@ -81,10 +100,12 @@ class External_FS_test(QThread):
                 setFrequ = setFrequ * 1.01
 
             for i in tqdm(frequList, desc="Calibration Frequ Step:"):
+                if self.stopped:
+                    break
                 setFrequ = i
                 MV = setAPM
                 instSigGen.switchRFOff()  # set RF ON!!!!!!!!!
-                controller = PI(0.2, 0.033, MV, 1)
+                controller = self.PI(0.2, 0.033, MV, 1)
                 controller.send(None)
                 # check if the switch needs to be switched
                 currAmpSwitch = instSwitch.validFrequ(setFrequ)  # check if frequency is valid
@@ -103,16 +124,15 @@ class External_FS_test(QThread):
                         print('activeSwitch: %i' % activSwitch)
                     elif currAmpSwitch == 4:
                         print('activeSwitch Abort: %i' % activSwitch)
-                        abortTest()
+                        self.abortTest()
                         break
                 instSigGen.setFrequMHZ(setFrequ)  # Set Beginning frequency
-                # if setAPM > maxAPMPoss:
-                #     abortTest()
                 instSigGen.setAmpDBM(setAPM)  # set beginning amplitude value
                 instSigGen.switchRFOn()  # set RF ON!!!!!!!!
 
                 instSonde.readval()
                 currSondeVal = instSonde.effEVal
+                # Powermeter auslesen eventuell aus bereinigtem Wert
                 instPowerMeter.switchChannelA()
                 instPowerMeter.getMeasVal()
                 currFwdVal = instPowerMeter.currVal
@@ -125,8 +145,12 @@ class External_FS_test(QThread):
                 iRow = 1
                 tmpSondeVal = [False] * 3
                 while 1:
+                    while self.isPaused:
+                        time.sleep(0)
+                    if self.stopped:
+                        break
                     # quadrieren der toleranzen -> kein sqrt nötig
-                    if (self.E_T < currSondeVal < max_E_L):
+                    if (self.E_T < currSondeVal < self.max_E_L):
                         # find at least 3 Sondeval in Row to validate
                         tmpSondeVal[iRow] = True
                     else:
@@ -143,30 +167,17 @@ class External_FS_test(QThread):
                     if (k % 60) == 0:
                         continueTest = input('Continue Test?\n')
                         if continueTest == 'No':
-                            abortTest()
+                            self.abortTest()
                     # Check if Rev and FWD are nearly same
-                    if abs(abs(currFwdVal) - abs(currRevVal)) <= powMeterTol:
+                    if abs(abs(currFwdVal) - abs(currRevVal)) <= self.powMeterTol:
                         print('tolerance fwd and reverse broken with %f' % abs(abs(currFwdVal) - abs(currRevVal)))
-                        abortTest()
+                        self.abortTest()
                         break
-                    # if currSondeVal < max_E_L:
-                    #     setAPM = setAPM + stepAPM
-                    # else:
-                    #     setAPM = setAPM - stepAPM
-                    # print('updated APMval: %f \n' % setAPM)
-
-                    # if setAPM > maxAPMPoss:
-                    #     abortTest()
-
-                    # piyes = input('set MV TO APM?')
-                    # if piyes == 'yes':
-                    #     print('set APM to %f' % MV)
-                    # print('set APM to %f' % MV)
                     setAPM = MV
 
-                    if abs(abs(prevStepAPM) - abs(setAPM)) > maxChangeVal:
+                    if abs(abs(prevStepAPM) - abs(setAPM)) > 10:
                         print('APM TO BIG')
-                        abortTest()
+                        self.abortTest()
 
                     instSigGen.setAmpDBM(setAPM)
                     instSigGen.switchRFOn()  # set RF ON!!!!!!!!!
@@ -177,24 +188,18 @@ class External_FS_test(QThread):
                     # print('time sonde:%f' % (time.time()-timeSonde))
                     # print('Updated currSondeVal: %f ' % currSondeVal)
                     t = time.time() - startTime
-                    MV = controller.send([t, currSondeVal, control_E_L])
+                    MV = controller.send([t, currSondeVal, self.control_E_L])
                     if (k > 5) and ((k % 3) == 0):
                         timePowMetA = time.time()
                         instPowerMeter.switchChannelA()
                         instPowerMeter.getMeasVal()
                         currFwdVal = instPowerMeter.currVal
-                        # print('time PowerMeterA:%f' % (time.time()-timePowMetA))
-                        # print('Updated CurrFwdVal: %f \n' % currFwdVal)
                         timePowMetB = time.time()
                         instPowerMeter.switchChannelB()
                         instPowerMeter.getMeasVal()
                         currRevVal = instPowerMeter.currVal
-                        # print('time PowerMeterB:%f' % (time.time()-timePowMetB))
                     # print('Updated currRevVal: %f \n' % currRevVal)
                     k = k + 1
-                    plt.scatter(k, currSondeVal)
-                    plt.show()
-                    plt.pause(0.001)
                 prevStepAPM = setAPM
 
                 # save the values in lists
@@ -212,67 +217,28 @@ class External_FS_test(QThread):
                 powRevVal.append(currRevVal)
                 sondeListVal.append(currSondeVal)
                 powAPMSet.append(setAPM)
-                plt.savefig('graphs/Field_strength_%s_%i_%i' % (polarisation, currPoint, ii))
-                plt.close()
-                # print('Saved currFwdVal: %f' % currFwdVal)
+                self.countChanged.emit(setFrequ, currFwdVal, currRevVal, currSondeVal, self.position)
                 res = [l for l in zip(frequVal, powFwdVal, powRevVal, powAPMSet, sondeListVal)]
-                path = 'output_%s_%i.csv' % (polarisation, currPoint)
+                path = 'output_%s_%i.csv' % (self.polarisation, self.position) # abspeichern der csv nach jeder Position
+                listCsvFile.append()
                 with open(path, 'w', newline='') as csvfile:
                     writer = csv.writer(csvfile)
                     for l in res:
                         writer.writerow(l)
-                ii = ii + 1
+                if not self.stopped:
+                    self.completed = True
+                    completed = self.completed
+                    self.completedflag.emit(completed,self.position)
+                self.isWaiting = True  # set isWaiting True to wait change of the position
 
-
-
-
-
-        #####
-        # rewrite
-        print('StartFreq %s' % self.StartFreq)
-        print('FreqStep %s' % self.FreqStep)
-        print('MaxFreq %s' % self.MaxFreq)
-        print('E_T %s' % self.E_T)
-        print('startAPM %s' % self.startAPM)
-        print('position %s' % self.position)
-
-            self.testFreq = self.StartFreq
-            position = self.position
-            while self.testFreq < self.MaxFreq:
-                self.vorPower = self.vorPower + 0.01
-                self.bwdPow = self.vorPower - 2
-                self.FieldStrength = self.FieldStrength + 0.04
-                print("testFreq %s" % self.testFreq)
-                print("freq step %s" % self.FreqStep)
-                print("position %s" % self.position)
-                measuredFreq = self.testFreq
-                vorPower = self.vorPower
-                bwdPow = self.bwdPow
-                FieldStrength = self.FieldStrength
-                self.testFreq = self.testFreq + self.FreqStep * self.testFreq
-                ######
-                # emit the data to GUI
-                self.countChanged.emit(measuredFreq, vorPower, bwdPow, FieldStrength, position)
-
-                #
-                # time.sleep(0.01)
-                while self.isPaused:
+                # waite for input 'Fortfahren'
+                while self.isWaiting:
                     time.sleep(0)
-                if self.stopped:
-                    break
-            if not self.stopped:
-                self.completed = True
-                completed = self.completed
-                self.completedflag.emit(completed, position)
+        #GUI Fenster öffnet sich mit "Save results?"
+        inpPath = 'C:/mengze/Results/calibResult.csv' # Output aus Gui wo ergebnisse abspeichern
+        createCalibrationFile(listCsvFile,inpPath)
 
-            self.isWaiting = True  # set isWaiting True to wait change of the position
 
-            # waite for input 'Fortfahren'
-            while self.isWaiting:
-                time.sleep(0)
-
-            self.position += 1
-            print(self.position)
 
     def stop(self):
         # print("thread stoped")
@@ -288,10 +254,10 @@ class External_FS_test(QThread):
         self.isWaiting = False
 
 
-    def abortTest():
+    def abortTest(self):
         instSigGen.switchRFOff()
         instSwitch.reset()
-        print('Test Aborted')
+        print('Test Paused')
         sys.exit()
 
 
@@ -313,7 +279,7 @@ class External_FS_test(QThread):
                 isvalid.append(1)
 
 
-    def PI(Kp, Ki, MV_bar, beta):
+    def PI(self,Kp, Ki, MV_bar, beta):
         # initialize stored data
         t_prev = -1
         I = 0
