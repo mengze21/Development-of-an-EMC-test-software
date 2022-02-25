@@ -6,6 +6,8 @@ from PyQt5.QtCore import Qt
 import time
 import numpy as np
 import math
+import csv
+from csv import reader
 from PyQt5.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
 import WordReportGenerator
 import cv2 as cv
@@ -934,6 +936,10 @@ class Ui_TestWindow_FS(object):
             self.curveFieldStr.append(a, b)
 
     def start_thread(self):
+        self.testType = 1 # 1 Signal Generator, 2 Forward Power, 3 Net Power
+        self.calResultPath = 'calResult.csv' # Calibration Result Path from GUI
+
+
         self._clearall()
         self.StartFreq = int(self.TestParaInfo.item(0, 1).text())
         self.FreStep = float(self.TestParaInfo.item(0, 2).text()) * 0.01
