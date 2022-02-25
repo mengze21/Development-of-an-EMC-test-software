@@ -18,19 +18,17 @@ from WrapperSignalGenerator import WrapperSignalGenerator
 from calibrationFileCreate import createCalibrationFile
 import pyvisa
 
-rm = pyvisa.ResourceManager()
-instSonde = WrapperEMRFeldsonde('ASRL3::INSTR', rm)
-instPowerMeter = WrapperPowerMeter('GPIB0::11::INSTR', rm)
-instSwitch = WrapperSwitchHP('GPIB0::9::INSTR', rm)
-instSigGen = WrapperSignalGenerator('GPIB0::21::INSTR', rm)
 sys.path.append('gui')
+
 
 class External_FS_test(QThread):
     completedflag = pyqtSignal(bool, int)
     countChanged = pyqtSignal(float, float, float, float, int)
     positionChanged = pyqtSignal(int)  # emit the current calibration position
 
-    def __init__(self, StartFreq, FreqStep, MaxFreq, E_T, startAPM, Position):
+
+
+    def __init__(self, StartFreq, FreqStep, MaxFreq, E_T, startAPM, Position,Polarisation):
         super(External_FS_test, self).__init__()
         self.StartFreq = StartFreq
         self.FreqStep = FreqStep
@@ -39,7 +37,7 @@ class External_FS_test(QThread):
         self.E_T = E_T
         self.E_L = E_T * 1.8  # Pegeleinstellungsfeldstärke
         self.E_L_Tol = 0.6 #Field Strength Toleranz
-        self.polarisation = 'vertical' # Polarisation auch aus GUI
+        self.polarisation = Polarisation # Polarisation auch aus GUI
         self.max_E_L = self.E_L + self.E_L_Tol
         self.control_E_L = self.E_L + self.E_L_Tol / 2
 
@@ -52,6 +50,12 @@ class External_FS_test(QThread):
         self.isWaiting = False
         # Resource adresses
         self.activSwitch = 0
+
+        rm = pyvisa.ResourceManager()
+        self.instSonde = WrapperEMRFeldsonde('ASRL3::INSTR', rm)
+        self.instPowerMeter = WrapperPowerMeter('GPIB0::11::INSTR', rm)
+        self.instSwitch = WrapperSwitchHP('GPIB0::9::INSTR', rm)
+        self.instSigGen = WrapperSignalGenerator('GPIB0::21::INSTR', rm)
 
 
         # dummy value
@@ -77,17 +81,17 @@ class External_FS_test(QThread):
             self.completed = False
             setFrequ = self.StartFreq
             setAPM = self.startAPM
-            currAmpSwitch = instSwitch.validFrequ(setFrequ)  # check if frequency is valid
+            currAmpSwitch = self.instSwitch.validFrequ(setFrequ)  # check if frequency is valid
             if currAmpSwitch == 1:
-                instSwitch.switchAmp1()
+                self.instSwitch.switchAmp1()
                 activSwitch = 1
                 print('activeSwitch: %i ' % self.activSwitch )
             elif currAmpSwitch == 2:
-                instSwitch.switchAmp2()
+                self.instSwitch.switchAmp2()
                 activSwitch = 2
                 print('activeSwitch: %i' % self.activSwitch )
             elif currAmpSwitch == 3:
-                instSwitch.switchAmp3()
+                self.instSwitch.switchAmp3()
                 activSwitch = 3
                 print('activeSwitch: %i ' % self.activSwitch )
             elif currAmpSwitch == 4:
@@ -104,41 +108,41 @@ class External_FS_test(QThread):
                     break
                 setFrequ = i
                 MV = setAPM
-                instSigGen.switchRFOff()  # set RF ON!!!!!!!!!
+                self.instSigGen.switchRFOff()  # set RF ON!!!!!!!!!
                 controller = self.PI(0.2, 0.033, MV, 1)
                 controller.send(None)
                 # check if the switch needs to be switched
-                currAmpSwitch = instSwitch.validFrequ(setFrequ)  # check if frequency is valid
+                currAmpSwitch = self.instSwitch.validFrequ(setFrequ)  # check if frequency is valid
                 if currAmpSwitch != activSwitch:
                     if currAmpSwitch == 1:
-                        instSwitch.switchAmp1()
+                        self.instSwitch.switchAmp1()
                         activSwitch = 1
                         print('activeSwitch: %i' % activSwitch)
                     elif currAmpSwitch == 2:
-                        instSwitch.switchAmp2()
+                        self.instSwitch.switchAmp2()
                         activSwitch = 2
                         print('activeSwitch: %i' % activSwitch)
                     elif currAmpSwitch == 3:
-                        instSwitch.switchAmp3()
+                        self.instSwitch.switchAmp3()
                         activSwitch = 3
                         print('activeSwitch: %i' % activSwitch)
                     elif currAmpSwitch == 4:
                         print('activeSwitch Abort: %i' % activSwitch)
                         self.abortTest()
                         break
-                instSigGen.setFrequMHZ(setFrequ)  # Set Beginning frequency
-                instSigGen.setAmpDBM(setAPM)  # set beginning amplitude value
-                instSigGen.switchRFOn()  # set RF ON!!!!!!!!
+                self.instSigGen.setFrequMHZ(setFrequ)  # Set Beginning frequency
+                self.instSigGen.setAmpDBM(setAPM)  # set beginning amplitude value
+                self.instSigGen.switchRFOn()  # set RF ON!!!!!!!!
 
-                instSonde.readval()
-                currSondeVal = instSonde.effEVal
+                self.instSonde.readval()
+                currSondeVal = self.instSonde.effEVal
                 # Powermeter auslesen eventuell aus bereinigtem Wert
-                instPowerMeter.switchChannelA()
-                instPowerMeter.getMeasVal()
-                currFwdVal = instPowerMeter.currVal
-                instPowerMeter.switchChannelB()
-                instPowerMeter.getMeasVal()
-                currRevVal = instPowerMeter.currVal
+                self.instPowerMeter.switchChannelA()
+                self.instPowerMeter.getMeasVal()
+                currFwdVal = self.instPowerMeter.currVal
+                self.instPowerMeter.switchChannelB()
+                self.instPowerMeter.getMeasVal()
+                currRevVal = self.instPowerMeter.currVal
 
                 k = 1
                 startTime = time.time()
@@ -179,38 +183,38 @@ class External_FS_test(QThread):
                         print('APM TO BIG')
                         self.abortTest()
 
-                    instSigGen.setAmpDBM(setAPM)
-                    instSigGen.switchRFOn()  # set RF ON!!!!!!!!!
+                    self.instSigGen.setAmpDBM(setAPM)
+                    self.instSigGen.switchRFOn()  # set RF ON!!!!!!!!!
                     # update measured val
                     timeSonde = time.time()
-                    instSonde.readval()
-                    currSondeVal = instSonde.effEVal
+                    self.instSonde.readval()
+                    currSondeVal = self.instSonde.effEVal
                     # print('time sonde:%f' % (time.time()-timeSonde))
                     # print('Updated currSondeVal: %f ' % currSondeVal)
                     t = time.time() - startTime
                     MV = controller.send([t, currSondeVal, self.control_E_L])
                     if (k > 5) and ((k % 3) == 0):
                         timePowMetA = time.time()
-                        instPowerMeter.switchChannelA()
-                        instPowerMeter.getMeasVal()
-                        currFwdVal = instPowerMeter.currVal
+                        self.instPowerMeter.switchChannelA()
+                        self.instPowerMeter.getMeasVal()
+                        currFwdVal = self.instPowerMeter.currVal
                         timePowMetB = time.time()
-                        instPowerMeter.switchChannelB()
-                        instPowerMeter.getMeasVal()
-                        currRevVal = instPowerMeter.currVal
+                        self.instPowerMeter.switchChannelB()
+                        self.instPowerMeter.getMeasVal()
+                        currRevVal = self.instPowerMeter.currVal
                     # print('Updated currRevVal: %f \n' % currRevVal)
                     k = k + 1
                 prevStepAPM = setAPM
 
                 # save the values in lists
-                instPowerMeter.switchChannelA()
-                instPowerMeter.getMeasVal()
-                currFwdVal = instPowerMeter.currVal
-                instPowerMeter.switchChannelB()
-                instPowerMeter.getMeasVal()
-                currRevVal = instPowerMeter.currVal
-                instSonde.readval()
-                currSondeVal = instSonde.effEVal
+                self.instPowerMeter.switchChannelA()
+                self.instPowerMeter.getMeasVal()
+                currFwdVal = self.instPowerMeter.currVal
+                self.instPowerMeter.switchChannelB()
+                self.instPowerMeter.getMeasVal()
+                currRevVal = self.instPowerMeter.currVal
+                self.instSonde.readval()
+                currSondeVal = self.instSonde.effEVal
                 controller.close()
                 frequVal.append(setFrequ)
                 powFwdVal.append(currFwdVal)
@@ -255,8 +259,8 @@ class External_FS_test(QThread):
 
 
     def abortTest(self):
-        instSigGen.switchRFOff()
-        instSwitch.reset()
+        self.instSigGen.switchRFOff()
+        self.instSwitch.reset()
         print('Test Paused')
         sys.exit()
 
