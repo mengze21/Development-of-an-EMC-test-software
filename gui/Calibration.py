@@ -132,9 +132,12 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.chart_2.addAxis(self.__axisFreq_2, QtCore.Qt.AlignBottom)
         self.__axisMag_2 = QtChart.QValueAxis()
         self.__axisMag_2.setTitleText("Vorwärtsleistung / dBm ")
-        self.__axisMag_2.setRange(-30, 10)
+        self.__axisMag_2.setRange(-30, 30)
         self.__axisMag_2.setTickCount(8)
         self.__axisMag_2.setLabelFormat("%d")
+        #self.__axisMag_2.setTickInterval(10)
+        #self.__axisMag_2.setTickAnchor(5)
+        #self.__axisMag_2.TickType(1)
         self.chart_2.addAxis(self.__axisMag_2, QtCore.Qt.AlignLeft)
         # chart 3   backward power
         self.__axisFreq_3 = QtChart.QLogValueAxis()
@@ -146,7 +149,7 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.chart_3.addAxis(self.__axisFreq_3, QtCore.Qt.AlignBottom)
         self.__axisMag_3 = QtChart.QValueAxis()
         self.__axisMag_3.setTitleText("Rückwärtsleistung / dBm ")
-        self.__axisMag_3.setRange(-30, 10)
+        self.__axisMag_3.setRange(-30, 30)
         self.__axisMag_3.setTickCount(8)
         self.__axisMag_3.setLabelFormat("%d")
         self.chart_3.addAxis(self.__axisMag_3, QtCore.Qt.AlignLeft)
@@ -568,6 +571,7 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.toolButton_new.clicked.connect(self.clearGraphics)     # clear graphics
         self.toolButton_new.clicked.connect(self.clearParameter)    # clear parameters
         self.toolButton_save.clicked.connect(self.dataSave2)
+        self.toolButton_result.clicked.connect(self.caliResult)
         #self.toolButton_open.clicked.connect(self.loadNewData2)
         self.comboBox_chart.currentIndexChanged.connect(self.changeChart)
 
@@ -597,7 +601,13 @@ class Ui_Calibration(QtWidgets.QDialog):
                 self.curveFPower1.append(a, b)
             for a, b in zip(self.measuredFreq, self.probData):
                 self.curveFieldStr_1.append(a, b)
+    #
+    def caliResult(self):
+        filepath = self.open_file()
+        # get data
 
+        if not filepath == "":
+            pass
     # adding new data to graphics
     # once for 1 position
     def loadNewData(self):
@@ -786,36 +796,12 @@ class Ui_Calibration(QtWidgets.QDialog):
             self.curveFieldStr_real5.show()
             self.curveRwdPow_real5.show()
 
-    #def do_chartView_mouseMove(self, point):
-        #pt = self.graphicsView_2.chart().mapToValue(point)
-        #self.MousPositionLabel.setText("Chart X=%.2f,Y=%.2f" % (pt.x(), pt.y()))
-        #self.Polarisation = ""
-        #self.FieldStrength = 30
 
     def changeChart(self):
         if self.comboBox_chart.currentText() == "Vorwärtsleistung":
             self.graphicsView_2.setChart(self.chart_2)
         elif self.comboBox_chart.currentText() == "Rückwärtsleistung":
             self.graphicsView_2.setChart(self.chart_3)
-
-    # def setupUi(self):
-    # dialog = uic.loadUi("uifiles/KalibierungWindow_neu.ui", self)
-    # dialog.exec_()
-    # dialog.show()
-    # get calibration setup from file
-    # f = open("./data/KalibrierungEinstellungsDaten.txt", "r")
-    # alllines = f.readlines()
-    # paragroup = alllines[0].strip()
-    # self.paralist = paragroup.split()
-    # f.close()
-    # self.treeWidget_info.topLevelItem(0).setText(1, "%s" % self.paralist[5])  # Position
-    # self.treeWidget_info.topLevelItem(1).setText(1, "%s" % self.paralist[6])  # Polarisation
-    # self.treeWidget_info.topLevelItem(2).setText(1, "%s" % self.paralist[0])
-    # self.treeWidget_info.topLevelItem(3).setText(1, "%s" % self.paralist[1])
-    # self.treeWidget_info.topLevelItem(4).setText(1, "%s" % self.paralist[2])
-    # self.treeWidget_info.topLevelItem(5).setText(1, "%s" % self.paralist[3])
-    # self.treeWidget_info.topLevelItem(6).setText(1, "%s" % self.paralist[4])
-
 
     def showCalibrationEditWindow(self):
         dialog = CalibrationEditWindow(self)
@@ -836,6 +822,8 @@ class Ui_Calibration(QtWidgets.QDialog):
             self.treeWidget_info.topLevelItem(5).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(self.index).text(3))
             self.treeWidget_info.topLevelItem(6).setText(1, "%s" % dialog.treeWidget_parameters.topLevelItem(self.index).text(4))
             self.treeWidget_info.topLevelItem(7).setText(1, "%s" % dialog.lineEdit_StartDrive.text())
+            self.treeWidget_info.topLevelItem(8).setText(1, "%s" % dialog.lineEdit_feldTol.text())
+            self.treeWidget_info.topLevelItem(9).setText(1, "%s" % dialog.lineEdit_powMeterTol.text())
         # get start frequency from setup info
         if "M" in str(dialog.treeWidget_parameters.topLevelItem(0).text(0)):
             self.StartFreq = float(dialog.treeWidget_parameters.topLevelItem(0).text(0).replace("M", ""))
@@ -1088,6 +1076,7 @@ class Ui_Calibration(QtWidgets.QDialog):
         dialog = TabularDateWindow()
         if dialog.path != "":
             dialog.exec_()
+
     # use numpy and panda
     def dataSave2(self):
         filename = QFileDialog.getSaveFileName(self, "Save File", "./data", "csv file(*.csv)")
@@ -1327,7 +1316,6 @@ class ParametersEditWindow(QtWidgets.QDialog):
         self.TestLevel = self.lineEdit_testlevel.text()
         self.Dwell = self.lineEdit_Dwell.text()
         applybtn = self.edit_var_parameters.button(self.edit_var_parameters.Apply)
-
 
         # define signals
         self.edit_var_parameters.accepted.connect(self.saveData)

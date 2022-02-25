@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1280</width>
+    <width>1185</width>
     <height>854</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
@@ -334,6 +340,11 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
         <item>
          <property name="text">
           <string>Vorwärtsleistung</string>
@@ -407,6 +418,9 @@
           <pointsize>12</pointsize>
          </font>
         </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="text">
          <string>Ein/Aus P5</string>
         </property>
@@ -422,6 +436,7 @@
         </property>
         <property name="font">
          <font>
+          <family>Verdana</family>
           <pointsize>12</pointsize>
          </font>
         </property>
@@ -447,6 +462,7 @@
         <property name="font">
          <font>
           <family>Verdana</family>
+          <pointsize>12</pointsize>
          </font>
         </property>
         <item>
@@ -471,6 +487,7 @@
         </property>
         <property name="font">
          <font>
+          <family>Verdana</family>
           <pointsize>12</pointsize>
          </font>
         </property>
@@ -489,6 +506,7 @@
         </property>
         <property name="font">
          <font>
+          <family>Verdana</family>
           <pointsize>12</pointsize>
          </font>
         </property>
@@ -532,6 +550,7 @@
         </property>
         <property name="font">
          <font>
+          <family>Verdana</family>
           <pointsize>12</pointsize>
          </font>
         </property>
@@ -1372,6 +1391,16 @@ gridline-color: rgb(252, 54, 83);</string>
         <item>
          <property name="text">
           <string>StartAPM(dBm):</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Feld tolerance</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Power meter tolerance</string>
          </property>
         </item>
        </widget>
