@@ -28,7 +28,7 @@ class External_FS_test(QThread):
 
 
 
-    def __init__(self, StartFreq, FreqStep, MaxFreq, E_T, startAPM, Position,Polarisation):
+    def __init__(self, StartFreq, FreqStep, MaxFreq, E_T, startAPM, Position, Polarisation):
         super(External_FS_test, self).__init__()
         self.StartFreq = StartFreq
         self.FreqStep = FreqStep
@@ -84,15 +84,15 @@ class External_FS_test(QThread):
             currAmpSwitch = self.instSwitch.validFrequ(setFrequ)  # check if frequency is valid
             if currAmpSwitch == 1:
                 self.instSwitch.switchAmp1()
-                activSwitch = 1
+                self.activSwitch = 1
                 print('activeSwitch: %i ' % self.activSwitch )
             elif currAmpSwitch == 2:
                 self.instSwitch.switchAmp2()
-                activSwitch = 2
+                self.activSwitch = 2
                 print('activeSwitch: %i' % self.activSwitch )
             elif currAmpSwitch == 3:
                 self.instSwitch.switchAmp3()
-                activSwitch = 3
+                self.activSwitch = 3
                 print('activeSwitch: %i ' % self.activSwitch )
             elif currAmpSwitch == 4:
                 print('activeSwitch Abort: %i ' % self.activSwitch )
@@ -113,21 +113,21 @@ class External_FS_test(QThread):
                 controller.send(None)
                 # check if the switch needs to be switched
                 currAmpSwitch = self.instSwitch.validFrequ(setFrequ)  # check if frequency is valid
-                if currAmpSwitch != activSwitch:
+                if currAmpSwitch != self.activSwitch:
                     if currAmpSwitch == 1:
                         self.instSwitch.switchAmp1()
-                        activSwitch = 1
-                        print('activeSwitch: %i' % activSwitch)
+                        self.activSwitch = 1
+                        print('activeSwitch: %i' % self.activSwitch)
                     elif currAmpSwitch == 2:
                         self.instSwitch.switchAmp2()
-                        activSwitch = 2
-                        print('activeSwitch: %i' % activSwitch)
+                        self.activSwitch = 2
+                        print('activeSwitch: %i' % self.activSwitch)
                     elif currAmpSwitch == 3:
                         self.instSwitch.switchAmp3()
-                        activSwitch = 3
-                        print('activeSwitch: %i' % activSwitch)
+                        self.activSwitch = 3
+                        print('activeSwitch: %i' % self.activSwitch)
                     elif currAmpSwitch == 4:
-                        print('activeSwitch Abort: %i' % activSwitch)
+                        print('activeSwitch Abort: %i' % self.activSwitch)
                         self.abortTest()
                         break
                 self.instSigGen.setFrequMHZ(setFrequ)  # Set Beginning frequency
@@ -192,6 +192,8 @@ class External_FS_test(QThread):
                     # print('time sonde:%f' % (time.time()-timeSonde))
                     # print('Updated currSondeVal: %f ' % currSondeVal)
                     t = time.time() - startTime
+                    print("currSondeVal %s" % currSondeVal)
+                    print("control_E_L %s" % self.control_E_L)
                     MV = controller.send([t, currSondeVal, self.control_E_L])
                     if (k > 5) and ((k % 3) == 0):
                         timePowMetA = time.time()
@@ -221,26 +223,32 @@ class External_FS_test(QThread):
                 powRevVal.append(currRevVal)
                 sondeListVal.append(currSondeVal)
                 powAPMSet.append(setAPM)
+                print("1")
                 self.countChanged.emit(setFrequ, currFwdVal, currRevVal, currSondeVal, self.position)
+                print("2")
                 res = [l for l in zip(frequVal, powFwdVal, powRevVal, powAPMSet, sondeListVal)]
+
                 path = 'output_%s_%i.csv' % (self.polarisation, self.position) # abspeichern der csv nach jeder Position
-                listCsvFile.append()
+                print("3")
+                listCsvFile.append(path)
                 with open(path, 'w', newline='') as csvfile:
                     writer = csv.writer(csvfile)
                     for l in res:
                         writer.writerow(l)
-                if not self.stopped:
-                    self.completed = True
-                    completed = self.completed
-                    self.completedflag.emit(completed,self.position)
+                print("3.2")
                 self.isWaiting = True  # set isWaiting True to wait change of the position
-
+                print("4")
                 # waite for input 'Fortfahren'
-                while self.isWaiting:
-                    time.sleep(0)
-        #GUI Fenster öffnet sich mit "Save results?"
-        inpPath = 'C:/mengze/Results/calibResult.csv' # Output aus Gui wo ergebnisse abspeichern
-        createCalibrationFile(listCsvFile,inpPath)
+            if not self.stopped:
+                self.completed = True
+                completed = self.completed
+                self.completedflag.emit(completed, self.position)
+            while self.isWaiting:
+                time.sleep(0)
+            self.position += 1
+    #GUI Fenster öffnet sich mit "Save results?"
+        inpPath = 'C:/Users/mlu/Results/calibResult.csv' # Output aus Gui wo ergebnisse abspeichern
+        createCalibrationFile(listCsvFile, inpPath)
 
 
 
