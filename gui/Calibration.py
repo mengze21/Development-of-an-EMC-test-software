@@ -118,9 +118,9 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.chart_1.addAxis(self.__axisFreq, QtCore.Qt.AlignBottom)
         self.__axisMag = QtChart.QValueAxis()
         self.__axisMag.setTitleText("Feldstärke / V/m  ")
-        self.__axisMag.setRange(0, 50)
+        self.__axisMag.setRange(-30, 10)
         self.__axisMag.setTickCount(8)
-        self.__axisMag.setLabelFormat("%d")
+        self.__axisMag.setLabelFormat("%.2f")
         self.chart_1.addAxis(self.__axisMag, QtCore.Qt.AlignLeft)
         # chart 2  forward power
         self.__axisFreq_2 = QtChart.QLogValueAxis()
@@ -132,9 +132,9 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.chart_2.addAxis(self.__axisFreq_2, QtCore.Qt.AlignBottom)
         self.__axisMag_2 = QtChart.QValueAxis()
         self.__axisMag_2.setTitleText("Vorwärtsleistung / dBm ")
-        self.__axisMag_2.setRange(-30, 30)
+        self.__axisMag_2.setRange(-40, 10)
         self.__axisMag_2.setTickCount(8)
-        self.__axisMag_2.setLabelFormat("%d")
+        self.__axisMag_2.setLabelFormat("%.2f")
         #self.__axisMag_2.setTickInterval(10)
         #self.__axisMag_2.setTickAnchor(5)
         #self.__axisMag_2.TickType(1)
@@ -149,9 +149,9 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.chart_3.addAxis(self.__axisFreq_3, QtCore.Qt.AlignBottom)
         self.__axisMag_3 = QtChart.QValueAxis()
         self.__axisMag_3.setTitleText("Rückwärtsleistung / dBm ")
-        self.__axisMag_3.setRange(-30, 30)
+        self.__axisMag_3.setRange(-40, 10)
         self.__axisMag_3.setTickCount(8)
-        self.__axisMag_3.setLabelFormat("%d")
+        self.__axisMag_3.setLabelFormat("%.2f")
         self.chart_3.addAxis(self.__axisMag_3, QtCore.Qt.AlignLeft)
 
         # create graphics
@@ -324,7 +324,7 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.chart_1.addSeries(self.curveFieldStr_1)
         self.curveFieldStr_1.attachAxis(self.__axisFreq)
         self.curveFieldStr_1.attachAxis(self.__axisMag)
-        self.chart_1.legend().markers(self.curveFieldStr_1)[0].setVisible(True)
+        self.chart_1.legend().markers(self.curveFieldStr_1)[0].setVisible(False)
         self.chart_1.legend().setAlignment(Qt.AlignTop)
         pen = QtGui.QPen(QtGui.QColor(0, 255, 0))
         pen.setWidth(1)
@@ -534,26 +534,26 @@ class Ui_Calibration(QtWidgets.QDialog):
 
         # open and read measurement data
         # measurement data in position 1
-        self.measuredFreq = []  # init parameters
-        self.forwardPower = []  # init parameters
-        self.probData = []      # init parameters
-        with open("./output.csv", "r") as FSCaliData:
-            reader = csv.reader(FSCaliData)
-            rows = []
-            for row in reader:
-                rows.append(row)
-            print(rows)
-        for i in range(len(rows)):
-            self.measuredFreq.append(float(rows[i][0]))    # column 0 is frequency
-            self.forwardPower.append(float(rows[i][1]))    # column 1 is forward power
-            self.probData.append(float(rows[i][2]))        # column 2 is measurement data field strength from prob
+        #self.measuredFreq = []  # init parameters
+        #self.forwardPower = []  # init parameters
+        #self.probData = []      # init parameters
+        #with open("./output.csv", "r") as FSCaliData:
+            #reader = csv.reader(FSCaliData)
+           #rows = []
+            #for row in reader:
+               # rows.append(row)
+            #print(rows)
+       # for i in range(len(rows)):
+            #self.measuredFreq.append(float(rows[i][0]))    # column 0 is frequency
+            #self.forwardPower.append(float(rows[i][1]))    # column 1 is forward power
+            #self.probData.append(float(rows[i][2]))        # column 2 is measurement data field strength from prob
 
         # adding data forward power to chart1
-        for a, b in zip(self.measuredFreq, self.forwardPower):
-            self.curveFPower1.append(a, b)
+        #for a, b in zip(self.measuredFreq, self.forwardPower):
+            #self.curveFPower1.append(a, b)
         # adding data field strength to chart1
-        for a, b in zip(self.measuredFreq, self.probData):
-            self.curveFieldStr_1.append(a, b)
+        #for a, b in zip(self.measuredFreq, self.probData):
+            #self.curveFieldStr_1.append(a, b)
 
         # define signal slots
         self.toolButton_testparameter.clicked.connect(self.showCalibrationEditWindow)
@@ -667,10 +667,47 @@ class Ui_Calibration(QtWidgets.QDialog):
     # load the calibration data
     # Numpy and panda method
     def loadData(self):
+
         filepath = self.open_file()
         if not filepath == "":
             caliData = pd.read_csv('%s' % filepath, header=0).values
-            print(caliData)
+            spiltData = np.hsplit(caliData, 6)
+            freqlist = np.array((spiltData[0]))
+            fielStr = np.array((spiltData[1]))
+            fwdPow = np.array((spiltData[2]))
+            bwdPow = np.array((spiltData[3]))
+            measuredLevel = np.array((spiltData[4]))
+            validCheck = np.array((spiltData[5]))
+            #newshap = validCheck.reshape(1, len(validCheck))
+            newshap = np.concatenate(validCheck, axis=None)
+            isValidIndex = np.where(newshap == 1)
+            length = len(isValidIndex)
+            #print("freqlist %s" %freqlist)
+            #print("Index %s" % isValidIndex)
+            for i in isValidIndex:
+                #print("i is %s" %i)
+                #print(freqlist[i])
+                freqlistValid = []
+               # fwdPowValid = []
+                fielStrValid = []
+                freqlistValid.append(freqlist[i])
+                #fwdPowValid.append(fwdPow[i])
+                fielStrValid.append(fielStr[i])
+                freqlistValid = np.concatenate(freqlistValid, axis=None)
+                fielStrValid = np.concatenate(fielStrValid, axis=None)
+            #print(freqlistValid)
+           # print(fielStrValid)
+            #self.curveFieldStr_1.append(freqlistValid, fielStrValid)
+                #for a, b in zip(freqlistValid, fwdPowValid):
+                    #self.curveFPower1.append(a, b)
+                for a, b in zip(freqlistValid, fielStrValid):
+                    self.curveFieldStr_1.append(a, b)
+            #print("freqlistvalid %s" % freqlistValid)
+            #print("freqlist %s" % freqlist)
+            #print("caliData %s" % caliData)
+            #print("isValid %s" % validCheck)
+            #print("isValid %s" % newshap)
+
 
     # choose a csv file and give the file path
     def open_file(self):
@@ -715,6 +752,9 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.treeWidget_info.topLevelItem(4).setText(1, "")
         self.treeWidget_info.topLevelItem(5).setText(1, "")
         self.treeWidget_info.topLevelItem(6).setText(1, "")
+        self.treeWidget_info.topLevelItem(7).setText(1, "")
+        self.treeWidget_info.topLevelItem(8).setText(1, "")
+        self.treeWidget_info.topLevelItem(9).setText(1, "")
 
     def ShowHideCurveP1(self):
         #if self.curveFPower1.isVisible():
@@ -875,7 +915,8 @@ class Ui_Calibration(QtWidgets.QDialog):
 
             self.External_FS_test = External_FS_test(StartFreq=self.StartFreq,
                                                  FreqStep=self.FreStep, MaxFreq=self.MaxFreq, E_T=self.level,
-                                                     startAPM=self.startAPM, Position=self.Position)
+                                                     startAPM=self.startAPM,
+                                                     Position=self.Position, Polarisation=self.Polarisation)
             self.External_FS_test.start()
             self.label_TestRunningStatus.setText("Test läuft")
             self.label_status.setText("Status: %s (%s)" % (
