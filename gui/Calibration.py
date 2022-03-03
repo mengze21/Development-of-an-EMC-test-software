@@ -6,7 +6,9 @@ import csv
 import numpy as np
 import pandas as pd
 import PyQt5
+
 from PyQt5 import uic, QtWidgets, QtChart, QtCore, QtGui
+
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -15,7 +17,8 @@ from PyQt5.QtWidgets import *
 from openpyxl.descriptors import Default
 
 import CaliDataProcessing
-from thread_FS_Calib import External_FS_Calib
+#from thread_FS_Calib import External_FS_Calib
+#from thread_FS_Meas import External_FS
 from thread_FS_test import External_FS_test
 from CaliDataProcessing import caliDataProcessing
 
@@ -118,9 +121,10 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.chart_1.addAxis(self.__axisFreq, QtCore.Qt.AlignBottom)
         self.__axisMag = QtChart.QValueAxis()
         self.__axisMag.setTitleText("Feldstärke / V/m  ")
-        self.__axisMag.setRange(-30, 10)
-        self.__axisMag.setTickCount(8)
-        self.__axisMag.setLabelFormat("%.2f")
+        self.__axisMag.setRange(0, 30)
+        self.__axisMag.setTickCount(6)
+        self.__axisMag.setMinorTickCount(2)
+        self.__axisMag.setLabelFormat("%.1f")
         self.chart_1.addAxis(self.__axisMag, QtCore.Qt.AlignLeft)
         # chart 2  forward power
         self.__axisFreq_2 = QtChart.QLogValueAxis()
@@ -133,8 +137,9 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.__axisMag_2 = QtChart.QValueAxis()
         self.__axisMag_2.setTitleText("Vorwärtsleistung / dBm ")
         self.__axisMag_2.setRange(-40, 10)
-        self.__axisMag_2.setTickCount(8)
-        self.__axisMag_2.setLabelFormat("%.2f")
+        self.__axisMag_2.setTickCount(6)
+        self.__axisMag_2.setMinorTickCount(2)
+        self.__axisMag_2.setLabelFormat("%.1f")
         #self.__axisMag_2.setTickInterval(10)
         #self.__axisMag_2.setTickAnchor(5)
         #self.__axisMag_2.TickType(1)
@@ -150,8 +155,9 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.__axisMag_3 = QtChart.QValueAxis()
         self.__axisMag_3.setTitleText("Rückwärtsleistung / dBm ")
         self.__axisMag_3.setRange(-40, 10)
-        self.__axisMag_3.setTickCount(8)
-        self.__axisMag_3.setLabelFormat("%.2f")
+        self.__axisMag_3.setTickCount(6)
+        self.__axisMag_3.setMinorTickCount(2)
+        self.__axisMag_3.setLabelFormat("%.1f")
         self.chart_3.addAxis(self.__axisMag_3, QtCore.Qt.AlignLeft)
 
         # create graphics
@@ -719,10 +725,19 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.progressBar_status.setValue(0)
         self.curveFieldStr_real.clear()
         self.curveFieldStr_real2.clear()
+        self.curveFieldStr_real3.clear()
+        self.curveFieldStr_real4.clear()
+        self.curveFieldStr_real5.clear()
         self.curveFPower_real.clear()
         self.curveFPower_real2.clear()
+        self.curveFPower_real3.clear()
+        self.curveFPower_real4.clear()
+        self.curveFPower_real5.clear()
         self.curveRwdPow_real.clear()
         self.curveRwdPow_real2.clear()
+        self.curveRwdPow_real3.clear()
+        self.curveRwdPow_real4.clear()
+        self.curveRwdPow_real5.clear()
         self.curveFieldStr_1.clear()
         self.curveFPower1.clear()
         self.curveFieldStr_2.clear()
@@ -743,6 +758,11 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.chart_2.legend().markers(self.curveFPower3)[0].setVisible(False)
         self.chart_2.legend().markers(self.curveFPower4)[0].setVisible(False)
         self.chart_2.legend().markers(self.curveFPower5)[0].setVisible(False)
+        self.chart_3.legend().markers(self.curveRwdPow_real)[0].setVisible(False)
+        self.chart_3.legend().markers(self.curveRwdPow_real2)[0].setVisible(False)
+        self.chart_3.legend().markers(self.curveRwdPow_real3)[0].setVisible(False)
+        self.chart_3.legend().markers(self.curveRwdPow_real4)[0].setVisible(False)
+        self.chart_3.legend().markers(self.curveRwdPow_real5)[0].setVisible(False)
 
     def clearParameter(self):
         self.treeWidget_info.topLevelItem(0).setText(1, "")
@@ -979,7 +999,7 @@ class Ui_Calibration(QtWidgets.QDialog):
             # QtWidgets.QMessageBox.information(self, "Hinweis",
             # "Bitte die Sonde in Position %s einstellen." % self.Position)
 
-            self.calc = External_FS_Calib(E_T=self.FieldStrength, f_min=self.StartFreq, f_step=self.FreStep,
+            self.calc = External_FS_test(E_T=self.FieldStrength, f_min=self.StartFreq, f_step=self.FreStep,
                                           f_max=self.MaxFreq, level=self.level)
             self.calc.start()
             self.calc.signal = 1
@@ -1108,6 +1128,23 @@ class Ui_Calibration(QtWidgets.QDialog):
             self.toolButton_stop.setEnabled(False)
             self.toolButton_pause.setEnabled(False)
             self.progressBar_status.setValue(0)
+            # remain the user save data
+            messageBox = QtWidgets.QMessageBox()
+            messageBox.setWindowTitle('Daten speichern?')
+            messageBox.setIcon(QtWidgets.QMessageBox.Warning)
+            messageBox.setWindowIcon(QtGui.QIcon('./icon_materials/8.png'))
+            messageBox.setText('Die Kaliebrierung ist fertig!\n '
+                               'Bitte die Daten speichern!')
+            messageBox.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+            buttonY = messageBox.button(QtWidgets.QMessageBox.Ok)
+            buttonY.setText('Speichern unter')
+            buttonN = messageBox.button(QtWidgets.QMessageBox.Cancel)
+            buttonN.setText('Nicht speichern')
+            if messageBox.exec_() == QtWidgets.QMessageBox.Ok:
+                print("aaa")
+                filename = QFileDialog.getSaveFileName(self, "Save File", "./data", "csv file(*.csv)")
+                if not filename[0] == "":
+                    self.External_FS_test.saveData(filename[0])
 
         #completedflag = completed
         #currentTestPos = position

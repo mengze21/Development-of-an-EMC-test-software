@@ -1,3 +1,4 @@
+
 import sys, os
 from os.path import join, getsize
 
@@ -26,8 +27,6 @@ class External_FS_test(QThread):
     countChanged = pyqtSignal(float, float, float, float, int)
     positionChanged = pyqtSignal(int)  # emit the current calibration position
 
-
-
     def __init__(self, StartFreq, FreqStep, MaxFreq, E_T, startAPM, Position, Polarisation):
         super(External_FS_test, self).__init__()
         self.StartFreq = StartFreq
@@ -36,13 +35,13 @@ class External_FS_test(QThread):
         self.position = Position
         self.E_T = E_T
         self.E_L = E_T * 1.8  # Pegeleinstellungsfeldstärke
-        self.E_L_Tol = 0.6 #Field Strength Toleranz
-        self.polarisation = Polarisation # Polarisation auch aus GUI
+        self.E_L_Tol = 0.6  # Field Strength Toleranz
+        self.polarisation = Polarisation  # Polarisation auch aus GUI
         self.max_E_L = self.E_L + self.E_L_Tol
         self.control_E_L = self.E_L + self.E_L_Tol / 2
-
+        self.listCsvFile = []
         self.startAPM = startAPM
-        self.powMeterTol = 0.1 #eventuell aus GUI
+        self.powMeterTol = 0.1  # eventuell aus GUI
         self.stopped = False
         self.completed = False
         self.restart = False
@@ -57,7 +56,6 @@ class External_FS_test(QThread):
         self.instSwitch = WrapperSwitchHP('GPIB0::9::INSTR', rm)
         self.instSigGen = WrapperSignalGenerator('GPIB0::21::INSTR', rm)
 
-
         # dummy value
         self.testFreq = 0
         self.vorPower = 0
@@ -67,35 +65,44 @@ class External_FS_test(QThread):
     def run(self):
         prevStepAPM = self.startAPM
         # list creation
-        frequVal = []
-        powFwdVal = []
-        sondeListVal = []
-        gridValFrequ = []
-        gridValFwd = []
-        powRevVal = []
-        powAPMSet = []
+       # frequVal = []
+        #powFwdVal = []
+        #sondeListVal = []
+       # gridValFrequ = []
+       # gridValFwd = []
+        #powRevVal = []
+       # powAPMSet = []
         # list CSV fiel
-        listCsvFile = []
+        #listCsvFile = []
         while self.position in range(6):
             self.stopped = False
             self.completed = False
+
+            frequVal = []
+            powFwdVal = []
+            sondeListVal = []
+            gridValFrequ = []
+            gridValFwd = []
+            powRevVal = []
+            powAPMSet = []
+
             setFrequ = self.StartFreq
             setAPM = self.startAPM
             currAmpSwitch = self.instSwitch.validFrequ(setFrequ)  # check if frequency is valid
             if currAmpSwitch == 1:
                 self.instSwitch.switchAmp1()
                 self.activSwitch = 1
-                print('activeSwitch: %i ' % self.activSwitch )
+                print('activeSwitch: %i ' % self.activSwitch)
             elif currAmpSwitch == 2:
                 self.instSwitch.switchAmp2()
                 self.activSwitch = 2
-                print('activeSwitch: %i' % self.activSwitch )
+                print('activeSwitch: %i' % self.activSwitch)
             elif currAmpSwitch == 3:
                 self.instSwitch.switchAmp3()
                 self.activSwitch = 3
-                print('activeSwitch: %i ' % self.activSwitch )
+                print('activeSwitch: %i ' % self.activSwitch)
             elif currAmpSwitch == 4:
-                print('activeSwitch Abort: %i ' % self.activSwitch )
+                print('activeSwitch Abort: %i ' % self.activSwitch)
                 break
 
             frequList = []
@@ -228,16 +235,17 @@ class External_FS_test(QThread):
                 print("2")
                 res = [l for l in zip(frequVal, powFwdVal, powRevVal, powAPMSet, sondeListVal)]
 
-                path = 'output_%s_%i.csv' % (self.polarisation, self.position) # abspeichern der csv nach jeder Position
+                path = 'output_%s_%i.csv' % (
+                self.polarisation, self.position)  # abspeichern der csv nach jeder Position
                 print("3")
-                listCsvFile.append(path)
+                self.listCsvFile.append(path)
                 with open(path, 'w', newline='') as csvfile:
                     writer = csv.writer(csvfile)
                     for l in res:
                         writer.writerow(l)
                 print("3.2")
                 self.isWaiting = True  # set isWaiting True to wait change of the position
-                print("4")
+                print(self.listCsvFile)
                 # waite for input 'Fortfahren'
             if not self.stopped:
                 self.completed = True
@@ -245,12 +253,11 @@ class External_FS_test(QThread):
                 self.completedflag.emit(completed, self.position)
             while self.isWaiting:
                 time.sleep(0)
+
             self.position += 1
-    #GUI Fenster öffnet sich mit "Save results?"
-        inpPath = 'C:/Users/mlu/Results/calibResult.csv' # Output aus Gui wo ergebnisse abspeichern
-        createCalibrationFile(listCsvFile, inpPath)
-
-
+        # GUI Fenster öffnet sich mit "Save results?"
+        #inpPath = 'C:/Users/mlu/Results/calibResult.csv'  # Output aus Gui wo ergebnisse abspeichern
+        #createCalibrationFile(self.listCsvFile, inpPath)
 
     def stop(self):
         # print("thread stoped")
@@ -265,13 +272,11 @@ class External_FS_test(QThread):
     def runNextTest(self):
         self.isWaiting = False
 
-
     def abortTest(self):
         self.instSigGen.switchRFOff()
         self.instSwitch.reset()
         print('Test Paused')
         sys.exit()
-
 
     def checkValues(gridValFrequ, gridValFwd):
         isvalid = []
@@ -290,8 +295,7 @@ class External_FS_test(QThread):
             else:
                 isvalid.append(1)
 
-
-    def PI(self,Kp, Ki, MV_bar, beta):
+    def PI(self, Kp, Ki, MV_bar, beta):
         # initialize stored data
         t_prev = -1
         I = 0
@@ -313,3 +317,9 @@ class External_FS_test(QThread):
             # print('New MV: %f' % MV)
             # update stored data for next iteration
             t_prev = t
+
+    def saveData(self, filename):
+        inpPath = filename
+        print(inpPath)
+        #inpPath = 'C:/Users/mlu/Results/calibResult.csv'  # Output aus Gui wo ergebnisse abspeichern
+        createCalibrationFile(self.listCsvFile, inpPath)
