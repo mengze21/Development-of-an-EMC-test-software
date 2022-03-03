@@ -19,6 +19,7 @@ from openpyxl.descriptors import Default
 import CaliDataProcessing
 #from thread_FS_Calib import External_FS_Calib
 #from thread_FS_Meas import External_FS
+from calibrationFileCreate import createCalibrationFile
 from thread_FS_test import External_FS_test
 from CaliDataProcessing import caliDataProcessing
 
@@ -188,7 +189,7 @@ class Ui_Calibration(QtWidgets.QDialog):
         self.chart_2.addSeries(self.curveFPower1)
         self.curveFPower1.attachAxis(self.__axisFreq_2)
         self.curveFPower1.attachAxis(self.__axisMag_2)
-        self.chart_2.legend().markers(self.curveFPower1)[0].setVisible(True)
+        self.chart_2.legend().markers(self.curveFPower1)[0].setVisible(False)
         self.chart_2.legend().setAlignment(Qt.AlignTop)
         pen = QtGui.QPen(QtGui.QColor(0, 255, 0))
         pen.setWidth(1)
@@ -609,11 +610,16 @@ class Ui_Calibration(QtWidgets.QDialog):
                 self.curveFieldStr_1.append(a, b)
     #
     def caliResult(self):
+        self.listCsvFile = []
         filepath = self.open_file()
         # get data
-
         if not filepath == "":
-            pass
+            self.listCsvFile.append('output_Vertical_1.csv')
+            self.listCsvFile.append('output_Vertical_2.csv')
+            self.listCsvFile.append('output_Vertical_3.csv')
+            self.listCsvFile.append('output_Vertical_4.csv')
+            self.listCsvFile.append('output_Vertical_5.csv')
+            createCalibrationFile(self.listCsvFile)
     # adding new data to graphics
     # once for 1 position
     def loadNewData(self):
